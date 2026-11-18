@@ -489,6 +489,45 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .vue__fermer { position: absolute; top: .7rem; right: .7rem; width: 2.3rem; height: 2.3rem; border-radius: 6px; border: 1.5px solid #6ea2ff; background: transparent; color: #fff; cursor: pointer; font-size: 1.2rem; }
 @media (max-width: 640px) { .vue[open] { grid-template-columns: 1fr; justify-items: center; max-height: calc(100svh - 1.5rem); overflow-y: auto; } }
 
+/* ---------- Étude de cas ---------- */
+.cas__tete { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.jalon { padding: 1.1rem 1.2rem; border-radius: var(--r); background: linear-gradient(175deg, var(--papier), var(--papier-2)) padding-box, var(--ultra) border-box; border: 5px solid transparent; color: var(--texte-carte); }
+.jalon b { display: block; font-family: var(--titres); font-size: 1.7rem; font-weight: 900; color: #9a5410; line-height: 1.1; }
+.jalon span { font-weight: 700; }
+.jalon p { font-size: var(--t-1); color: #4b4636; margin-top: .25rem; }
+.cas__sous { font-family: var(--titres); font-size: var(--t1); font-weight: 800; color: var(--encre); margin: 2.2rem 0 1rem; }
+.enjeux { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1rem; }
+.enjeu { padding: 1.1rem 1.2rem 1.2rem; border-radius: var(--r); background: linear-gradient(160deg, var(--tapis-2), #151946); border: 1px solid rgb(180 185 227 / .18); }
+.enjeu__tete { display: flex; align-items: center; gap: .7rem; margin-bottom: .5rem; }
+.enjeu__icone { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 8px; background: var(--rare); color: #fff; }
+.enjeu__icone svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.enjeu h4 { font-size: var(--t0); font-weight: 800; line-height: 1.25; }
+.enjeu p { color: var(--doux); font-size: var(--t-1); }
+.enjeu p + p { margin-top: .45rem; }
+.enjeu .moi { color: var(--or); font-weight: 650; }
+.role-liste { display: grid; gap: .45rem; max-width: 48rem; }
+.role-liste li { padding-left: 1.3rem; position: relative; }
+.role-liste li::before { content: "◆"; position: absolute; left: 0; color: var(--or); font-size: .8em; top: .2em; }
+.code { margin-top: .4rem; border-radius: var(--r); overflow: hidden; border: 1px solid rgb(180 185 227 / .2); max-width: 48rem; }
+.code p { padding: .6rem 1rem; font-size: var(--t-1); color: var(--doux); background: rgb(27 31 82 / .8); }
+.code pre { margin: 0; padding: 1rem; overflow-x: auto; background: #0b0e2a; color: #dfe6ff; font: .86rem/1.55 ui-monospace, "Cascadia Code", Menlo, Consolas, monospace; }
+.code .k { color: #f2bf4a; } .code .c { color: #8f96c8; }
+.bilan { margin-top: 2rem; padding: 1.3rem 1.4rem; border-radius: var(--r); background: rgb(63 224 181 / .08); border: 1px solid rgb(63 224 181 / .35); max-width: 48rem; }
+.bilan b { color: var(--menthe); }
+
+/* ---------- Projets ---------- */
+.projets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
+.projet { padding: 5px; border-radius: var(--r); background: var(--cadre, var(--rare)); }
+.projet[data-rarete="ultra"] { --cadre: var(--ultra); } .projet[data-rarete="super"] { --cadre: var(--super); } .projet[data-rarete="secrete"] { --cadre: var(--secrete); }
+.projet > div { height: 100%; border-radius: calc(var(--r) - 4px); padding: 1.1rem 1.2rem 1.2rem; background: linear-gradient(175deg, var(--papier), var(--papier-2)); color: var(--texte-carte); display: grid; align-content: start; gap: .4rem; }
+.projet__etat { justify-self: start; font-size: .75rem; font-weight: 800; padding: .15rem .55rem; border-radius: 999px; background: #1b2a6e; color: #fff; }
+.projet h3 { font-size: var(--t1); font-weight: 850; font-stretch: 88%; line-height: 1.2; }
+.projet p { font-size: var(--t-1); color: #3e3a30; }
+.projet a { font-size: var(--t-1); font-weight: 700; color: #1b2a6e; }
+.projet__logo { width: 3.4rem; height: 3.4rem; border-radius: 10px; display: grid; place-items: center; border: 2px dashed #b9ae8c; color: #9a8f6d; font-family: var(--titres); font-weight: 900; }
+.reglementaire { margin-top: 1.4rem; color: var(--doux); font-size: var(--t-1); }
+.reglementaire b { color: var(--encre); }
+
 /* ---------- Mode classique / mode jeu ---------- */
 body.classique .jeu-seul { display: none !important; }
 body:not(.classique) .classique-seul { display: none !important; }
@@ -522,6 +561,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
     <a class="mono" href="#haut" aria-label="Retour en haut">DG</a>
     <nav aria-label="Sections">
       <a href="#main-cartes">Certificats</a>
+      <a href="#bascule">Bascule</a>
       <a href="#parcours">Parcours</a>
       <a href="#competences">Compétences</a>
       <a class="jeu-seul" href="#jeu">Mission</a>
@@ -582,6 +622,57 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
     </div>
   </section>
 
+  <section id="bascule" aria-labelledby="t-bascule">
+    <div class="wrap">
+      <div class="entete">
+        <h2 class="titre" id="t-bascule">La bascule IZY → PSA</h2>
+        <p class="chapeau">Étude de cas. Avec les équipes de l'UMS et d'Assia, nous avons changé le logiciel métier de la mutuelle : toutes les données mutualistes sont passées d'IZY Protect à ASSIA PSA.</p>
+      </div>
+      <div class="cas__tete">
+        <div class="jalon"><b>6 mois</b><span>pour basculer</span><p>Reprise, contrôle et mise en service des données mutualistes dans ASSIA PSA.</p></div>
+        <div class="jalon"><b>1 an</b><span>pour adapter et maîtriser</span><p>Ajustements, nouveaux paramétrages et autonomie des équipes sur l'outil.</p></div>
+        <div class="jalon"><b>500+</b><span>garanties paramétrées</span><p>Et plus de 100 requêtes et extractions pour contrôler et piloter.</p></div>
+      </div>
+
+      <h3 class="cas__sous">Ce qu'implique une bascule de mutuelle</h3>
+      <div class="enjeux" data-zone="enjeux"></div>
+
+      <h3 class="cas__sous">Mon rôle</h3>
+      <ul class="role-liste">
+        <li>Reprise, contrôle et fiabilisation des données, avant et après la bascule</li>
+        <li>Paramétrage de plus de 500 garanties dans ASSIA</li>
+        <li>Participation au basculement des flux</li>
+        <li>Mise en place des extranets</li>
+        <li>Mise en place de l'échange comptable avec génération des bordereaux</li>
+        <li>Plus de 100 requêtes et extractions pour contrôler et suivre l'activité</li>
+        <li>Support et accompagnement des utilisateurs pendant et après le changement</li>
+      </ul>
+
+      <h3 class="cas__sous">Exemple de contrôle</h3>
+      <div class="code">
+        <p>Exemple simplifié et anonymisé du type de requête utilisé pour vérifier qu'aucun adhérent ne s'est perdu pendant la reprise.</p>
+<pre><code><span class="c">-- Adhérents présents dans l'ancien système mais absents du nouveau</span>
+<span class="k">SELECT</span> a.num_adherent, a.nom, a.date_adhesion
+<span class="k">FROM</span>   anciens_adherents a
+<span class="k">LEFT JOIN</span> adherents_assia n
+       <span class="k">ON</span> n.num_adherent = a.num_adherent
+<span class="k">WHERE</span>  n.num_adherent <span class="k">IS NULL</span>;</code></pre>
+      </div>
+
+      <p class="bilan"><b>Le résultat :</b> la mutuelle a changé de logiciel en 6 mois, sans perdre ses données, et les équipes maîtrisaient l'outil un an plus tard.</p>
+    </div>
+  </section>
+
+  <section id="projets" aria-labelledby="t-projets">
+    <div class="wrap">
+      <div class="entete">
+        <h2 class="titre" id="t-projets">Projets</h2>
+        <p class="chapeau">Ce que je construis à côté de mon métier.</p>
+      </div>
+      <div class="projets" data-zone="projets"></div>
+    </div>
+  </section>
+
   <section id="parcours" aria-labelledby="t-parcours">
     <div class="wrap">
       <div class="entete">
@@ -615,6 +706,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <p class="chapeau jeu-seul">Ouvrez un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
       </div>
       <div class="competences classique-seul" data-zone="competences-liste"></div>
+      <p class="reglementaire classique-seul"><b>Formations réglementaires :</b> RGPD et LCB-FT, suivies comme dans toute mutuelle.</p>
       <div class="booster jeu-seul">
         <div class="scene">
           <button class="pack" type="button" data-action="ouvrir" aria-label="Ouvrir le booster">
@@ -746,20 +838,12 @@ const CONTENU = {
     { id: "cert-jira", nom: "JIRA", etoiles: 7, rarete: "super", icone: "ticket",
       effet: "Aucune demande ne se perd : chacune a un statut, une priorité et une suite.",
       detail: "Formation au suivi des demandes et des incidents dans JIRA.",
-      meta: "3 h, à distance, 21 décembre 2023, Cimut (Assia)", fichier: "assets/certificats/certificat-jira.pdf" },
-    { id: "cert-rgpd", nom: "RGPD", etoiles: 7, rarete: "rare", icone: "bouclier",
-      effet: "Les données personnelles des adhérents restent protégées et utilisées dans les règles.",
-      detail: "Formation au Règlement général sur la protection des données.",
-      meta: "Certificat de formation", fichier: "" },
-    { id: "cert-lcbft", nom: "LCB-FT", etoiles: 7, rarete: "rare", icone: "balance",
-      effet: "Repère les opérations suspectes avant qu'elles ne deviennent un problème.",
-      detail: "Formation à la lutte contre le blanchiment de capitaux et le financement du terrorisme.",
-      meta: "Certificat de formation", fichier: "" }
+      meta: "3 h, à distance, 21 décembre 2023, Cimut (Assia)", fichier: "assets/certificats/certificat-jira.pdf" }
   ],
 
   // Réalisations : valeur = le chiffre ou le mot mis en avant
   realisations: [
-    { valeur: "IZY → PSA", rarete: "ultra", titre: "Bascule de logiciel métier", texte: "Changement d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation des données avant et après migration." },
+    { valeur: "IZY → PSA", rarete: "ultra", titre: "Bascule de logiciel métier", texte: "Changement d'IZY Protect vers ASSIA PSA en 6 mois, puis maîtrise de l'outil en 1 an.", lien: "#bascule" },
     { valeur: "500+", rarete: "ultra", titre: "Garanties paramétrées", texte: "Plus de 500 garanties configurées dans ASSIA." },
     { valeur: "100+", rarete: "ultra", titre: "Requêtes et extractions", texte: "Réalisées pour la mutuelle, pour le suivi et le contrôle des données." },
     { valeur: "Compta", rarete: "super", titre: "Échange comptable", texte: "Mise en place de l'échange avec la comptabilité et génération des bordereaux." },
@@ -788,6 +872,44 @@ const CONTENU = {
         "Rapports Oracle BI (Maestro), incidents suivis dans JIRA",
         "Support aux utilisateurs, scripts d'automatisation, sécurité informatique"
       ] }
+  ],
+
+  // Étude de cas : ce qu'implique une bascule (icone : base, reglages, reseau, plateforme, graphique, casque, valide, bouclier)
+  enjeux: [
+    { icone: "base", titre: "Les données mutualistes",
+      texte: "Adhérents, ayants droit, contrats, garanties souscrites, cotisations, historique des remboursements : tout doit passer dans le nouveau logiciel sans se perdre ni changer de sens. Il faut faire correspondre les anciens codes aux nouveaux, contrôler avant, contrôler après, et corriger chaque écart.",
+      moi: "Reprise, contrôle et fiabilisation des données." },
+    { icone: "reglages", titre: "Le paramétrage",
+      texte: "Chaque garantie et chaque règle de gestion doit être recréée dans ASSIA pour qu'un même soin donne le même remboursement qu'avant. Une erreur de paramétrage, c'est un adhérent mal remboursé.",
+      moi: "Plus de 500 garanties paramétrées." },
+    { icone: "reseau", titre: "Les flux",
+      texte: "Une mutuelle échange en continu : décomptes de l'Assurance maladie en télétransmission, tiers payant avec les professionnels de santé, prélèvements des cotisations, virements des remboursements, fichiers des partenaires. Chaque flux doit être rebranché sur le nouveau logiciel sans coupure : le jour de la bascule, les remboursements continuent.",
+      moi: "Participation au basculement des flux." },
+    { icone: "plateforme", titre: "Les extranets",
+      texte: "Les adhérents consultent en ligne leurs remboursements, leurs attestations et leurs documents. Ces espaces doivent être reconnectés aux nouvelles données, avec les mêmes accès, sans que l'adhérent ait rien à refaire.",
+      moi: "Mise en place des extranets." },
+    { icone: "graphique", titre: "La comptabilité",
+      texte: "Chaque cotisation encaissée et chaque prestation versée produit des écritures comptables. Le nouveau logiciel doit alimenter la comptabilité avec des bordereaux justes, sinon les comptes de la mutuelle ne tombent plus juste.",
+      moi: "Échange comptable et génération des bordereaux." },
+    { icone: "valide", titre: "Les contrôles et le pilotage",
+      texte: "Avant, pendant et après la bascule, il faut pouvoir prouver que tout est juste : comptages, comparaisons, listes d'anomalies, tableaux de suivi pour la direction.",
+      moi: "Plus de 100 requêtes et extractions." },
+    { icone: "casque", titre: "Les utilisateurs",
+      texte: "Les équipes de gestion continuent de traiter les dossiers pendant le changement. Il faut les former, répondre à leurs questions et résoudre vite les incidents, jusqu'à ce que l'outil soit maîtrisé.",
+      moi: "Support, incidents suivis dans JIRA, accompagnement." },
+    { icone: "bouclier", titre: "La protection des données",
+      texte: "Ce sont des données de santé : les transferts, les accès et les environnements de test doivent respecter le RGPD et la sécurité, à chaque étape.",
+      moi: "Respect des politiques de sécurité et du RGPD." }
+  ],
+
+  // Projets (etat : texte du badge ; lien : "" s'il n'y en a pas ; logo : chemin d'image ou "")
+  projets: [
+    { nom: "Mon entreprise", etat: "Bientôt", rarete: "secrete", logo: "",
+      texte: "Mon projet d'entreprise est en préparation. Plus d'informations très bientôt.", lien: "" },
+    { nom: "Lâcher la mise", etat: "En test", rarete: "ultra", logo: "",
+      texte: "Un programme gratuit et anonyme, né à La Réunion, pour aider les personnes qui ont un problème avec les jeux d'argent à reprendre la main, et pour aider leurs proches. Indépendant de tout opérateur de jeux, il oriente toujours vers les professionnels.", lien: "" },
+    { nom: "Ce portfolio", etat: "En ligne", rarete: "super", logo: "",
+      texte: "Un portfolio en forme de jeu de cartes, fait en HTML, CSS et JavaScript sans aucune bibliothèque : pioche, boosters, missions et collection.", lien: "https://github.com/DimitriGIGAN/Portfolio-" }
   ],
 
   anciens: [
@@ -1009,10 +1131,19 @@ const CONTENU = {
     if (!ouverte) decouvrir(b.dataset.id);
   });
 
+  /* ---------- Étude de cas et projets ---------- */
+  $('[data-zone="enjeux"]').innerHTML = C.enjeux.map(e => `<article class="enjeu">
+      <div class="enjeu__tete"><span class="enjeu__icone">${artIcone(e.icone)}</span><h4>${esc(e.titre)}</h4></div>
+      <p>${esc(e.texte)}</p>${e.moi ? `<p class="moi">Mon rôle : ${esc(e.moi)}</p>` : ""}</article>`).join("");
+  $('[data-zone="projets"]').innerHTML = C.projets.map(p => `<article class="projet" data-rarete="${p.rarete}"><div>
+      ${p.logo ? `<img src="${esc(p.logo)}" alt="Logo ${esc(p.nom)}" style="width:3.4rem;height:3.4rem;object-fit:contain;border-radius:10px">` : (p.nom === "Mon entreprise" ? `<span class="projet__logo" aria-hidden="true">?</span>` : "")}
+      <span class="projet__etat">${esc(p.etat)}</span><h3>${esc(p.nom)}</h3><p>${esc(p.texte)}</p>
+      ${p.lien ? `<a href="${esc(p.lien)}" target="_blank" rel="noopener">Voir le projet</a>` : ""}</div></article>`).join("");
+
   /* ---------- Réalisations ---------- */
   $('[data-zone="realisations"]').innerHTML = C.realisations.map(r => `
     <li class="exploit" data-rarete="${r.rarete}"><span class="exploit__valeur">${esc(r.valeur)}</span>
-    <div><h3>${esc(r.titre)}</h3><p>${esc(r.texte)}</p></div></li>`).join("");
+    <div><h3>${esc(r.titre)}</h3><p>${esc(r.texte)}${r.lien ? ` <a href="${esc(r.lien)}" style="color:var(--or);font-weight:700">Lire l'étude de cas</a>` : ""}</p></div></li>`).join("");
 
   /* ---------- 2. Pioche du parcours ---------- */
   const terrain = $(".terrain"), detail = $(".detail"), paquet = $(".paquet__btn");
@@ -1102,7 +1233,7 @@ const CONTENU = {
   }
   const listeComp = [
     { groupe: "Logiciels et données", items: ["ASSIA 360 / ASSIA PSA", "Paramétrage produit", "Oracle / SQL", "Oracle BI (Maestro)", "Migration de données"] },
-    { groupe: "Support et méthode", items: ["Support applicatif", "Gestion des incidents", "JIRA", "Analyse fonctionnelle", "RGPD", "LCB-FT", "Sécurité informatique"] },
+    { groupe: "Support et méthode", items: ["Support applicatif", "Gestion des incidents", "JIRA", "Analyse fonctionnelle", "Sécurité informatique", "RGPD et LCB-FT (formations réglementaires)"] },
     { groupe: "Technique", items: ["Python", "VBA / Visual Basic", "Développement web", "Windows, Linux, macOS", "Réseau et fibre"] }
   ];
   $('[data-zone="competences-liste"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
