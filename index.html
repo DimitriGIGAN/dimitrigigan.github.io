@@ -349,6 +349,157 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 .contact .btns { justify-content: center; margin-top: 1.6rem; }
 footer { border-top: 1px solid rgb(180 185 227 / .12); padding-block: 1.4rem; color: var(--doux); font-size: var(--t-1); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; }
+
+/* =========================================================
+   JEUX : compteur, sons, pioche, booster, collection
+   ========================================================= */
+.controles { display: flex; align-items: center; gap: .45rem; }
+.compteur, .son {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 2.2rem; padding: .25rem .7rem;
+  border-radius: 6px; font-family: var(--titres); font-weight: 800; font-size: .78rem; color: #2b1a02; text-decoration: none;
+  background: var(--ultra); border: 1.5px solid #fff1c2; cursor: pointer;
+}
+.compteur svg, .son svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.son { padding: .25rem .5rem; background: linear-gradient(180deg, #2a55c9, #13297a); border-color: #6ea2ff; color: #fff; }
+.son .on, .son[aria-pressed="true"] .off { display: none; }
+.son[aria-pressed="true"] .on { display: block; }
+.compteur.pulse { animation: pulse .6s ease; }
+@keyframes pulse { 40% { transform: scale(1.15); } }
+@media (max-width: 860px) { .top nav { display: none; } }
+
+/* Carte face cachée : le dos DG d'abord, la carte au verso */
+.verso-dg {
+  height: 100%; border-radius: calc(var(--r) - 5px); display: grid; place-items: center;
+  background:
+    repeating-linear-gradient(45deg, rgb(255 255 255 / .06) 0 2px, transparent 2px 12px),
+    radial-gradient(circle at 50% 35%, #34408f, #12164a 72%);
+}
+.verso-dg span {
+  display: grid; place-items: center; width: 42%; aspect-ratio: 1; border-radius: 50%;
+  font-family: var(--titres); font-weight: 900; font-size: calc(var(--w-carte) * .12); color: #fff;
+  border: 3px solid var(--or); box-shadow: 0 0 18px rgb(242 191 74 / .45);
+}
+.carte.brille .face { box-shadow: 0 0 0 3px #fff8, 0 0 34px 6px rgb(242 191 74 / .7); }
+
+/* ---------- Pioche du parcours ---------- */
+.pioche { --w-carte: clamp(140px, 13vw, 170px); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); align-items: start; }
+.paquet { display: grid; justify-items: center; gap: .6rem; }
+.paquet__btn {
+  position: relative; width: var(--w-carte); aspect-ratio: 5 / 7; border: 0; padding: 0; background: none; cursor: pointer; color: #fff;
+}
+.paquet__btn:disabled { cursor: default; opacity: .45; }
+.paquet__pile { position: absolute; inset: 0; }
+.paquet__pile i { position: absolute; inset: 0; border-radius: var(--r); padding: 6px; background: var(--ultra); box-shadow: 0 8px 18px -10px #000; }
+.paquet__pile i::after { content: ""; position: absolute; inset: 6px; border-radius: calc(var(--r) - 5px); background: repeating-linear-gradient(45deg, rgb(255 255 255 / .06) 0 2px, transparent 2px 12px), radial-gradient(circle at 50% 35%, #34408f, #12164a 72%); }
+.paquet__pile i:nth-child(1) { transform: translate(6px, 6px); }
+.paquet__pile i:nth-child(2) { transform: translate(3px, 3px); }
+.paquet__txt { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: .2rem; z-index: 1; }
+.paquet__txt b { font-family: var(--titres); font-size: 1rem; }
+.paquet__txt span { font-size: var(--t-1); color: var(--doux); }
+.paquet .lien { background: none; border: 0; color: var(--doux); font-size: var(--t-1); text-decoration: underline; cursor: pointer; }
+.terrain { display: flex; gap: .8rem; overflow-x: auto; padding: .3rem .2rem 1rem; scrollbar-width: thin; }
+.case { flex: none; width: var(--w-carte); aspect-ratio: 5 / 7; border-radius: var(--r); border: 2px dashed rgb(180 185 227 / .3); display: grid; place-items: center; font-family: var(--titres); font-weight: 800; color: rgb(180 185 227 / .45); }
+.case.pleine { border: 0; display: block; }
+.case .carte { width: 100%; font-family: "Archivo", system-ui, sans-serif; font-weight: 400; }
+.case .carte.choisie .face { box-shadow: 0 0 0 3px #fff, 0 12px 26px -12px #000; }
+.case .carte.pioche-anim { animation: pioche .5s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes pioche { from { opacity: 0; transform: translateX(-60px) rotate(-8deg); } }
+.detail {
+  margin-top: 1.2rem; padding: 1.2rem 1.4rem; border-radius: var(--r);
+  background: linear-gradient(175deg, var(--papier), var(--papier-2)) padding-box, var(--rare) border-box;
+  border: 5px solid transparent; color: var(--texte-carte); min-height: 6rem;
+}
+.detail h3 { font-size: var(--t1); font-weight: 850; font-stretch: 88%; }
+.detail .type { font-size: var(--t-1); font-weight: 700; color: #6a5a2e; }
+.detail .role { color: #4b4636; }
+.detail ul { margin-top: .6rem; display: grid; gap: .3rem; }
+.detail li { padding-left: 1rem; position: relative; font-size: var(--t-1); color: #34302a; }
+.detail li::before { content: ""; position: absolute; left: 0; top: .62em; width: .4rem; height: .4rem; border-radius: 2px; background: #c58c1c; transform: rotate(45deg); }
+.detail .vide { color: #6d6650; }
+@media (max-width: 700px) {
+  .pioche { grid-template-columns: 1fr; --w-carte: 150px; }
+  .paquet { grid-auto-flow: column; justify-content: start; align-items: center; gap: 1rem; }
+  .paquet__btn { width: 110px; }
+  .terrain { margin-inline: calc(-1 * var(--pad)); padding-inline: var(--pad); }
+}
+
+/* ---------- Booster ---------- */
+.booster { --w-carte: clamp(150px, 14vw, 180px); }
+.scene { min-height: calc(var(--w-carte) * 1.4 + 2.5rem); display: grid; place-items: center; padding: 1.2rem; border-radius: var(--r); background: radial-gradient(ellipse at 50% 100%, rgb(91 155 255 / .25), transparent 70%), rgb(27 31 82 / .6); border: 1px solid rgb(180 185 227 / .16); }
+.pack { position: relative; width: calc(var(--w-carte) * 1.05); aspect-ratio: 5 / 8; border: 0; padding: 0; background: none; cursor: pointer; color: #fff; transition: transform .25s; }
+.pack:hover { transform: translateY(-5px) rotate(-2deg); }
+.pack__haut, .pack__corps { position: absolute; left: 0; right: 0; display: block; background: linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .35) 38%, transparent 48%), linear-gradient(160deg, #ffe08a, #e7a52f 40%, #7a4fe0 75%, #3c6fe0); }
+.pack__haut { top: 0; height: 13%; border-radius: 8px 8px 0 0; border-bottom: 2px dashed rgb(255 255 255 / .8); transition: transform .45s, opacity .45s; }
+.pack__corps { top: 13%; bottom: 0; border-radius: 0 0 8px 8px; display: grid; align-content: center; justify-items: center; gap: .5rem; text-align: center; padding: .8rem; box-shadow: 0 16px 26px -14px #000; }
+.pack__corps b { font-family: var(--titres); font-size: 1.05rem; line-height: 1.15; text-shadow: 0 2px 0 rgb(0 0 0 / .35); }
+.pack__corps i { display: grid; place-items: center; width: 3rem; aspect-ratio: 1; border-radius: 50%; border: 2.5px solid #fff; font-family: var(--titres); font-style: normal; font-weight: 900; background: rgb(17 20 58 / .45); }
+.pack__corps small { font-weight: 700; font-size: .78rem; }
+.pack.dechire { animation: secoue .4s; }
+.pack.dechire .pack__haut { transform: translate(40%, -150%) rotate(25deg); opacity: 0; }
+@keyframes secoue { 25% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } 75% { transform: rotate(-2deg); } }
+.tirage { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; }
+.tirage .carte { animation: sort .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
+@keyframes sort { from { opacity: 0; transform: translateY(40px) scale(.8); } }
+.booster__bas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; margin-top: 1rem; }
+.booster__etat { color: var(--doux); }
+.toutes { margin-top: 1.4rem; color: var(--doux); font-size: var(--t-1); }
+.toutes summary { cursor: pointer; font-weight: 700; color: var(--encre); }
+.toutes .competences { margin-top: 1rem; }
+@media (max-width: 700px) {
+  .booster { --w-carte: 160px; }
+  .scene { padding-inline: 0; overflow: hidden; }
+  .tirage { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; width: 100%; padding: .6rem 1rem; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .tirage .carte { scroll-snap-align: center; }
+}
+
+/* ---------- Collection ---------- */
+.barre { height: .8rem; border-radius: 999px; background: rgb(180 185 227 / .15); overflow: hidden; }
+.barre span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--secrete); transition: width .5s; }
+.collec__info { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; margin-top: .7rem; color: var(--doux); font-size: var(--t-1); }
+.collec__info b { color: var(--encre); font-family: var(--titres); }
+.album { margin-top: 1.4rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(6.8rem, 1fr)); gap: .7rem; }
+.mini {
+  --cadre: var(--rare);
+  width: 100%; aspect-ratio: 5 / 7; border: 0; padding: 4px; border-radius: 10px; cursor: pointer;
+  background: var(--cadre); color: var(--texte-carte); text-align: left;
+}
+.mini[data-rarete="commune"] { --cadre: var(--commune); }
+.mini[data-rarete="super"] { --cadre: var(--super); }
+.mini[data-rarete="ultra"] { --cadre: var(--ultra); }
+.mini[data-rarete="secrete"] { --cadre: var(--secrete); }
+.mini > span { display: grid; grid-template-rows: auto 1fr auto; height: 100%; padding: .45rem; border-radius: 7px; background: linear-gradient(175deg, var(--papier), var(--papier-2)); }
+.mini small { font-size: .62rem; font-weight: 700; color: #6a5a2e; }
+.mini b { font-size: .8rem; line-height: 1.12; align-self: center; font-stretch: 85%; }
+.mini em { font-size: .6rem; font-style: normal; font-weight: 700; color: #6d6650; }
+.mini.verrou > span { place-items: center; grid-template-rows: 1fr; background: repeating-linear-gradient(45deg, rgb(255 255 255 / .06) 0 2px, transparent 2px 10px), radial-gradient(circle at 50% 35%, #34408f, #12164a 75%); }
+.mini.verrou { --cadre: linear-gradient(150deg, #4a5190, #2a2f6b); }
+.mini.verrou b { font-family: var(--titres); font-size: 1.6rem; color: rgb(255 255 255 / .55); }
+.mini.secret.verrou b { color: var(--or); }
+.collec__reset { margin-top: 1.2rem; background: none; border: 0; color: var(--doux); font-size: var(--t-1); text-decoration: underline; cursor: pointer; }
+
+/* ---------- Visionneuse ---------- */
+.vue { border: 0; padding: clamp(1.2rem, 3vw, 2rem); border-radius: 16px; max-width: min(44rem, calc(100% - 1.5rem)); background: linear-gradient(160deg, #222868, var(--tapis)); color: var(--encre); box-shadow: 0 30px 70px -20px #000; }
+.vue[open] { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.5rem; align-items: center; }
+.vue::backdrop { background: rgb(5 8 30 / .75); }
+.vue__carte { --w-carte: clamp(190px, 24vw, 240px); }
+.vue h2 { font-family: var(--titres); font-size: var(--t1); line-height: 1.2; padding-right: 2.2rem; }
+.vue__texte { margin-top: .7rem; display: grid; gap: .6rem; color: var(--doux); }
+.vue__texte ul { display: grid; gap: .3rem; }
+.vue__texte li::before { content: "◆ "; color: var(--or); }
+.vue__fermer { position: absolute; top: .7rem; right: .7rem; width: 2.3rem; height: 2.3rem; border-radius: 6px; border: 1.5px solid #6ea2ff; background: transparent; color: #fff; cursor: pointer; font-size: 1.2rem; }
+@media (max-width: 640px) { .vue[open] { grid-template-columns: 1fr; justify-items: center; max-height: calc(100svh - 1.5rem); overflow-y: auto; } }
+
+/* ---------- Notifications ---------- */
+.notifs { position: fixed; left: 50%; bottom: 1rem; translate: -50% 0; z-index: 20; display: grid; gap: .5rem; width: min(25rem, calc(100% - 1.5rem)); pointer-events: none; }
+.notif { pointer-events: auto; display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .7rem 1rem; border-radius: 10px; font-size: var(--t-1); background: #1d2260; border: 1.5px solid var(--or); box-shadow: 0 14px 28px -12px #000; animation: notif .3s ease; }
+.notif b { color: var(--or); }
+.notif button { flex: none; border: 0; border-radius: 6px; padding: .35rem .7rem; background: var(--or); color: #2b1a02; font-weight: 800; cursor: pointer; }
+.notif.part { opacity: 0; transition: opacity .3s; }
+@keyframes notif { from { opacity: 0; translate: 0 10px; } }
+@media (prefers-reduced-motion: reduce) {
+  .case .carte.pioche-anim, .tirage .carte, .pack.dechire, .compteur.pulse, .notif { animation: none; }
+  .pack__haut, .barre span { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -359,11 +510,21 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <a class="mono" href="#haut" aria-label="Retour en haut">DG</a>
     <nav aria-label="Sections">
       <a href="#main-cartes">Certificats</a>
-      <a href="#realisations">Réalisations</a>
       <a href="#parcours">Parcours</a>
+      <a href="#competences">Booster</a>
       <a href="#jeu">Mission</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="controles">
+      <a class="compteur" href="#collection" aria-label="Ma collection">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="11" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></svg>
+        <span data-compte>0/0</span>
+      </a>
+      <button class="son" type="button" data-action="son" aria-pressed="false" aria-label="Activer le son">
+        <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="m17 9 5 6M22 9l-5 6"/></svg>
+        <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -389,7 +550,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-main">Ma main</h2>
-        <p class="chapeau">Mes certificats de formation. Touchez une carte pour la retourner.</p>
+        <p class="chapeau">Mes certificats de formation. Retournez chaque carte pour l'ajouter à votre collection.</p>
       </div>
       <div class="main-cartes" data-zone="certificats" role="list"></div>
     </div>
@@ -409,8 +570,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-parcours">Parcours</h2>
+        <p class="chapeau">Piochez les cartes une par une, du lycée à aujourd'hui.</p>
       </div>
-      <ol class="parcours" data-zone="parcours"></ol>
+      <div class="pioche">
+        <div class="paquet">
+          <button class="paquet__btn" type="button" data-action="piocher">
+            <span class="paquet__pile" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="paquet__txt"><b>Piocher</b><span data-reste></span></span>
+          </button>
+          <button class="lien" type="button" data-action="tout-piocher">Tout piocher</button>
+        </div>
+        <ol class="terrain" aria-label="Cartes du parcours piochées"></ol>
+      </div>
+      <div class="detail" aria-live="polite"></div>
       <details class="anciens">
         <summary>Premières expériences, 2011 – 2019</summary>
         <ul data-zone="anciens"></ul>
@@ -421,9 +593,29 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   <section id="competences" aria-labelledby="t-comp">
     <div class="wrap">
       <div class="entete">
-        <h2 class="titre" id="t-comp">Compétences</h2>
+        <h2 class="titre" id="t-comp">Booster de compétences</h2>
+        <p class="chapeau">Ouvrez un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
       </div>
-      <div class="competences" data-zone="competences"></div>
+      <div class="booster">
+        <div class="scene">
+          <button class="pack" type="button" data-action="ouvrir" aria-label="Ouvrir le booster">
+            <span class="pack__haut" aria-hidden="true"></span>
+            <span class="pack__corps" aria-hidden="true"><small>Booster</small><b>Compétences<br>SI santé</b><i>DG</i><small>5 cartes</small></span>
+          </button>
+          <div class="tirage" role="group" aria-label="Cartes du booster" hidden></div>
+        </div>
+        <div class="booster__bas">
+          <p class="booster__etat" aria-live="polite">Cliquez sur le booster pour l'ouvrir.</p>
+          <div class="btns">
+            <button class="btn" type="button" data-action="tout-retourner" hidden>Tout retourner</button>
+            <button class="btn btn--or" type="button" data-action="nouveau" hidden>Ouvrir un autre booster</button>
+          </div>
+        </div>
+      </div>
+      <details class="toutes">
+        <summary>Voir toutes mes compétences en liste</summary>
+        <div class="competences" data-zone="competences"></div>
+      </details>
     </div>
   </section>
 
@@ -448,6 +640,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
+  <section id="collection" aria-labelledby="t-collec">
+    <div class="wrap">
+      <div class="entete">
+        <h2 class="titre" id="t-collec">Collection</h2>
+        <p class="chapeau">Chaque carte découverte rejoint l'album. Complétez-le pour débloquer la carte secrète.</p>
+      </div>
+      <div class="barre" role="progressbar" aria-label="Progression de la collection" aria-valuemin="0"><span></span></div>
+      <div class="collec__info"><p class="collec__compte"></p><p>Cartes à trouver : certificats, parcours et booster</p></div>
+      <ul class="album" aria-label="Album de cartes"></ul>
+      <button class="collec__reset" type="button" data-action="reset">Recommencer la collection</button>
+    </div>
+  </section>
+
   <section class="contact" id="contact" aria-labelledby="t-contact">
     <div class="wrap">
       <h2 class="titre" id="t-contact">Travaillons ensemble</h2>
@@ -468,6 +673,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </div>
 </footer>
 
+<dialog class="vue" aria-labelledby="vue-titre">
+  <button class="vue__fermer" type="button" data-action="fermer" aria-label="Fermer">✕</button>
+  <div class="vue__carte"></div>
+  <div><h2 id="vue-titre"></h2><div class="vue__texte"></div></div>
+</dialog>
+
+<div class="notifs" aria-live="polite"></div>
+
 <noscript><p style="padding:2rem;text-align:center">Activez JavaScript pour voir le portfolio, ou écrivez-moi : dimitrigigan@gmail.com</p></noscript>
 
 <script>
@@ -476,6 +689,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
    - Garde les guillemets "..." et les virgules entre les blocs.
    - rarete : "commune", "rare", "super", "ultra" ou "secrete"
    - etoiles : de 1 à 10
+   - id : identifiant unique d'une carte (sert à la collection et aux missions)
    ========================================================= */
 const CONTENU = {
   identite: {
@@ -502,23 +716,23 @@ const CONTENU = {
 
   // « Ma main » : les certificats (fichier : PDF dans assets/certificats, ou "" s'il n'y en a pas)
   certificats: [
-    { nom: "Formation ASSIA 360°", etoiles: 8, rarete: "ultra", icone: "plateforme",
+    { id: "cert-assia360", nom: "Formation ASSIA 360°", etoiles: 8, rarete: "ultra", icone: "plateforme",
       effet: "Donne accès à toute la plateforme de gestion santé et assurance des mutuelles.",
       detail: "Formation à la plateforme ASSIA 360, le logiciel de gestion des mutuelles et de l'assurance santé.",
       meta: "7 h, présentiel, 18 août 2023, Cimut (Assia)", fichier: "assets/certificats/certificat-assia-360.pdf" },
-    { nom: "Paramétrage produit", etoiles: 9, rarete: "secrete", icone: "reglages",
+    { id: "cert-parametrage", nom: "Paramétrage produit", etoiles: 9, rarete: "secrete", icone: "reglages",
       effet: "Quand une nouvelle garantie arrive, configure contrats, droits et règles sans une ligne de code.",
       detail: "Formation au paramétrage des produits dans ASSIA : contrats, garanties, prestations et règles de gestion.",
       meta: "21 h, présentiel, 21 au 23 août 2023, Cimut (Assia)", fichier: "assets/certificats/certificat-parametrage-produit.pdf" },
-    { nom: "JIRA", etoiles: 7, rarete: "super", icone: "ticket",
+    { id: "cert-jira", nom: "JIRA", etoiles: 7, rarete: "super", icone: "ticket",
       effet: "Aucune demande ne se perd : chacune a un statut, une priorité et une suite.",
       detail: "Formation au suivi des demandes et des incidents dans JIRA.",
       meta: "3 h, à distance, 21 décembre 2023, Cimut (Assia)", fichier: "assets/certificats/certificat-jira.pdf" },
-    { nom: "RGPD", etoiles: 7, rarete: "rare", icone: "bouclier",
+    { id: "cert-rgpd", nom: "RGPD", etoiles: 7, rarete: "rare", icone: "bouclier",
       effet: "Les données personnelles des adhérents restent protégées et utilisées dans les règles.",
       detail: "Formation au Règlement général sur la protection des données.",
       meta: "Certificat de formation", fichier: "" },
-    { nom: "LCB-FT", etoiles: 7, rarete: "rare", icone: "balance",
+    { id: "cert-lcbft", nom: "LCB-FT", etoiles: 7, rarete: "rare", icone: "balance",
       effet: "Repère les opérations suspectes avant qu'elles ne deviennent un problème.",
       detail: "Formation à la lutte contre le blanchiment de capitaux et le financement du terrorisme.",
       meta: "Certificat de formation", fichier: "" }
@@ -535,25 +749,26 @@ const CONTENU = {
     { valeur: "Fibre", rarete: "rare", titre: "Écoles de Saint-Denis", texte: "Participation au passage de l'ADSL à la fibre dans toutes les écoles primaires et maternelles (Caisse des écoles)." }
   ],
 
+  // Parcours : du plus ancien au plus récent (c'est l'ordre de la pioche)
   parcours: [
-    { annee: "2023", fin: "2026", type: "Expérience", rarete: "ultra", nom: "UMS Réunion (mutuelle)", role: "Technicien informatique polyvalent",
-      points: [
-        "Paramétrage, maintenance et support du logiciel métier ASSIA",
-        "Requêtes SQL et rapports Oracle BI (Maestro) pour le suivi de l'activité",
-        "Incidents et demandes suivis dans JIRA : analyse, priorisation, résolution",
-        "Support aux utilisateurs : diagnostic, résolution, accompagnement",
-        "Scripts et outils pour automatiser les tâches répétitives",
-        "Respect des politiques de sécurité et gestion des risques"
-      ] },
-    { annee: "2021", fin: "2022", type: "Expérience", rarete: "super", nom: "Caisse des écoles", role: "Technicien informatique",
+    { id: "p-lycee", annee: "2012", fin: "2015", type: "Formation", rarete: "commune", nom: "Lycée Julien de Rontaunay", role: "Bac pro Gestion administration (BEP MSA en 2014)", points: [] },
+    { id: "p-dpeg", annee: "2016", fin: "2017", type: "Expérience", rarete: "commune", nom: "DPEG", role: "Service civique : appui informatique et administratif", points: [] },
+    { id: "p-simplon", annee: "2020", fin: "2021", type: "Formation", rarete: "rare", nom: "Simplon.co", role: "Titre professionnel Développeur web et webmaster", points: [] },
+    { id: "p-caisse", annee: "2021", fin: "2022", type: "Expérience", rarete: "super", nom: "Caisse des écoles", role: "Technicien informatique",
       points: [
         "Passage de l'ADSL à la fibre dans les écoles primaires et maternelles de Saint-Denis",
         "Support informatique aux équipes",
         "Outils internes en Visual Basic et Python"
       ] },
-    { annee: "2020", fin: "2021", type: "Formation", rarete: "rare", nom: "Simplon.co", role: "Titre professionnel Développeur web et webmaster", points: [] },
-    { annee: "2016", fin: "2017", type: "Expérience", rarete: "commune", nom: "DPEG", role: "Service civique : appui informatique et administratif", points: [] },
-    { annee: "2012", fin: "2015", type: "Formation", rarete: "commune", nom: "Lycée professionnel Julien de Rontaunay", role: "Bac pro Gestion administration (BEP MSA en 2014)", points: [] }
+    { id: "p-ums", annee: "2023", fin: "2026", type: "Expérience", rarete: "ultra", nom: "UMS Réunion", role: "Technicien informatique polyvalent (mutuelle)",
+      points: [
+        "Bascule d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation des données",
+        "Plus de 500 garanties paramétrées, extranets, bascule des flux, échange comptable",
+        "Plus de 70 % des extractions et requêtes de la mutuelle",
+        "Paramétrage, maintenance et support du logiciel métier ASSIA",
+        "Rapports Oracle BI (Maestro), incidents suivis dans JIRA",
+        "Support aux utilisateurs, scripts d'automatisation, sécurité informatique"
+      ] }
   ],
 
   anciens: [
@@ -565,52 +780,108 @@ const CONTENU = {
     ["2011", "ODOM Services", "accueil et standard"]
   ],
 
+  // Cartes du booster (et du mini-jeu)
   competences: [
-    { groupe: "Logiciels et données", items: ["ASSIA 360 / ASSIA PSA", "Paramétrage métier", "Oracle / SQL", "Oracle BI (Maestro)", "Migration de données"] },
-    { groupe: "Support et méthode", items: ["Support applicatif", "Gestion des incidents", "JIRA", "Analyse fonctionnelle", "RGPD", "Sécurité informatique"] },
-    { groupe: "Technique", items: ["Python", "VBA / Visual Basic", "Développement web", "Windows, Linux, macOS", "Réseau et fibre"] }
+    { id: "sql", nom: "Oracle / SQL", icone: "base", etoiles: 8, rarete: "ultra", effet: "Une requête suffit pour retrouver l'adhérent, le contrat ou l'anomalie cachée." },
+    { id: "migration", nom: "Migration de données", icone: "base", etoiles: 8, rarete: "ultra", effet: "Reprend, contrôle et bascule les données d'un logiciel à l'autre sans rien perdre." },
+    { id: "bi", nom: "Oracle BI (Maestro)", icone: "graphique", etoiles: 7, rarete: "super", effet: "Transforme les données en rapports que la direction lit vraiment." },
+    { id: "fiabilisation", nom: "Fiabilisation des données", icone: "valide", etoiles: 7, rarete: "super", effet: "Avant chaque bascule, chaque donnée est contrôlée. Après aussi." },
+    { id: "support", nom: "Support applicatif", icone: "casque", etoiles: 8, rarete: "super", effet: "Quand le logiciel résiste, diagnostique, explique et remet l'équipe au travail." },
+    { id: "compta", nom: "Échange comptable", icone: "graphique", etoiles: 7, rarete: "super", effet: "Les bordereaux partent vers la comptabilité, justes et à l'heure." },
+    { id: "incidents", nom: "Gestion des incidents", icone: "alerte", etoiles: 7, rarete: "rare", effet: "Analyse, priorise, résout. Le ticket suivant peut arriver." },
+    { id: "analyse", nom: "Analyse fonctionnelle", icone: "graphique", etoiles: 6, rarete: "rare", effet: "Traduit le besoin des équipes métier en paramétrage concret." },
+    { id: "securite", nom: "Sécurité informatique", icone: "bouclier", etoiles: 6, rarete: "rare", effet: "Applique les politiques de sécurité et repère les risques." },
+    { id: "auto", nom: "Automatisation", icone: "engrenage", etoiles: 6, rarete: "super", effet: "Une tâche répétitive devient un script. L'équipe récupère son temps." },
+    { id: "python", nom: "Python", icone: "code", etoiles: 6, rarete: "rare", effet: "Écrit les petits outils qui font gagner des heures chaque semaine." },
+    { id: "vba", nom: "VBA / Visual Basic", icone: "code", etoiles: 6, rarete: "rare", effet: "Automatise les fichiers Excel et les outils internes." },
+    { id: "web", nom: "Développement web", icone: "code", etoiles: 5, rarete: "commune", effet: "HTML, CSS, JavaScript : ce portfolio en est la preuve." },
+    { id: "systemes", nom: "Windows, Linux, macOS", icone: "ecran", etoiles: 6, rarete: "commune", effet: "Installe, dépanne et configure les postes." },
+    { id: "reseau", nom: "Réseau et fibre", icone: "reseau", etoiles: 6, rarete: "rare", effet: "Du câble au poste de travail, remet la connexion en état." }
   ],
 
-  // Cartes compétences utilisées dans le mini-jeu
-  cartesJeu: {
-    migration: { nom: "Migration de données", etoiles: 8, rarete: "ultra", icone: "base", effet: "Reprend, contrôle et bascule les données sans rien perdre." },
-    parametrage: { nom: "Paramétrage produit", etoiles: 9, rarete: "secrete", icone: "reglages", effet: "Configure garanties, contrats et règles de gestion." },
-    sql: { nom: "Oracle / SQL", etoiles: 8, rarete: "ultra", icone: "base", effet: "Une requête suffit pour trouver l'anomalie cachée." },
-    support: { nom: "Support applicatif", etoiles: 8, rarete: "super", icone: "casque", effet: "Diagnostique et débloque les utilisateurs." },
-    bi: { nom: "Oracle BI", etoiles: 7, rarete: "super", icone: "graphique", effet: "Transforme les données en rapports lisibles." },
-    auto: { nom: "Automatisation", etoiles: 6, rarete: "rare", icone: "engrenage", effet: "Une tâche répétitive devient un script." },
-    reseau: { nom: "Réseau et fibre", etoiles: 6, rarete: "rare", icone: "reseau", effet: "Remet la connexion en état, du câble au poste." },
-    web: { nom: "Développement web", etoiles: 5, rarete: "commune", icone: "code", effet: "HTML, CSS, JavaScript." }
-  },
-
+  // Mini-jeu : bonne et autres = id de cartes compétences ou de certificats
   missions: [
     { texte: "La mutuelle change de logiciel métier : il faut reprendre toutes les données sans en perdre une seule.", bonne: "migration", autres: ["support", "web"],
       bravo: "C'est ce que j'ai fait chez UMS Réunion, lors de la bascule d'IZY Protect vers ASSIA PSA.", indice: "Il s'agit de reprendre, contrôler et basculer des données." },
-    { texte: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain.", bonne: "parametrage", autres: ["reseau", "auto"],
+    { texte: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain.", bonne: "cert-parametrage", autres: ["reseau", "auto"],
       bravo: "J'ai paramétré plus de 500 garanties dans ASSIA.", indice: "Ce n'est pas du développement : c'est une garantie à configurer." },
     { texte: "Des doublons d'adhérents faussent les statistiques de la mutuelle.", bonne: "sql", autres: ["support", "web"],
       bravo: "J'ai créé plus de 70 % des extractions et requêtes de l'UMS.", indice: "Il faut interroger la base de données." },
     { texte: "Un service ne peut plus saisir de remboursements depuis ce matin.", bonne: "support", autres: ["bi", "web"],
       bravo: "Diagnostic, résolution et accompagnement des utilisateurs : mon quotidien, avec un suivi dans JIRA.", indice: "Des utilisateurs sont bloqués : il faut les débloquer." },
-    { texte: "Les écoles de la ville ont une connexion trop lente pour travailler.", bonne: "reseau", autres: ["sql", "parametrage"],
+    { texte: "Les écoles de la ville ont une connexion trop lente pour travailler.", bonne: "reseau", autres: ["sql", "cert-parametrage"],
       bravo: "J'ai participé au passage de l'ADSL à la fibre dans toutes les écoles primaires et maternelles de Saint-Denis.", indice: "C'est une question d'infrastructure réseau." }
-  ]
+  ],
+
+  // La carte secrète, débloquée quand la collection est complète
+  carteSecrete: {
+    nom: "Me recruter",
+    effet: "Quand cette carte est jouée, un technicien SI santé rejoint votre équipe.",
+    message: "Bravo, vous avez complété toute la collection ! Merci d'avoir joué jusqu'au bout. Parlons de votre projet."
+  }
 };
 
 /* =========================================================
    CODE : pas besoin d'y toucher pour modifier le contenu.
    ========================================================= */
 (() => {
+  "use strict";
   const C = CONTENU, id = C.identite;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const melange = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]);
+  const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const attendre = ms => new Promise(r => setTimeout(r, calme ? 0 : ms));
   const RARETE = { commune: "Commune", rare: "Rare", super: "Super rare", ultra: "Ultra rare", secrete: "Rare secrète" };
+  const RANG = { commune: 0, rare: 1, super: 2, ultra: 3, secrete: 4 };
 
+  /* ---------- Sauvegarde dans le navigateur ---------- */
+  const CLE = "dg-portfolio-cartes-v3";
+  let S = {};
+  try { S = JSON.parse(localStorage.getItem(CLE)) || {}; } catch { S = {}; }
+  S.trouvees = new Set(S.trouvees || []);
+  S.boosters = S.boosters || 0;
+  const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify({ ...S, trouvees: [...S.trouvees] })); } catch { /* le jeu marche quand même */ } };
+
+  /* ---------- Sons générés (coupés par défaut) ---------- */
+  const Son = (() => {
+    let ctx = null;
+    const ac = () => { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === "suspended") ctx.resume(); return ctx; };
+    const bruit = (duree, f0, f1, type = "bandpass", vol = .22) => {
+      const c = ac(), n = Math.floor(c.sampleRate * duree), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 2);
+      const src = c.createBufferSource(); src.buffer = buf;
+      const f = c.createBiquadFilter(); f.type = type; f.frequency.setValueAtTime(f0, c.currentTime); f.frequency.exponentialRampToValueAtTime(f1, c.currentTime + duree);
+      const g = c.createGain(); g.gain.value = vol; src.connect(f).connect(g).connect(c.destination); src.start();
+    };
+    const note = (fr, t0, duree, type = "triangle", vol = .12) => {
+      const c = ac(), t = c.currentTime + t0, o = c.createOscillator(), g = c.createGain();
+      o.type = type; o.frequency.value = fr; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + duree);
+      o.connect(g).connect(c.destination); o.start(t); o.stop(t + duree + .05);
+    };
+    const arpege = (ns, pas = .07, type = "triangle", d = .35) => ns.forEach((n, i) => note(n, i * pas, d, type));
+    const sons = {
+      retourne: () => bruit(.09, 3200, 1100),
+      pioche: () => bruit(.2, 1600, 500, "bandpass", .18),
+      dechire: () => bruit(.5, 700, 7000, "highpass", .28),
+      super: () => arpege([784, 988], .08),
+      ultra: () => arpege([659, 784, 988, 1319], .07),
+      secrete: () => arpege([523, 659, 784, 1047, 1319, 1568], .06, "triangle", .5),
+      bravo: () => arpege([660, 880, 1320], .09, "sine", .3),
+      rate: () => { note(196, 0, .18, "square", .05); note(147, .1, .22, "square", .05); },
+      deblocage: () => arpege([523, 659, 784, 1047, 784, 1047, 1319, 1568, 2093], .08, "triangle", .6)
+    };
+    return {
+      jouer(nom) { if (!S.son) return; try { sons[nom]?.(); } catch { /* audio indisponible */ } },
+      activer(on) { S.son = on; sauver(); if (on) { try { ac(); } catch { /* */ } } }
+    };
+  })();
+
+  /* ---------- Dessins ---------- */
   const ICONES = {
     plateforme: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 8h6M7 11h10"/>',
-    reglages: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+    reglages: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
     ticket: '<path d="M3 7h18v3.5a2 2 0 0 0 0 4V18H3v-3.5a2 2 0 0 0 0-4Z"/><path d="M14.5 7v11" stroke-dasharray="2 2.2"/>',
     bouclier: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/>',
     balance: '<path d="M12 4v16M7 20h10M5 7h14"/><path d="m5 7-3 6h6Zm14 0-3 6h6Z"/>',
@@ -619,115 +890,221 @@ const CONTENU = {
     graphique: '<path d="M3 21h18"/><path d="M6 17v-5M11 17V7M16 17v-8M21 17V4"/>',
     engrenage: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
     reseau: '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M12 7.2V12M12 12 6.5 17.3M12 12l5.5 5.3"/>',
-    code: '<path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>'
+    code: '<path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+    valide: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9"/>',
+    alerte: '<path d="M12 3 2 21h20Z"/><path d="M12 10v5M12 18v.4"/>',
+    ecran: '<rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'
   };
   const etoiles = n => "★".repeat(Math.max(0, Math.min(10, n || 0)));
+  const artIcone = nom => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[nom] || ICONES.engrenage}</svg>`;
+  const artAnnee = c => `<span style="display:grid;place-items:center;text-align:center;line-height:1"><b style="font-family:var(--titres);font-size:2.6em;color:#fff">${esc(c.annee)}</b><small style="font-size:.9em;color:#cfd6ff">${c.fin ? "à " + esc(c.fin) : ""}</small></span>`;
 
-  /** Face avant d'une carte */
-  function face(c, { type, art, stats = "", pied }) {
-    return `<div class="papier">
+  function papier(c, { type, art, stats = "", pied, effet = "Effet" }) {
+    return `<span class="papier">
       <span class="c-type">${esc(type)}</span>
       <span class="c-nom">${esc(c.nom)}</span>
-      <span class="c-etoiles" aria-label="Niveau ${c.etoiles || 0} sur 10">${etoiles(c.etoiles)}</span>
+      <span class="c-etoiles" aria-hidden="true">${etoiles(c.etoiles)}</span>
       <span class="c-art">${art}</span>
-      <span class="c-effet"><b>Effet</b> ${esc(c.effet)}</span>
+      <span class="c-effet"><b>${effet}</b> ${esc(c.effet)}</span>
       ${stats}
       <span class="c-pied"><span>${esc(pied[0])}</span><span>${esc(pied[1])}</span></span>
-    </div>`;
+    </span>`;
   }
-  const artIcone = nom => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[nom] || ICONES.engrenage}</svg>`;
+  const versoDG = `<span class="verso-dg"><span>DG</span></span>`;
 
-  /* ---- Textes et liens ---- */
+  /* ---------- Catalogue de la collection ---------- */
+  const catalogue = [];
+  C.certificats.forEach((c, i) => catalogue.push({ ...c, sorte: "cert", type: "Certificat", art: artIcone(c.icone), pied: [RARETE[c.rarete], `${i + 1}/${C.certificats.length}`], ou: "#main-cartes", ouTexte: "les certificats" }));
+  C.parcours.forEach((p, i) => catalogue.push({ ...p, sorte: "parcours", effet: p.role, etoiles: 0, art: artAnnee(p), type: p.type, pied: [RARETE[p.rarete], `${p.annee}`], effetLabel: p.type === "Formation" ? "Diplôme" : "Rôle", ou: "#parcours", ouTexte: "la pioche du parcours" }));
+  C.competences.forEach((c, i) => catalogue.push({ ...c, sorte: "comp", type: "Compétence", art: artIcone(c.icone), pied: [RARETE[c.rarete], `${i + 1}/${C.competences.length}`], ou: "#competences", ouTexte: "les boosters" }));
+  const parId = Object.fromEntries(catalogue.map(c => [c.id, c]));
+  const TOTAL = catalogue.length;
+  S.trouvees = new Set([...S.trouvees].filter(x => parId[x]));
+  const secret = { id: "secret", sorte: "secret", nom: C.carteSecrete.nom, effet: C.carteSecrete.effet, rarete: "secrete", etoiles: 10, type: "Carte secrète", art: `<span style="font-family:var(--titres);font-size:3em;font-weight:900;color:#fff">DG</span>`, pied: ["Rare secrète", "★"] };
+  const faceDe = c => papier(c, { type: c.type, art: c.art, pied: c.pied, effet: c.effetLabel || "Effet" });
+
+  /* ---------- Notifications, compteur, découvertes ---------- */
+  const notifs = $(".notifs");
+  function notifier(html, bouton, action) {
+    const n = document.createElement("div");
+    n.className = "notif";
+    n.innerHTML = `<span>${html}</span>`;
+    if (bouton) { const b = document.createElement("button"); b.type = "button"; b.textContent = bouton; b.onclick = () => { action(); n.remove(); }; n.append(b); }
+    notifs.append(n);
+    while (notifs.children.length > 2) notifs.firstElementChild.remove();
+    setTimeout(() => { n.classList.add("part"); setTimeout(() => n.remove(), 350); }, bouton ? 8000 : 3000);
+  }
+  function compteur(pulse) {
+    const a = $(".compteur");
+    $("[data-compte]").textContent = `${S.trouvees.size}/${TOTAL}`;
+    a.setAttribute("aria-label", `Ma collection : ${S.trouvees.size} cartes sur ${TOTAL}`);
+    if (pulse && !calme) { a.classList.remove("pulse"); void a.offsetWidth; a.classList.add("pulse"); }
+  }
+  function decouvrir(cid) {
+    if (!parId[cid] || S.trouvees.has(cid)) return;
+    S.trouvees.add(cid); sauver();
+    compteur(true); album();
+    notifier(`Nouvelle carte : <b>${esc(parId[cid].nom)}</b> (${S.trouvees.size}/${TOTAL})`);
+    if (S.trouvees.size === TOTAL) setTimeout(() => {
+      Son.jouer("deblocage");
+      notifier("Collection complète ! <b>La carte secrète est débloquée.</b>", "La voir", () => voir("secret"));
+    }, 800);
+  }
+  function retourner(btn) {
+    btn.setAttribute("aria-pressed", "true");
+    Son.jouer("retourne");
+    const r = btn.dataset.rarete;
+    if (["super", "ultra", "secrete"].includes(r)) setTimeout(() => Son.jouer(r), 220);
+    if (r === "ultra" || r === "secrete") { btn.classList.add("brille"); setTimeout(() => btn.classList.remove("brille"), 1400); }
+  }
+
+  /* ---------- Textes et liens ---------- */
   const textes = { nom: id.nom, metier: id.metier, dispo: id.dispo, email: id.email, ville: id.ville, annee: new Date().getFullYear() };
   $$("[data-texte]").forEach(n => { n.textContent = textes[n.dataset.texte] ?? ""; });
-  const h1 = $(".nom"); h1.innerHTML = id.nom.split(" ").map(m => `<span>${esc(m)}</span>`).join("");
+  $(".nom").innerHTML = id.nom.split(" ").map(m => `<span>${esc(m)}</span>`).join("");
   $$("[data-html]").forEach(n => { n.innerHTML = id[n.dataset.html] ?? ""; });
   const liens = { mail: "mailto:" + id.email, cv: id.cv, linkedin: id.linkedin };
   $$("[data-lien]").forEach(a => { const h = liens[a.dataset.lien]; if (h) a.href = h; else a.remove(); });
   if (!id.dispo) $(".dispo").remove();
 
-  /* ---- Carte joueur ---- */
+  /* ---------- Carte joueur ---------- */
   const J = C.carteJoueur;
   const statsJ = `<span class="c-stats">${J.stats.map(([k, v]) => `<span>${esc(k)} <b>${esc(v)}</b></span>`).join("")}</span>`;
   $('[data-zone="joueur"]').innerHTML = `<div class="carte" data-rarete="${J.rarete}" role="img" aria-label="Carte joueur de ${esc(J.nom)} : ${esc(J.effet)}">
-    <div class="carte__in"><div class="face">${face(J, { type: J.type, art: "DG", stats: statsJ, pied: J.pied })}</div></div></div>`;
+    <div class="carte__in"><div class="face">${papier(J, { type: J.type, art: "DG", stats: statsJ, pied: J.pied })}</div></div></div>`;
 
-  /* ---- Ma main : certificats qui se retournent ---- */
+  /* ---------- 1. Ma main : certificats ---------- */
   const zoneCert = $('[data-zone="certificats"]');
-  C.certificats.forEach((c, i) => {
-    const wrap = document.createElement("div");
-    wrap.setAttribute("role", "listitem");
-    wrap.innerHTML = `<button class="carte" type="button" data-rarete="${c.rarete}" aria-pressed="false" style="--i:${i}"
-        aria-label="Certificat ${esc(c.nom)}. Retourner la carte pour voir le détail.">
+  zoneCert.innerHTML = C.certificats.map((c, i) => `<div role="listitem">
+    <button class="carte" type="button" data-rarete="${c.rarete}" data-id="${c.id}" aria-pressed="false" style="--i:${i}" aria-label="Certificat ${esc(c.nom)}. Retourner la carte.">
       <span class="carte__in">
-        <span class="face">${face(c, { type: "Certificat", art: artIcone(c.icone), pied: [RARETE[c.rarete], `${i + 1}/${C.certificats.length}`] })}</span>
-        <span class="face face--dos"><span class="dos">
-          <h3>${esc(c.nom)}</h3>
-          <p>${esc(c.detail)}</p>
-          <p class="meta">${esc(c.meta)}</p>
-        </span></span>
+        <span class="face">${faceDe(parId[c.id])}</span>
+        <span class="face face--dos"><span class="dos"><h3>${esc(c.nom)}</h3><p>${esc(c.detail)}</p><p class="meta">${esc(c.meta)}</p></span></span>
       </span>
-    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a>` : ""}`;
-    zoneCert.append(wrap);
+    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a>` : ""}</div>`).join("");
+  zoneCert.addEventListener("click", e => {
+    const b = e.target.closest(".carte"); if (!b) return;
+    const ouverte = b.getAttribute("aria-pressed") === "true";
+    b.setAttribute("aria-pressed", String(!ouverte));
+    Son.jouer("retourne");
+    if (!ouverte) decouvrir(b.dataset.id);
   });
-  $$(".carte", zoneCert).forEach(b => b.addEventListener("click", () => b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"))));
 
-  /* ---- Réalisations ---- */
+  /* ---------- Réalisations ---------- */
   $('[data-zone="realisations"]').innerHTML = C.realisations.map(r => `
-    <li class="exploit" data-rarete="${r.rarete}">
-      <span class="exploit__valeur">${esc(r.valeur)}</span>
-      <div><h3>${esc(r.titre)}</h3><p>${esc(r.texte)}</p></div>
-    </li>`).join("");
+    <li class="exploit" data-rarete="${r.rarete}"><span class="exploit__valeur">${esc(r.valeur)}</span>
+    <div><h3>${esc(r.titre)}</h3><p>${esc(r.texte)}</p></div></li>`).join("");
 
-  /* ---- Parcours ---- */
-  $('[data-zone="parcours"]').innerHTML = C.parcours.map((p, i) => {
-    const liste = p.points.length ? `<ul>${p.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
-    return `<li class="etape" data-rarete="${p.rarete}">
-      <div class="etape__annee"><b>${esc(p.annee)}</b><span>${p.fin && p.fin !== p.annee ? "à " + esc(p.fin) : ""}</span></div>
-      <div class="etape__corps">
-        <p class="etape__type">${esc(p.type)}</p>
-        <h3>${esc(p.nom)}</h3>
-        <p class="etape__role">${esc(p.role)}</p>
-        ${liste}
-      </div>
-    </li>`;
-  }).join("");
+  /* ---------- 2. Pioche du parcours ---------- */
+  const terrain = $(".terrain"), detail = $(".detail"), paquet = $(".paquet__btn");
+  const cases = C.parcours.map(p => { const li = document.createElement("li"); li.className = "case"; li.textContent = p.annee; terrain.append(li); return li; });
+  let piochees = 0;
+  function montrer(p) {
+    $$(".carte", terrain).forEach(k => k.classList.toggle("choisie", k.dataset.id === p.id));
+    detail.innerHTML = `<p class="type">${esc(p.type)}, ${esc(p.annee)}${p.fin ? " à " + esc(p.fin) : ""}</p><h3>${esc(p.nom)}</h3><p class="role">${esc(p.role)}</p>
+      ${p.points.length ? `<ul>${p.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
+  }
+  function poser(i, anime) {
+    const p = C.parcours[i], c = parId[p.id];
+    cases[i].classList.add("pleine");
+    cases[i].innerHTML = `<button class="carte${anime ? " pioche-anim" : ""}" type="button" data-rarete="${p.rarete}" data-id="${p.id}" aria-pressed="${anime ? "false" : "true"}" aria-label="${esc(p.nom)}, ${esc(p.annee)}. Voir le détail.">
+      <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(c)}</span></span></button>`;
+    const btn = $(".carte", cases[i]);
+    btn.addEventListener("click", () => montrer(p));
+    if (anime) { Son.jouer("pioche"); setTimeout(() => retourner(btn), calme ? 0 : 450); cases[i].scrollIntoView({ block: "nearest", inline: "nearest", behavior: calme ? "auto" : "smooth" }); }
+  }
+  function majPaquet() {
+    const reste = C.parcours.length - piochees;
+    $("[data-reste]").textContent = reste ? `${reste} carte${reste > 1 ? "s" : ""}` : "Paquet vide";
+    paquet.disabled = !reste;
+    paquet.setAttribute("aria-label", reste ? `Piocher la prochaine carte du parcours, ${reste} restante${reste > 1 ? "s" : ""}` : "Paquet vide");
+    $('[data-action="tout-piocher"]').hidden = !reste;
+  }
+  function piocher() {
+    if (piochees >= C.parcours.length) return;
+    const i = piochees++;
+    poser(i, true); majPaquet(); decouvrir(C.parcours[i].id); montrer(C.parcours[i]);
+  }
+  while (piochees < C.parcours.length && S.trouvees.has(C.parcours[piochees].id)) poser(piochees++, false);
+  if (piochees) montrer(C.parcours[piochees - 1]); else detail.innerHTML = `<p class="vide">Le terrain est vide. Piochez votre première carte !</p>`;
+  majPaquet();
   $('[data-zone="anciens"]').innerHTML = C.anciens.map(([a, n, r]) => `<li>${esc(a)} : <b>${esc(n)}</b>, ${esc(r)}</li>`).join("");
 
-  /* ---- Compétences ---- */
-  $('[data-zone="competences"]').innerHTML = C.competences.map(g => `
-    <div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  /* ---------- 3. Booster de compétences ---------- */
+  const pack = $(".pack"), tirage = $(".tirage"), etat = $(".booster__etat");
+  const btnTout = $('[data-action="tout-retourner"]'), btnNouveau = $('[data-action="nouveau"]');
+  let ouverture = false;
+  function choisir() {
+    const neuves = melange(C.competences.filter(c => !S.trouvees.has(c.id)));
+    const connues = melange(C.competences.filter(c => S.trouvees.has(c.id)));
+    return [...neuves.slice(0, 5), ...connues].slice(0, 5).sort((a, b) => RANG[a.rarete] - RANG[b.rarete]);
+  }
+  function finBooster() {
+    const reste = C.competences.filter(c => !S.trouvees.has(c.id)).length;
+    etat.textContent = reste ? `Booster terminé. Il reste ${reste} compétence${reste > 1 ? "s" : ""} à découvrir.` : `Toutes les compétences sont dans votre collection.`;
+    btnTout.hidden = true; btnNouveau.hidden = false;
+  }
+  async function ouvrir() {
+    if (ouverture) return; ouverture = true;
+    Son.jouer("dechire"); pack.classList.add("dechire");
+    await attendre(600);
+    pack.hidden = true; S.boosters++; sauver();
+    tirage.innerHTML = choisir().map((c, i) => `<button class="carte" type="button" data-rarete="${c.rarete}" data-id="${c.id}" aria-pressed="false" style="--i:${i}" aria-label="Carte face cachée ${i + 1} sur 5. Retourner.">
+      <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(parId[c.id])}</span></span></button>`).join("");
+    tirage.hidden = false;
+    etat.textContent = "Cliquez sur chaque carte pour la retourner.";
+    btnTout.hidden = false; btnNouveau.hidden = true;
+    $(".carte", tirage)?.focus({ preventScroll: true });
+    ouverture = false;
+  }
+  tirage.addEventListener("click", e => {
+    const b = e.target.closest(".carte");
+    if (!b || b.getAttribute("aria-pressed") === "true") return;
+    retourner(b);
+    const c = parId[b.dataset.id];
+    b.setAttribute("aria-label", `${c.nom}, ${RARETE[c.rarete].toLowerCase()}`);
+    decouvrir(c.id);
+    const reste = $$('.carte[aria-pressed="false"]', tirage).length;
+    if (!reste) finBooster(); else etat.textContent = `Encore ${reste} carte${reste > 1 ? "s" : ""} à retourner.`;
+  });
+  async function toutRetourner() {
+    btnTout.hidden = true;
+    for (const b of $$('.carte[aria-pressed="false"]', tirage)) { b.click(); await attendre(250); }
+  }
+  function nouveau() {
+    tirage.hidden = true; tirage.innerHTML = "";
+    pack.hidden = false; pack.classList.remove("dechire");
+    etat.textContent = "Cliquez sur le booster pour l'ouvrir.";
+    btnNouveau.hidden = true; pack.focus({ preventScroll: true });
+  }
+  const listeComp = [
+    { groupe: "Logiciels et données", items: ["ASSIA 360 / ASSIA PSA", "Paramétrage produit", "Oracle / SQL", "Oracle BI (Maestro)", "Migration de données"] },
+    { groupe: "Support et méthode", items: ["Support applicatif", "Gestion des incidents", "JIRA", "Analyse fonctionnelle", "RGPD", "LCB-FT", "Sécurité informatique"] },
+    { groupe: "Technique", items: ["Python", "VBA / Visual Basic", "Développement web", "Windows, Linux, macOS", "Réseau et fibre"] }
+  ];
+  $('[data-zone="competences"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
 
-  /* ---- Mini-jeu : Mission recruteur ---- */
-  const M = C.missions, cartes = C.cartesJeu;
+  /* ---------- 4. Mission recruteur ---------- */
+  const M = C.missions;
   const num = $(".mission__num"), texte = $(".mission__texte"), retour = $(".mission__retour");
   const choix = $(".choix"), score = $(".score"), suivante = $('[data-action="suivante"]');
   let n = 0, reussies = 0, enCours = true;
-
-  function afficherScore() { score.textContent = `Missions réussies : ${reussies}/${M.length}`; }
+  const afficherScore = () => { score.textContent = `Missions réussies : ${reussies}/${M.length}`; };
   function charger(i) {
     if (i >= M.length) {
       num.textContent = "Partie terminée";
       texte.textContent = reussies === M.length ? "Toutes les missions réussies. On en parle ?" : "Partie terminée. On en parle ?";
       retour.innerHTML = `Écrivez-moi : <a href="mailto:${esc(id.email)}">${esc(id.email)}</a>`;
-      choix.replaceChildren();
-      suivante.textContent = "Rejouer";
-      suivante.hidden = false;
-      enCours = false;
-      return;
+      choix.replaceChildren(); suivante.textContent = "Rejouer"; suivante.hidden = false; enCours = false; return;
     }
     enCours = true;
     const m = M[i];
     num.textContent = `Mission ${i + 1} sur ${M.length}`;
-    texte.textContent = m.texte;
-    retour.textContent = "";
-    delete retour.dataset.etat;
-    suivante.hidden = true;
-    choix.innerHTML = melange([m.bonne, ...m.autres]).filter(k => cartes[k]).map(k => {
-      const c = cartes[k];
+    texte.textContent = m.texte; retour.textContent = ""; delete retour.dataset.etat; suivante.hidden = true;
+    choix.innerHTML = melange([m.bonne, ...m.autres]).filter(k => parId[k]).map(k => {
+      const c = parId[k];
       return `<button class="carte" type="button" data-rarete="${c.rarete}" data-carte="${k}" aria-label="Jouer la carte ${esc(c.nom)}">
-        <span class="carte__in"><span class="face">${face(c, { type: "Compétence", art: artIcone(c.icone), pied: [RARETE[c.rarete], "Jouer"] })}</span></span>
-      </button>`;
+        <span class="carte__in"><span class="face">${papier(c, { type: c.type, art: c.art, pied: [RARETE[c.rarete], "Jouer"] })}</span></span></button>`;
     }).join("");
   }
   choix.addEventListener("click", e => {
@@ -735,30 +1112,86 @@ const CONTENU = {
     if (!b || b.disabled || !enCours) return;
     const m = M[n];
     if (b.dataset.carte === m.bonne) {
-      b.classList.add("est-bonne");
-      $$(".carte", choix).forEach(x => { x.disabled = true; });
-      retour.innerHTML = `<b>Mission réussie.</b> ${esc(m.bravo)}`;
-      retour.dataset.etat = "ok";
-      reussies++;
-      afficherScore();
-      suivante.textContent = n + 1 < M.length ? "Mission suivante" : "Voir le résultat";
-      suivante.hidden = false;
-      suivante.focus({ preventScroll: true });
+      b.classList.add("est-bonne"); $$(".carte", choix).forEach(x => { x.disabled = true; });
+      retour.innerHTML = `<b>Mission réussie.</b> ${esc(m.bravo)}`; retour.dataset.etat = "ok";
+      reussies++; afficherScore(); Son.jouer("bravo"); decouvrir(m.bonne);
+      suivante.textContent = n + 1 < M.length ? "Mission suivante" : "Voir le résultat"; suivante.hidden = false; suivante.focus({ preventScroll: true });
     } else {
-      b.classList.add("est-fausse");
-      b.disabled = true;
-      retour.innerHTML = `<b>Pas cette carte.</b> Indice : ${esc(m.indice)}`;
-      retour.dataset.etat = "rate";
+      b.classList.add("est-fausse"); b.disabled = true; Son.jouer("rate");
+      retour.innerHTML = `<b>Pas cette carte.</b> Indice : ${esc(m.indice)}`; retour.dataset.etat = "rate";
     }
   });
   suivante.addEventListener("click", () => {
-    if (!enCours && n >= M.length) { n = 0; reussies = 0; afficherScore(); charger(0); return; }
-    n++;
-    charger(n);
-    $(".carte", choix)?.focus({ preventScroll: true });
+    if (!enCours) { n = 0; reussies = 0; afficherScore(); charger(0); return; }
+    n++; charger(n); $(".carte", choix)?.focus({ preventScroll: true });
   });
-  afficherScore();
-  charger(0);
+  afficherScore(); charger(0);
+
+  /* ---------- 5. Collection ---------- */
+  const zoneAlbum = $(".album");
+  function album() {
+    const k = S.trouvees.size, complet = k === TOTAL;
+    $(".barre span").style.width = `${(k / TOTAL) * 100}%`;
+    const barre = $(".barre"); barre.setAttribute("aria-valuemax", TOTAL); barre.setAttribute("aria-valuenow", k);
+    $(".collec__compte").innerHTML = complet ? `<b>${k}/${TOTAL}</b> : collection complète !` : `<b>${k}/${TOTAL}</b> cartes découvertes`;
+    zoneAlbum.innerHTML = [...catalogue, secret].map(c => {
+      const ok = c.sorte === "secret" ? complet : S.trouvees.has(c.id);
+      if (ok) return `<li><button class="mini${c.sorte === "secret" ? " secret" : ""}" type="button" data-rarete="${c.rarete}" data-voir="${c.id}" aria-label="${esc(c.nom)}. Voir la carte."><span><small>${esc(c.type)}</small><b>${esc(c.nom)}</b><em>${RARETE[c.rarete]}</em></span></button></li>`;
+      const label = c.sorte === "secret" ? "Carte secrète verrouillée" : `Carte inconnue, à trouver dans ${c.ouTexte}`;
+      return `<li><button class="mini verrou${c.sorte === "secret" ? " secret" : ""}" type="button" data-cache="${c.id}" aria-label="${label}"><span><b>${c.sorte === "secret" ? "★" : "?"}</b></span></button></li>`;
+    }).join("");
+  }
+  zoneAlbum.addEventListener("click", e => {
+    const v = e.target.closest("[data-voir]"), c = e.target.closest("[data-cache]");
+    if (v) return voir(v.dataset.voir);
+    if (!c) return;
+    if (c.dataset.cache === "secret") return notifier(`Il manque <b>${TOTAL - S.trouvees.size}</b> carte${TOTAL - S.trouvees.size > 1 ? "s" : ""} pour débloquer la carte secrète.`);
+    const x = parId[c.dataset.cache];
+    notifier(`Cette carte se trouve dans <b>${x.ouTexte}</b>.`);
+    $(x.ou)?.scrollIntoView({ behavior: calme ? "auto" : "smooth" });
+  });
+
+  /* ---------- Visionneuse ---------- */
+  const vue = $(".vue");
+  function voir(cid) {
+    const c = cid === "secret" ? secret : parId[cid]; if (!c) return;
+    $(".vue__carte").innerHTML = `<div class="carte" data-rarete="${c.rarete}" style="cursor:default"><div class="carte__in"><div class="face">${papier(c, { type: c.type, art: c.art, pied: c.pied, effet: c.effetLabel || "Effet" })}</div></div></div>`;
+    $("#vue-titre").textContent = c.nom;
+    let t = `<p>${esc(c.effet)}</p>`;
+    if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a></p>` : ""}`;
+    if (c.sorte === "parcours") t = `<p>${esc(c.role)}</p>${c.points.length ? `<ul>${c.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
+    if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download>Télécharger mon CV</a></div>`; Son.jouer("secrete"); }
+    $(".vue__texte").innerHTML = t;
+    vue.showModal();
+  }
+  vue.addEventListener("click", e => { if (e.target === vue) vue.close(); });
+
+  /* ---------- Boutons généraux ---------- */
+  function son(on) {
+    Son.activer(on);
+    const b = $('[data-action="son"]');
+    b.setAttribute("aria-pressed", String(on));
+    b.setAttribute("aria-label", on ? "Couper le son" : "Activer le son");
+  }
+  son(!!S.son);
+  let resetArme = 0;
+  const actions = {
+    son: () => { son(!S.son); if (S.son) Son.jouer("bravo"); },
+    piocher, "tout-piocher": async () => { while (piochees < C.parcours.length) { piocher(); await attendre(350); } },
+    ouvrir, "tout-retourner": toutRetourner, nouveau,
+    fermer: () => vue.close(),
+    reset: e => {
+      const b = e.target.closest("button");
+      if (Date.now() - resetArme > 4000) { resetArme = Date.now(); b.textContent = "Cliquez encore pour tout effacer"; setTimeout(() => { b.textContent = "Recommencer la collection"; }, 4000); return; }
+      S.trouvees.clear(); S.boosters = 0; sauver(); location.reload();
+    }
+  };
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-action]");
+    if (t && actions[t.dataset.action] && t.dataset.action !== "suivante") actions[t.dataset.action](e);
+  });
+
+  album(); compteur(false);
 })();
 </script>
 </body>

@@ -10,8 +10,11 @@ Un portfolio dans l'univers des jeux de cartes :
 - **Carte joueur** en haut de page
 - **Ma main** : les certificats de formation, à retourner d'un clic (avec le PDF quand il existe)
 - **Réalisations** : bascule IZY Protect vers ASSIA PSA, 500+ garanties, 70 % des extractions et requêtes…
-- **Parcours** et **Compétences**
-- **Mission recruteur** : un petit jeu où l'on joue la carte qui résout une situation
+- **Pioche du parcours** : les étapes se posent une par une sur le terrain
+- **Booster de compétences** : 5 cartes à retourner, de la commune à l'ultra rare
+- **Mission recruteur** : jouer la carte qui résout une situation
+- **Collection** : un album de 25 cartes, avec une carte secrète au bout (compteur en haut, progression gardée dans le navigateur)
+- **Sons** : bruitages de cartes, coupés par défaut (bouton haut-parleur)
 
 ## Modifier le contenu
 
@@ -20,7 +23,7 @@ Les textes sont dans la partie `CONTENU`, en bas du fichier (cherche « CONTENU 
 Garde les guillemets `"..."` et les virgules entre les blocs.
 
 - Un nouveau certificat : copie un bloc dans `certificats`, et dépose le PDF dans `assets/certificats/`.
-- Une nouvelle expérience : copie un bloc dans `parcours` (la plus récente en haut).
+- Une nouvelle expérience : copie un bloc dans `parcours` (du plus ancien au plus récent, c'est l'ordre de la pioche) avec un `id` unique.
 - `rarete` : `"commune"`, `"rare"`, `"super"`, `"ultra"` ou `"secrete"`. `etoiles` : de 1 à 10.
 
 Le CV se remplace en déposant le nouveau PDF dans `assets/` sous le nom `CV-Dimitri-Gigan.pdf`.
