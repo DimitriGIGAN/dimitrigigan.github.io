@@ -1,198 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>Menu Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./magic-master/dist/magic.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Megrim&family=Pompiere&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dimitri Gigan, technicien informatique</title>
+  <meta name="description" content="Portfolio de Dimitri Gigan, technicien informatique certifié sur le logiciel ASSIA, à Saint-Denis, La Réunion. SI mutuelle, migration de données, Oracle et SQL, support applicatif.">
+  <meta name="theme-color" content="#081638">
+  <meta property="og:title" content="Dimitri Gigan, technicien informatique">
+  <meta property="og:description" content="SI mutuelle et assurance santé, migration de données, Oracle et SQL, support applicatif. Saint-Denis, La Réunion.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="data.js" defer></script>
+  <script src="main.js" defer></script>
 </head>
-
 <body>
+  <a class="skip" href="#parcours">Aller au contenu</a>
 
-    <header>
-        <nav>
+  <header class="topbar">
+    <a class="monogram" href="#top" aria-label="Retour en haut">DG</a>
+    <nav aria-label="Sections">
+      <a href="#certifications">Certifications</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#competences">Compétences</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-            <div class="menuNav">
-               
-
-                <ul>
-                    <img class="Logo" src="https://i.ibb.co/qp4n3xF/Logo-Portfolio-1.gif">
-                    <li class="menuNav--boutton" type="button">
-                        Bienvenue sur mon Port-Folio j'espere qu'il vous plaira :)
-
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
-
-    </header>
-    <div>
-        <div class="section ">
-            <h2 type="button" class="collapsible"> <img src="images/MUGEN.png" width="25px"> DIPLÔMES</h2>
-
-            <div class="content">
-                <img class="Diplome " src="images/SERVICECIVIQUE.jpeg">
-                <img class="Diplome " src="images/BAC.jpeg">
-                <img class="Diplome " src="images/BEP.jpeg">
-                <img class="Diplome " src="images/BREVET.jpeg">
-            </div>
-            <div class="section">
-                <h2 type="button" class="collapsible"> <img src="images/FIELD.png" width="25px"> EXPERICENCE
-                    PROFESSIONEL</h2>
-
-                <div class="content">
-                    <div class="EXP">
-                        <img class="Diplome " src="images/CARFOUR.jpeg">
-                        <img class="Diplome " src="images/SERVICEMD.jpeg">
-                        <img class="Diplome " src="images/OCEINA2.jpeg">
-                        <img class="Diplome " src="images/OCEINA.jpeg">
-                        <img class="Diplome " src="images/PEEP2.jpeg">
-                        <img class="Diplome " src="images/PEEP.jpeg">
-                        <img class="Diplome " src="images/JIR.jpeg">
-                        <img class="Diplome " src="images/GET974.jpeg">
-                        <img class="Diplome " src="images/ODOM.jpeg">
-                    </div>
-                </div>
-            
-
-            <div class="section">
-                <h2 type="button" class="collapsible"><img src="images/EQUIP.png" width="25px">
-                    COMPÉTENCES/ATOUTS/CENTRE-INTERET</h2>
-
-                <div class="content">
-                    <div class="pol">
-                        <p><span class="titre "> <img class="Skill" src="images/skill.png">Conpétences/Skill:</span>
-                        <ul>
-                            <li> Anglais Niveau Moyen</li>
-                            <li> Allemand Niveau Faible </li>
-                            <li> Informatique </li>
-                            <li> Excel/Word/PowerPoint </li>
-                            <li> Adaptabilité</li>
-                            <li>Gestion téléphonique </li>
-                            <li> Communication</li>
-                            <li>Gestion téléphonique </li>
-                            <li>Résolution des problémes et esprit d'equipe </li>
-                            <li>Diplomatie </li>
-
-                        </ul>
-                        </p>
-
-
-                        <p><span class="titre"><img class="Skill" src="images/skill.png">Mes centres intérets:</span>
-                        <ul>
-                            <li>Lecture </li>
-                            <li> Manga </li>
-                            <li> Sport </li>
-                            <li>Jeux-Vidéo </li>
-                            <li> Carte à jouer </li>
-                            <li>Cuisiner </li>
-                            <li>Faire des débat </li>
-
-
-
-                        </ul>
-                        </p>
-
-
-                        <p><span class="titre "><img class="Skill" src="images/skill.png">Mes atôuts:</span>
-                        <ul>
-                            <li>Autonome</li>
-                            <li>Rigoureux </li>
-                            <li> Dynamique </li>
-                            <li> Ponctuel </li>
-                            <li>Motivé</li>
-                            <li> Determiner </li>
-                            <li>Prendre des iniative </li>
-                            <li>Curieux </li>
-                            <li> Droit dans ces bottes </li>
-
-
-                        </ul>
-                        </p>
-
-
-
-                    </div>
-                </div>
-                <div class="section">
-                    <h2 type="button" class="collapsible"><img src="images/MAGIC.png" width="25px"> MES RÉALISATION
-                    </h2>
-
-
-                    <div class="content">
-                        <img class="Diplome " src="images/Portfolio.png">
-
-                    </div>
-                </div>
-            
-        
-
-
-    </div>
-    <footer>
-        <div>
-            <img src="images/sns_more_bk.png">
-            <div class="infophoto">
-
-                <div class="info ">
-                    <div class="photo">
-                        <img class="GIGAN" src="https://zupimages.net/up/20/31/0b0t.jpg">
-
-                    </div>
-                    <p><strong>GIGAN Dimitri Pierre Henri</strong> <br/>
-                        <img src="images/Rank_Star.png"><img src="images/Rank_Star.png"><img src="images/Rank_Star.png"><img src="images/Rank_Star.png"><img src="images/Rank_Star.png"><img src="images/Rank_Star.png"> <br/>
-                        Date de naissance : le 04 Novembre 1996
-                    </p>
-                    <p>3 Allée des Zinnias Champ-Fleurie ~ 97490 Sainte Clotilde<br />
-                        0692 893674 <br />
-                        Dimitrigigan@gmail.com
-                    </p>
-                    <a href="https://www.facebook.com/dimitri.gigan" target="blank"><img
-                            src="https://ressources.blogdumoderateur.com/2017/10/facebook.jpg" width="100px"
-                            height="50px" /></a>
-                    <a href="https://twitter.com/Dimimajin" target="blank"><img
-                            src="https://lh3.googleusercontent.com/fXWKkS5OcyOPZimNU1_lCdOAESs-Hgy53TikRH7cofRLmc4W5HOZySqU6-S7_biQjYM"
-                            width="100px" height="50px" /></a>
-
-
-                </div>
-            </div>
-
+  <main id="top">
+    <section class="hero" aria-labelledby="nom">
+      <div class="hero__text">
+        <p class="status" data-slot="disponibilite" hidden></p>
+        <h1 id="nom" class="hero__name"><span data-slot="prenom"></span> <span data-slot="nom"></span></h1>
+        <p class="hero__title" data-slot="titre"></p>
+        <p class="hero__lede" data-slot="accroche"></p>
+        <div class="actions">
+          <a class="btn btn--primary" data-href="mailto">M'écrire</a>
+          <a class="btn" data-href="cv" download>Télécharger mon CV</a>
+          <a class="btn btn--ghost" data-href="linkedin" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+      </div>
 
-    </footer>
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
+      <div class="deck" id="certifications">
+        <h2 class="visually-hidden">Ma certification sur le logiciel ASSIA</h2>
+        <div class="hand" role="group" aria-label="Modules de ma certification sur le logiciel ASSIA 360"></div>
+        <div class="deck__caption" aria-live="polite">
+          <p class="deck__set"></p>
+          <p class="deck__pick"><strong></strong> <span></span></p>
+        </div>
+      </div>
+    </section>
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-        const selector = document.querySelector('.infophoto')
-selector.classList.add('magictime', 'vanishIn')
-    </script>
+    <section class="parcours" id="parcours" aria-labelledby="parcours-titre">
+      <div class="wrap">
+        <h2 id="parcours-titre" class="section-title">Parcours</h2>
+        <div class="parcours__grid">
+          <div>
+            <h3 class="sub">Expériences</h3>
+            <ol class="timeline" data-list="experiences"></ol>
+            <details class="early">
+              <summary>Premières expériences, 2011 – 2019</summary>
+              <ul class="early__list" data-list="premieres"></ul>
+            </details>
+          </div>
+          <div>
+            <h3 class="sub">Formation</h3>
+            <ol class="schools" data-list="formations"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="tide" aria-hidden="true"></div>
+
+    <section class="skills" id="competences" aria-labelledby="competences-titre">
+      <div class="wrap">
+        <h2 id="competences-titre" class="section-title">Compétences</h2>
+        <div class="skills__grid" data-list="competences"></div>
+        <div class="atouts">
+          <h3 class="sub">Ce que j'apporte à une équipe</h3>
+          <ul data-list="atouts"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-titre">
+      <div class="wrap">
+        <h2 id="contact-titre" class="section-title">Travaillons ensemble</h2>
+        <p class="contact__text">Un poste sur ASSIA, un projet de migration ou un besoin en support applicatif ? Écrivez-moi, je réponds rapidement.</p>
+        <a class="contact__mail" data-href="mailto" data-slot="email"></a>
+        <p class="contact__place" data-slot="ville"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© <span data-slot="annee"></span> Dimitri Gigan</p>
+      <a data-href="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </footer>
+
+  <noscript><p class="noscript">Activez JavaScript pour afficher le contenu, ou écrivez-moi à dimitrigigan@gmail.com.</p></noscript>
 </body>
-
 </html>
