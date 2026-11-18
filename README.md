@@ -36,6 +36,8 @@ Ouvre `index.html` dans ton navigateur (double-clic).
 2. Sur GitHub : Settings → Pages → Source « Deploy from a branch », branche `main`, dossier `/ (root)`.
 3. Le site est publié sur https://dimitrigigan.github.io/Portfolio-/
 
+Après une grosse modification de `style.css`, `main.js` ou `data.js`, augmente le numéro `?v=` dans `index.html` (par exemple `?v=4`) pour que les visiteurs reçoivent la nouvelle version.
+
 ## Structure
 
 ```
