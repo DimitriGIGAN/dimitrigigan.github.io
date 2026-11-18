@@ -22,7 +22,7 @@ window.PORTFOLIO = {
     disponible: true,
     disponibilite: "Ouvert à un nouveau poste, sur site, en hybride ou à distance",
     accroche:
-      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. Chez UMS Réunion, j'ai été pendant trois ans le référent interne du logiciel de gestion ASSIA : paramétrage, support aux utilisateurs, migration et fiabilisation des données avec Oracle Maestro et SQL."
+      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. Je suis certifié sur le logiciel de gestion ASSIA 360. Pendant trois ans chez UMS Réunion, je l'ai paramétré et j'ai accompagné ses utilisateurs, tout en migrant et en fiabilisant les données avec Oracle Maestro et SQL."
   },
 
   // La "main" de cartes en haut de page : les certifications ASSIA
@@ -65,12 +65,12 @@ window.PORTFOLIO = {
   experiences: [
     {
       entreprise: "UMS Réunion",
-      poste: "Technicien informatique polyvalent, référent interne du logiciel ASSIA",
+      poste: "Technicien informatique polyvalent",
       periode: "Juil. 2023 – sept. 2026",
       debut: 2023, // sert à l'ordre de la pioche
       lieu: "Saint-Denis",
       missions: [
-        "Référent interne du logiciel de gestion ASSIA (mutuelle et assurance santé) : paramétrage, maintenance et support",
+        "Paramétrage, maintenance et support du logiciel métier ASSIA (mutuelle et assurance santé)",
         "Paramétrage métier des contrats, prestations, droits et règles de gestion",
         "Projets de migration, reprise et bascule de données, avec contrôle et fiabilisation avant et après migration",
         "Requêtes SQL et rapports Oracle BI (Maestro) pour analyser les données et suivre l'activité",
