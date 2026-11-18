@@ -22,7 +22,7 @@ window.PORTFOLIO = {
     disponible: true,
     disponibilite: "Ouvert à un nouveau poste, sur site, en hybride ou à distance",
     accroche:
-      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. J'ai les certificats de formation ASSIA 360 et Paramétrage produit délivrés par l'éditeur du logiciel. Pendant trois ans chez UMS Réunion, j'ai paramétré ASSIA et accompagné ses utilisateurs, tout en migrant et en fiabilisant les données avec Oracle Maestro et SQL."
+      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. J'ai les certificats de formation ASSIA 360 et Paramétrage produit délivrés par l'éditeur du logiciel. Pendant trois ans chez UMS Réunion, j'ai participé à la bascule d'IZY Protect vers ASSIA PSA, paramétré plus de 500 garanties et créé plus de 70 % des extractions et requêtes de la mutuelle."
   },
 
   // La "main" de cartes en haut de page : tes certificats de formation
@@ -66,9 +66,13 @@ window.PORTFOLIO = {
       debut: 2023, // sert à l'ordre de la pioche
       lieu: "Saint-Denis",
       missions: [
+        "Bascule de données lors du changement de logiciel métier, d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation avant et après migration",
+        "Paramétrage de plus de 500 garanties",
+        "Mise en place des extranets et participation au basculement des flux",
+        "Mise en place de l'échange comptable avec génération des bordereaux",
+        "Création de plus de 70 % des extractions et requêtes de l'UMS",
         "Paramétrage, maintenance et support du logiciel métier ASSIA (mutuelle et assurance santé)",
         "Paramétrage métier des contrats, prestations, droits et règles de gestion",
-        "Projets de migration, reprise et bascule de données, avec contrôle et fiabilisation avant et après migration",
         "Requêtes SQL et rapports Oracle BI (Maestro) pour analyser les données et suivre l'activité",
         "Incidents applicatifs et de sécurité suivis dans JIRA : analyse, priorisation, résolution",
         "Scripts et outils pour automatiser des tâches et fiabiliser les processus IT",
@@ -77,11 +81,12 @@ window.PORTFOLIO = {
     },
     {
       entreprise: "Caisse des écoles",
-      poste: "Informaticien",
+      poste: "Technicien informatique",
       periode: "Nov. 2021 – oct. 2022",
       debut: 2021,
       lieu: "Saint-Denis",
       missions: [
+        "Participation au passage de l'ADSL à la fibre dans toutes les écoles primaires et maternelles de Saint-Denis",
         "Support informatique aux équipes",
         "Développement d'outils internes en Visual Basic et Python"
       ]
@@ -172,11 +177,11 @@ window.PORTFOLIO = {
   missions: [
     { titre: "Migrer les contrats d'une mutuelle vers un nouveau logiciel sans perdre une seule donnée",
       bonne: "migration", autres: ["support", "web"],
-      bravo: "C'est ce que j'ai fait chez UMS Réunion : préparation, contrôle et fiabilisation des données avant et après chaque bascule.",
+      bravo: "Chez UMS Réunion, j'ai participé à la bascule d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation des données avant et après migration.",
       indice: "Pense aux données : il faut les reprendre, les contrôler et les basculer." },
     { titre: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain",
       bonne: "cert-parametrage", autres: ["python", "reseau"],
-      bravo: "Le paramétrage métier dans ASSIA permet de configurer contrats, prestations et règles de gestion sans développement.",
+      bravo: "J'ai paramétré plus de 500 garanties dans ASSIA, avec le certificat Paramétrage produit de l'éditeur.",
       indice: "Ce n'est pas un problème technique : c'est une règle de gestion à configurer." },
     { titre: "Un service ne peut plus saisir de remboursements depuis ce matin",
       bonne: "support", autres: ["maestro", "vba"],
@@ -188,7 +193,7 @@ window.PORTFOLIO = {
       indice: "Il s'agit de transformer des données en rapport lisible." },
     { titre: "Des doublons d'adhérents faussent les statistiques",
       bonne: "sql", autres: ["jira", "web"],
-      bravo: "Des requêtes SQL pour repérer, analyser et corriger les anomalies dans les données métier.",
+      bravo: "J'ai créé plus de 70 % des extractions et requêtes de l'UMS : repérer et corriger ce genre d'anomalie, c'est mon terrain.",
       indice: "Il faut interroger la base de données pour trouver les doublons." },
     { titre: "Une tâche répétitive prend deux heures par jour à l'équipe",
       bonne: "automatisation", autres: ["incidents", "cert-jira"],
