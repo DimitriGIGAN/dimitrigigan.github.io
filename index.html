@@ -23,11 +23,22 @@
   <header class="topbar">
     <a class="monogram" href="#top" aria-label="Retour en haut">DG</a>
     <nav aria-label="Sections">
-      <a href="#certifications">Certifications</a>
       <a href="#parcours">Parcours</a>
       <a href="#competences">Compétences</a>
+      <a class="game-only" href="#missions">Missions</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="controls">
+      <a class="chip game-only" href="#collection" aria-label="Voir ma collection">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="11" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></svg>
+        <span data-count>0/0</span>
+      </a>
+      <button class="icon-btn game-only" type="button" data-act="sound" aria-pressed="false" aria-label="Activer le son">
+        <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="m17 9 5 6M22 9l-5 6"/></svg>
+        <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
+      <button class="mode-btn" type="button" data-act="mode" aria-pressed="false">Mode classique</button>
+    </div>
   </header>
 
   <main id="top">
@@ -42,6 +53,7 @@
           <a class="btn" data-href="cv" download>Télécharger mon CV</a>
           <a class="btn btn--ghost" data-href="linkedin" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+        <p class="hero__hint game-only">Ce portfolio se joue comme un jeu de cartes. Pressé ? <button type="button" class="linklike" data-act="mode">Passer en mode classique</button></p>
       </div>
 
       <div class="deck" id="certifications">
@@ -56,21 +68,38 @@
 
     <section class="parcours" id="parcours" aria-labelledby="parcours-titre">
       <div class="wrap">
-        <h2 id="parcours-titre" class="section-title">Parcours</h2>
-        <div class="parcours__grid">
+        <div class="section-head">
+          <h2 id="parcours-titre" class="section-title">Parcours</h2>
+          <p class="section-lede game-only">Pioche les cartes une par une pour découvrir mon parcours, du lycée à aujourd'hui.</p>
+        </div>
+
+        <div class="pioche game-only">
+          <div class="pioche__deck">
+            <button class="deckpile" type="button" data-act="draw">
+              <span class="deckpile__stack" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span class="deckpile__label">Piocher</span>
+              <span class="deckpile__count" data-left></span>
+            </button>
+            <button class="linklike" type="button" data-act="draw-all">Tout piocher</button>
+          </div>
+          <ol class="terrain" aria-label="Cartes du parcours piochées"></ol>
+        </div>
+        <div class="pioche__detail game-only" aria-live="polite"></div>
+
+        <div class="parcours__grid classic-only">
           <div>
             <h3 class="sub">Expériences</h3>
             <ol class="timeline" data-list="experiences"></ol>
-            <details class="early">
-              <summary>Premières expériences, 2011 – 2019</summary>
-              <ul class="early__list" data-list="premieres"></ul>
-            </details>
           </div>
           <div>
             <h3 class="sub">Formation</h3>
             <ol class="schools" data-list="formations"></ol>
           </div>
         </div>
+        <details class="early">
+          <summary>Premières expériences, 2011 – 2019</summary>
+          <ul class="early__list" data-list="premieres"></ul>
+        </details>
       </div>
     </section>
 
@@ -78,12 +107,86 @@
 
     <section class="skills" id="competences" aria-labelledby="competences-titre">
       <div class="wrap">
-        <h2 id="competences-titre" class="section-title">Compétences</h2>
-        <div class="skills__grid" data-list="competences"></div>
+        <div class="section-head">
+          <h2 id="competences-titre" class="section-title">Compétences</h2>
+          <p class="section-lede game-only">Ouvre un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
+        </div>
+
+        <div class="booster game-only">
+          <div class="booster__stage">
+            <button class="pack" type="button" data-act="open-pack" aria-label="Ouvrir le booster de compétences">
+              <span class="pack__strip" aria-hidden="true"></span>
+              <span class="pack__body" aria-hidden="true">
+                <span class="pack__brand">Booster</span>
+                <span class="pack__name">Compétences<br>SI santé</span>
+                <span class="pack__emblem">DG</span>
+                <span class="pack__count">5 cartes</span>
+              </span>
+            </button>
+            <div class="pull" role="group" aria-label="Cartes du booster"></div>
+          </div>
+          <div class="booster__bar">
+            <p class="booster__status" aria-live="polite">Clique sur le booster pour l'ouvrir.</p>
+            <div class="booster__actions">
+              <button class="btn btn--dark" type="button" data-act="reveal-all" hidden>Tout retourner</button>
+              <button class="btn btn--primary" type="button" data-act="new-pack" hidden>Ouvrir un autre booster</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills__grid classic-only" data-list="competences"></div>
         <div class="atouts">
           <h3 class="sub">Ce que j'apporte à une équipe</h3>
           <ul data-list="atouts"></ul>
         </div>
+      </div>
+    </section>
+
+    <section class="missions game-only" id="missions" aria-labelledby="missions-titre">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="missions-titre" class="section-title">Missions</h2>
+          <p class="section-lede">Vous êtes recruteur ? Tirez une mission et jouez la carte qui la résout.</p>
+        </div>
+        <div class="duel">
+          <article class="mission" aria-live="polite">
+            <p class="mission__count"></p>
+            <h3 class="mission__title"></h3>
+            <p class="mission__feedback"></p>
+          </article>
+          <div class="duel__side">
+            <p class="duel__prompt">Jouez une carte :</p>
+            <div class="duel__hand" role="group" aria-label="Cartes jouables"></div>
+            <div class="duel__actions">
+              <button class="btn btn--dark" type="button" data-act="next-mission" hidden>Mission suivante</button>
+              <button class="linklike" type="button" data-act="reset-missions" hidden>Rejouer les missions</button>
+            </div>
+          </div>
+        </div>
+        <p class="duel__score"></p>
+      </div>
+    </section>
+
+    <section class="collection game-only" id="collection" aria-labelledby="collection-titre">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="collection-titre" class="section-title">Collection</h2>
+          <p class="section-lede">Chaque carte découverte rejoint l'album. Complète-le pour débloquer la carte secrète.</p>
+        </div>
+        <div class="album__head">
+          <div class="progress" role="progressbar" aria-label="Collection" aria-valuemin="0">
+            <span class="progress__bar"></span>
+          </div>
+          <p class="album__count"></p>
+        </div>
+        <ul class="legend" aria-label="Types de cartes">
+          <li data-kind="cert">Certification</li>
+          <li data-kind="skill">Compétence</li>
+          <li data-kind="exp">Expérience</li>
+          <li data-kind="form">Formation</li>
+        </ul>
+        <ul class="album" aria-label="Album de cartes"></ul>
+        <button class="linklike album__reset" type="button" data-act="reset-all">Recommencer la collection</button>
       </div>
     </section>
 
@@ -103,6 +206,19 @@
       <a data-href="linkedin" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </footer>
+
+  <dialog class="viewer" aria-labelledby="viewer-title">
+    <button class="viewer__close" type="button" data-act="close-viewer" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="viewer__card"></div>
+    <div class="viewer__text">
+      <h2 id="viewer-title"></h2>
+      <div class="viewer__body"></div>
+    </div>
+  </dialog>
+
+  <div class="toasts" aria-live="polite"></div>
 
   <noscript><p class="noscript">Activez JavaScript pour afficher le contenu, ou écrivez-moi à dimitrigigan@gmail.com.</p></noscript>
 </body>
