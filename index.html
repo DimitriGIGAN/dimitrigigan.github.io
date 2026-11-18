@@ -8,9 +8,9 @@
 <meta name="theme-color" content="#11143a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dimitri Gigan, technicien informatique SI santé">
-<meta property="og:description" content="Bascule IZY Protect vers ASSIA PSA, plus de 500 garanties paramétrées, plus de 70 % des extractions et requêtes d'une mutuelle.">
+<meta property="og:description" content="Bascule IZY Protect vers ASSIA PSA, plus de 500 garanties paramétrées, plus de 100 requêtes et extractions réalisées pour une mutuelle.">
 <meta property="og:url" content="https://dimitrigigan.github.io/Portfolio-/">
-<meta property="og:image" content="https://dimitrigigan.github.io/Portfolio-/assets/apercu.png">
+<meta property="og:image" content="https://dimitrigigan.github.io/Portfolio-/assets/apercu.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="fr_FR">
@@ -312,7 +312,7 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 .competences li { padding: .35rem .8rem; border-radius: 999px; font-size: var(--t-1); background: rgb(180 185 227 / .1); border: 1px solid rgb(180 185 227 / .2); }
 
 /* =========================================================
-   Mini-jeu : Mission recruteur
+   Mini-jeu : Missions
    ========================================================= */
 .jeu { background: linear-gradient(180deg, transparent, rgb(27 31 82 / .7) 18%, rgb(27 31 82 / .7) 82%, transparent); }
 .plateau { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
@@ -607,10 +607,11 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
     </div>
   </section>
 
-  <section id="competences" aria-labelledby="t-comp">
+  <section id="competences" aria-label="Compétences">
     <div class="wrap">
       <div class="entete">
-        <h2 class="titre" id="t-comp"><span class="jeu-seul">Booster de c</span><span class="classique-seul">C</span>ompétences</h2>
+        <h2 class="titre jeu-seul" id="t-comp">Booster de compétences</h2>
+        <h2 class="titre classique-seul">Compétences</h2>
         <p class="chapeau jeu-seul">Ouvrez un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
       </div>
       <div class="competences classique-seul" data-zone="competences-liste"></div>
@@ -640,7 +641,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
   <section class="jeu jeu-seul" id="jeu" aria-labelledby="t-jeu">
     <div class="wrap">
       <div class="entete">
-        <h2 class="titre" id="t-jeu">Mission recruteur</h2>
+        <h2 class="titre" id="t-jeu">Missions</h2>
         <p class="chapeau">Une situation, trois cartes. Jouez celle qui résout le problème.</p>
       </div>
       <div class="plateau">
@@ -714,7 +715,7 @@ const CONTENU = {
     nom: "Dimitri Gigan",
     metier: "Technicien informatique SI santé",
     dispo: "Disponible",
-    pitch: "Je travaille sur les logiciels des mutuelles. Pendant trois ans chez UMS Réunion, j'ai participé à la <b>bascule d'IZY Protect vers ASSIA PSA</b>, paramétré <b>plus de 500 garanties</b> et créé <b>plus de 70 % des extractions et requêtes</b> de la mutuelle.",
+    pitch: "Je travaille sur les logiciels des mutuelles. Pendant trois ans chez UMS Réunion, j'ai participé à la <b>bascule d'IZY Protect vers ASSIA PSA</b>, paramétré <b>plus de 500 garanties</b> et réalisé <b>plus de 100 requêtes et extractions</b> pour la mutuelle.",
     email: "dimitrigigan@gmail.com",
     ville: "Saint-Denis, La Réunion",
     cv: "assets/CV-Dimitri-Gigan.pdf",
@@ -728,7 +729,7 @@ const CONTENU = {
     etoiles: 8,
     rarete: "secrete",
     effet: "Paramètre, migre et fiabilise les données des mutuelles. Les utilisateurs ne restent jamais bloqués.",
-    stats: [["Garanties", "500+"], ["Requêtes", "70 %"]],
+    stats: [["Garanties", "500+"], ["Requêtes", "100+"]],
     pied: ["Technicien SI santé", "974"]
   },
 
@@ -760,7 +761,7 @@ const CONTENU = {
   realisations: [
     { valeur: "IZY → PSA", rarete: "ultra", titre: "Bascule de logiciel métier", texte: "Changement d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation des données avant et après migration." },
     { valeur: "500+", rarete: "ultra", titre: "Garanties paramétrées", texte: "Plus de 500 garanties configurées dans ASSIA." },
-    { valeur: "70 %", rarete: "ultra", titre: "Des extractions et requêtes", texte: "Créées pour la mutuelle, pour le suivi et le contrôle des données." },
+    { valeur: "100+", rarete: "ultra", titre: "Requêtes et extractions", texte: "Réalisées pour la mutuelle, pour le suivi et le contrôle des données." },
     { valeur: "Compta", rarete: "super", titre: "Échange comptable", texte: "Mise en place de l'échange avec la comptabilité et génération des bordereaux." },
     { valeur: "Flux", rarete: "super", titre: "Bascule des flux", texte: "Participation au basculement des flux lors du changement de logiciel." },
     { valeur: "Web", rarete: "super", titre: "Extranets", texte: "Mise en place des extranets de la mutuelle." },
@@ -771,7 +772,7 @@ const CONTENU = {
   parcours: [
     { id: "p-lycee", annee: "2012", fin: "2015", type: "Formation", rarete: "commune", nom: "Lycée Julien de Rontaunay", role: "Bac pro Gestion administration (BEP MSA en 2014)", points: [] },
     { id: "p-dpeg", annee: "2016", fin: "2017", type: "Expérience", rarete: "commune", nom: "DPEG", role: "Service civique : appui informatique et administratif", points: [] },
-    { id: "p-simplon", annee: "2020", fin: "2021", type: "Formation", rarete: "rare", nom: "Simplon.co", role: "Titre professionnel Développeur web et webmaster", points: [] },
+    { id: "p-simplon", annee: "2020", fin: "2021", type: "Formation", rarete: "rare", nom: "Simplon.co", role: "Titre professionnel Web / multimédia, management et webmaster (niveau 3)", points: [] },
     { id: "p-caisse", annee: "2021", fin: "2022", type: "Expérience", rarete: "super", nom: "Caisse des écoles", role: "Technicien informatique",
       points: [
         "Passage de l'ADSL à la fibre dans les écoles primaires et maternelles de Saint-Denis",
@@ -782,7 +783,7 @@ const CONTENU = {
       points: [
         "Bascule d'IZY Protect vers ASSIA PSA : reprise, contrôle et fiabilisation des données",
         "Plus de 500 garanties paramétrées, extranets, bascule des flux, échange comptable",
-        "Plus de 70 % des extractions et requêtes de la mutuelle",
+        "Plus de 100 requêtes et extractions réalisées pour la mutuelle",
         "Paramétrage, maintenance et support du logiciel métier ASSIA",
         "Rapports Oracle BI (Maestro), incidents suivis dans JIRA",
         "Support aux utilisateurs, scripts d'automatisation, sécurité informatique"
@@ -824,7 +825,7 @@ const CONTENU = {
     { texte: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain.", bonne: "cert-parametrage", autres: ["reseau", "auto"],
       bravo: "J'ai paramétré plus de 500 garanties dans ASSIA.", indice: "Ce n'est pas du développement : c'est une garantie à configurer." },
     { texte: "Des doublons d'adhérents faussent les statistiques de la mutuelle.", bonne: "sql", autres: ["support", "web"],
-      bravo: "J'ai créé plus de 70 % des extractions et requêtes de l'UMS.", indice: "Il faut interroger la base de données." },
+      bravo: "J'ai réalisé plus de 100 requêtes et extractions pour l'UMS.", indice: "Il faut interroger la base de données." },
     { texte: "Un service ne peut plus saisir de remboursements depuis ce matin.", bonne: "support", autres: ["bi", "web"],
       bravo: "Diagnostic, résolution et accompagnement des utilisateurs : mon quotidien, avec un suivi dans JIRA.", indice: "Des utilisateurs sont bloqués : il faut les débloquer." },
     { texte: "Les écoles de la ville ont une connexion trop lente pour travailler.", bonne: "reseau", autres: ["sql", "cert-parametrage"],
@@ -833,8 +834,8 @@ const CONTENU = {
 
   // La carte secrète, débloquée quand la collection est complète
   carteSecrete: {
-    nom: "Me recruter",
-    effet: "Quand cette carte est jouée, un technicien SI santé rejoint votre équipe.",
+    nom: "Me contacter",
+    effet: "Quand cette carte est jouée, un technicien SI santé rejoint votre projet.",
     message: "Bravo, vous avez complété toute la collection ! Merci d'avoir joué jusqu'au bout. Parlons de votre projet."
   }
 };
@@ -1107,7 +1108,7 @@ const CONTENU = {
   $('[data-zone="competences-liste"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
   $('[data-zone="competences"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
 
-  /* ---------- 4. Mission recruteur ---------- */
+  /* ---------- 4. Missions ---------- */
   const M = C.missions;
   const num = $(".mission__num"), texte = $(".mission__texte"), retour = $(".mission__retour");
   const choix = $(".choix"), score = $(".score"), suivante = $('[data-action="suivante"]');

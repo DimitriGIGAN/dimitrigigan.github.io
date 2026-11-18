@@ -34,7 +34,7 @@ Le CV se remplace en déposant le nouveau PDF dans `assets/` sous le nom `CV-Dim
 index.html                  le site complet (styles, contenu, code)
 assets/CV-Dimitri-Gigan.pdf le CV
 assets/certificats/         les certificats en PDF
-assets/apercu.png           l'image affichée quand on partage le lien
+assets/apercu.jpg           l'image affichée quand on partage le lien
 assets/favicon.svg          l'icône de l'onglet
 assets/fonts/               les polices Orbitron et Archivo (licence libre SIL OFL)
 ```
