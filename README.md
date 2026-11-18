@@ -33,6 +33,7 @@ assets/CV-Dimitri-Gigan.pdf le CV
 assets/certificats/         les certificats en PDF
 assets/apercu.png           l'image affichée quand on partage le lien
 assets/favicon.svg          l'icône de l'onglet
+assets/fonts/               les polices Orbitron et Archivo (licence libre SIL OFL)
 ```
 
 Les anciennes versions restent dans l'historique Git (et la toute première dans la branche `v1`).
