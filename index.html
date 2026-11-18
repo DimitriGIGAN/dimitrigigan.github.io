@@ -14,8 +14,32 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://dimitrigigan.github.io/">
+<link rel="alternate" hreflang="fr" href="https://dimitrigigan.github.io/">
+<link rel="alternate" hreflang="en" href="https://dimitrigigan.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://dimitrigigan.github.io/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dimitri Gigan",
+  "url": "https://dimitrigigan.github.io/",
+  "image": "https://dimitrigigan.github.io/assets/apercu.jpg",
+  "jobTitle": "Technicien informatique SI santé",
+  "description": "Technicien informatique spécialisé dans les logiciels de mutuelle : ASSIA, migration de données, paramétrage, SQL et support applicatif.",
+  "address": { "@type": "PostalAddress", "addressLocality": "Saint-Denis", "addressRegion": "La Réunion", "addressCountry": "FR" },
+  "knowsAbout": ["ASSIA 360", "ASSIA PSA", "Paramétrage produit", "Migration de données", "Oracle SQL", "Oracle BI", "JIRA", "Support applicatif", "Systèmes d'information de mutuelle"],
+  "hasCredential": [
+    { "@type": "EducationalOccupationalCredential", "name": "Formation ASSIA 360°", "credentialCategory": "Certificat de formation", "recognizedBy": { "@type": "Organization", "name": "Cimut (Assia)" } },
+    { "@type": "EducationalOccupationalCredential", "name": "Paramétrage produit (ASSIA)", "credentialCategory": "Certificat de formation", "recognizedBy": { "@type": "Organization", "name": "Cimut (Assia)" } },
+    { "@type": "EducationalOccupationalCredential", "name": "JIRA", "credentialCategory": "Certificat de formation", "recognizedBy": { "@type": "Organization", "name": "Cimut (Assia)" } }
+  ],
+  "sameAs": ["https://www.linkedin.com/in/dimitri-gigan", "https://github.com/DimitriGIGAN"]
+}
+</script>
 <link rel="preload" href="assets/fonts/orbitron-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -89,7 +113,8 @@ a { color: inherit; text-underline-offset: .2em; }
   border-bottom: 1px solid rgb(180 185 227 / .12);
 }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; }
-.mono {
+.mono { flex: none;
+
   display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 8px;
   font-family: var(--titres); font-weight: 900; font-size: .85rem; text-decoration: none;
   background: var(--ultra); color: #3b2306;
@@ -102,7 +127,6 @@ a { color: inherit; text-underline-offset: .2em; }
   border: 1.5px solid #6ea2ff; box-shadow: inset 0 1px 0 rgb(255 255 255 / .35);
 }
 .top nav a:hover { background: linear-gradient(180deg, #3b6ff0, #1a3596); }
-@media (max-width: 640px) { .top nav a:not(:last-child) { display: none; } }
 
 /* ---------- Boutons ---------- */
 .btns { display: flex; flex-wrap: wrap; gap: .7rem; }
@@ -190,6 +214,25 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 @media (prefers-reduced-motion: reduce) {
   .carte__in { transition: none; }
 }
+/* Effet holographique : la carte s'incline et brille sous le doigt ou la souris */
+.face { transition: transform .35s ease, box-shadow .2s; }
+.carte.incline .face { transition: transform .08s linear, box-shadow .2s; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.carte.incline .face--dos { transform: rotateY(180deg) rotateX(calc(var(--rx, 0deg) * -1)) rotateY(calc(var(--ry, 0deg) * -1)); }
+.face::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / .55), transparent 48%);
+  mix-blend-mode: soft-light;
+}
+.carte:is([data-rarete="super"], [data-rarete="ultra"], [data-rarete="secrete"]) .face::after {
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / .6), transparent 45%),
+    linear-gradient(115deg, transparent 18%, rgb(255 90 200 / .45) 34%, rgb(80 255 220 / .45) 48%, rgb(255 230 90 / .45) 62%, transparent 80%) var(--px, 50%) 0 / 260% 100%;
+  mix-blend-mode: color-dodge;
+}
+.carte.incline .face::after { opacity: .75; }
+.carte.eclat .face::after { animation: eclat .7s ease-out; }
+@keyframes eclat { 0% { opacity: .9; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .carte.eclat .face::after { animation: none; } }
 
 /* =========================================================
    Haut de page : la carte joueur
@@ -339,6 +382,52 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
   .choix { --w-carte: min(176px, calc((100vw - 2 * var(--pad) - .75rem) / 2)); flex-wrap: wrap; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) { .choix .carte.est-fausse { animation: none; } }
+/* Duel : le problème est un adversaire avec des points de vie */
+.mission__tete { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; flex-wrap: wrap; }
+.mission__nom { font-family: var(--titres); font-weight: 900; font-size: var(--t1); color: #7a1f1f; line-height: 1.15; }
+.pv { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .6rem; font-size: var(--t-1); font-weight: 800; color: #6a5a2e; }
+.pv__barre { height: .7rem; border-radius: 999px; background: #d8cfb5; overflow: hidden; }
+.pv__barre span { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #e2452b, #f2bf4a); transition: width .6s cubic-bezier(.2, .8, .2, 1); }
+.mission.touche { animation: touche .5s ease; }
+@keyframes touche { 15% { transform: translateX(-8px) rotate(-1deg); filter: brightness(1.6); } 40% { transform: translateX(8px) rotate(1deg); } 70% { transform: translateX(-4px); } }
+.mission.vaincu .mission__nom { text-decoration: line-through; text-decoration-thickness: 3px; color: #8a8270; }
+.plateau.riposte { animation: riposte .45s ease; }
+@keyframes riposte { 30% { transform: translateY(6px); } }
+.coeurs { color: var(--doux); font-weight: 700; }
+.coeurs b { color: #ff6b8a; letter-spacing: .1em; font-size: 1.1em; }
+.coeurs i { font-style: normal; color: rgb(180 185 227 / .35); letter-spacing: .1em; font-size: 1.1em; }
+.rang { font-family: var(--titres); font-weight: 900; color: #9a5410; }
+@media (prefers-reduced-motion: reduce) { .mission.touche, .plateau.riposte { animation: none; } .pv__barre span { transition: none; } }
+
+/* Trophées */
+.trophees { margin-top: 2.2rem; }
+.trophees h3 { font-family: var(--titres); font-size: var(--t1); font-weight: 800; margin-bottom: 1rem; }
+.trophees ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: .7rem; }
+.trophee { display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: center; padding: .75rem .9rem; border-radius: 10px; background: rgb(27 31 82 / .6); border: 1px solid rgb(180 185 227 / .16); }
+.trophee__ico { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; background: rgb(180 185 227 / .12); color: rgb(180 185 227 / .45); }
+.trophee__ico svg { width: 1.35rem; height: 1.35rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.trophee b { display: block; font-size: var(--t-1); line-height: 1.25; }
+.trophee span { display: block; font-size: .8rem; color: var(--doux); line-height: 1.3; }
+.trophee.gagne { border-color: rgb(242 191 74 / .55); background: linear-gradient(160deg, rgb(242 191 74 / .14), rgb(27 31 82 / .6)); }
+.trophee.gagne .trophee__ico { background: var(--ultra); color: #3b2306; box-shadow: 0 0 14px rgb(242 191 74 / .45); }
+.trophee:not(.gagne) b { color: var(--doux); }
+.collec__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: 1.4rem; }
+.collec__actions .collec__reset { margin-top: 0; }
+
+/* Rangées qui défilent : flèches et bords estompés */
+.defile { position: relative; min-width: 0; }
+.scene > .defile { width: 100%; }
+.fleche {
+  position: absolute; top: calc(50% - 1.3rem); z-index: 2; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; color: #2b1a02; font-size: 1.4rem; font-weight: 900; line-height: 1;
+  background: var(--ultra); border: 2px solid #fff1c2; box-shadow: 0 8px 18px -8px #000;
+}
+.fleche--g { left: .2rem; } .fleche--d { right: .2rem; }
+.fleche svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.defile.vers-d > :first-child { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 3rem), transparent); }
+.defile.vers-g > :first-child { -webkit-mask-image: linear-gradient(90deg, transparent, #000 3rem); mask-image: linear-gradient(90deg, transparent, #000 3rem); }
+.defile.vers-g.vers-d > :first-child { -webkit-mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }
 
 /* =========================================================
    Contact
@@ -365,7 +454,23 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .son[aria-pressed="true"] .on { display: block; }
 .compteur.pulse { animation: pulse .6s ease; }
 @keyframes pulse { 40% { transform: scale(1.15); } }
-@media (max-width: 860px) { .top nav { display: none; } }
+.menu, .langue {
+  display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 2.2rem; min-width: 2.2rem; padding: .25rem .55rem; border-radius: 6px; cursor: pointer;
+  font-family: var(--titres); font-weight: 800; font-size: .74rem; color: #fff; text-decoration: none;
+  background: linear-gradient(180deg, #2a55c9, #13297a); border: 1.5px solid #6ea2ff;
+}
+.menu { display: none; }
+.menu svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+@media (max-width: 1100px) {
+  .top .wrap { position: relative; }
+  .menu { display: inline-flex; }
+  .top nav {
+    display: none; position: absolute; top: 100%; left: calc(-1 * var(--pad)); right: calc(-1 * var(--pad)); flex-direction: column; gap: .5rem;
+    padding: .9rem var(--pad) 1.1rem; background: rgb(17 20 58 / .98); border-bottom: 1px solid rgb(180 185 227 / .2); box-shadow: 0 20px 30px -20px #000;
+  }
+  .top nav.ouvert { display: flex; }
+  .top nav a { padding: .7rem 1rem; font-size: var(--t0); }
+}
 
 /* Carte face cachée : le dos DG d'abord, la carte au verso */
 .verso-dg {
@@ -397,7 +502,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .paquet__txt b { font-family: var(--titres); font-size: 1rem; }
 .paquet__txt span { font-size: var(--t-1); color: var(--doux); }
 .paquet .lien { background: none; border: 0; color: var(--doux); font-size: var(--t-1); text-decoration: underline; cursor: pointer; }
-.terrain { display: flex; gap: .8rem; overflow-x: auto; padding: .3rem .2rem 1rem; scrollbar-width: thin; }
+.terrain { display: flex; gap: .8rem; overflow-x: auto; padding: .3rem .2rem 1rem; scrollbar-width: thin; scroll-snap-type: x proximity; }
+.case { scroll-snap-align: start; }
 .case { flex: none; width: var(--w-carte); aspect-ratio: 5 / 7; border-radius: var(--r); border: 2px dashed rgb(180 185 227 / .3); display: grid; place-items: center; font-family: var(--titres); font-weight: 800; color: rgb(180 185 227 / .45); }
 .case.pleine { border: 0; display: block; }
 .case .carte { width: 100%; font-family: "Archivo", system-ui, sans-serif; font-weight: 400; }
@@ -551,6 +657,10 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
   .case .carte.pioche-anim, .tirage .carte, .pack.dechire, .compteur.pulse, .notif { animation: none; }
   .pack__haut, .barre span { transition: none; }
 }
+/* En-tête compact sur petit écran (après les styles de .mode) */
+.mode { white-space: nowrap; } .mode__c { display: none; }
+@media (max-width: 480px) { .controles { gap: .3rem; } .mode { padding-inline: .6rem; } .mode__l { display: none; } .mode__c { display: inline; } .compteur { padding-inline: .5rem; } }
+@media (max-width: 360px) { .top .wrap { gap: .4rem; } .compteur svg { display: none; } .controles { gap: .25rem; } .langue, .menu, .son { min-width: 2rem; padding-inline: .4rem; } .mode { padding-inline: .45rem; font-size: .74rem; } .mono { width: 2rem; height: 2rem; } }
 </style>
 </head>
 <body class="classique">
@@ -559,7 +669,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
 <header class="top">
   <div class="wrap">
     <a class="mono" href="#haut" aria-label="Retour en haut">DG</a>
-    <nav aria-label="Sections">
+    <nav id="menu-sections" aria-label="Sections">
       <a href="#main-cartes">Certificats</a>
       <a href="#bascule">Bascule</a>
       <a href="#parcours">Parcours</a>
@@ -578,6 +688,8 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>
       </button>
       <button class="mode" type="button" data-action="mode">Mode jeu</button>
+      <a class="langue" href="en/" hreflang="en" lang="en" aria-label="English version">EN</a>
+      <button class="menu" type="button" data-action="menu" aria-expanded="false" aria-controls="menu-sections" aria-label="Ouvrir le menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
 </header>
@@ -734,11 +846,12 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-jeu">Missions</h2>
-        <p class="chapeau">Une situation, trois cartes. Jouez celle qui résout le problème.</p>
+        <p class="chapeau">Un problème vous défie en duel. Jouez la carte qui le bat. Une erreur, et il vous coûte un cœur.</p>
       </div>
       <div class="plateau">
         <div class="mission" aria-live="polite">
-          <p class="mission__num"></p>
+          <div class="mission__tete"><p class="mission__nom"></p><p class="mission__num"></p></div>
+          <div class="pv" aria-hidden="true"><span>PV</span><span class="pv__barre"><span></span></span><span class="pv__val">100</span></div>
           <p class="mission__texte"></p>
           <p class="mission__retour"></p>
         </div>
@@ -746,6 +859,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       </div>
       <div class="jeu__bas">
         <p class="score"></p>
+        <p class="coeurs"></p>
         <button class="btn btn--or" type="button" data-action="suivante" hidden>Mission suivante</button>
       </div>
     </div>
@@ -760,7 +874,14 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <div class="barre" role="progressbar" aria-label="Progression de la collection" aria-valuemin="0"><span></span></div>
       <div class="collec__info"><p class="collec__compte"></p><p>Cartes à trouver : certificats, parcours et booster</p></div>
       <ul class="album" aria-label="Album de cartes"></ul>
-      <button class="collec__reset" type="button" data-action="reset">Recommencer la collection</button>
+      <div class="trophees">
+        <h3>Trophées <span class="trophees__compte" style="color:var(--or)"></span></h3>
+        <ul aria-label="Trophées"></ul>
+      </div>
+      <div class="collec__actions">
+        <button class="btn btn--or" type="button" data-action="partager">Partager mon score</button>
+        <button class="collec__reset" type="button" data-action="reset">Recommencer la collection</button>
+      </div>
     </div>
   </section>
 
@@ -940,21 +1061,33 @@ const CONTENU = {
     { id: "reseau", nom: "Réseau et fibre", icone: "reseau", etoiles: 6, rarete: "rare", effet: "Du câble au poste de travail, remet la connexion en état." }
   ],
 
-  // Mini-jeu : bonne et autres = id de cartes compétences ou de certificats
+  // Mini-jeu (duel) : adversaire = nom du problème ; bonne et autres = id de cartes compétences ou de certificats
   missions: [
-    { texte: "La mutuelle change de logiciel métier : il faut reprendre toutes les données sans en perdre une seule.", bonne: "migration", autres: ["support", "web"],
+    { adversaire: "Le Grand Changement", texte: "La mutuelle change de logiciel métier : il faut reprendre toutes les données sans en perdre une seule.", bonne: "migration", autres: ["support", "web"],
       bravo: "C'est ce que j'ai fait chez UMS Réunion, lors de la bascule d'IZY Protect vers ASSIA PSA.", indice: "Il s'agit de reprendre, contrôler et basculer des données." },
-    { texte: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain.", bonne: "cert-parametrage", autres: ["reseau", "auto"],
+    { adversaire: "La Garantie Fantôme", texte: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain.", bonne: "cert-parametrage", autres: ["reseau", "auto"],
       bravo: "J'ai paramétré plus de 500 garanties dans ASSIA.", indice: "Ce n'est pas du développement : c'est une garantie à configurer." },
-    { texte: "Des doublons d'adhérents faussent les statistiques de la mutuelle.", bonne: "sql", autres: ["support", "web"],
+    { adversaire: "Les Doublons Jumeaux", texte: "Des doublons d'adhérents faussent les statistiques de la mutuelle.", bonne: "sql", autres: ["support", "web"],
       bravo: "J'ai réalisé plus de 100 requêtes et extractions pour l'UMS.", indice: "Il faut interroger la base de données." },
-    { texte: "Un service ne peut plus saisir de remboursements depuis ce matin.", bonne: "support", autres: ["bi", "web"],
+    { adversaire: "Le Blocage du Matin", texte: "Un service ne peut plus saisir de remboursements depuis ce matin.", bonne: "support", autres: ["bi", "web"],
       bravo: "Diagnostic, résolution et accompagnement des utilisateurs : mon quotidien, avec un suivi dans JIRA.", indice: "Des utilisateurs sont bloqués : il faut les débloquer." },
-    { texte: "Les écoles de la ville ont une connexion trop lente pour travailler.", bonne: "reseau", autres: ["sql", "cert-parametrage"],
+    { adversaire: "La Connexion Escargot", texte: "Les écoles de la ville ont une connexion trop lente pour travailler.", bonne: "reseau", autres: ["sql", "cert-parametrage"],
       bravo: "J'ai participé au passage de l'ADSL à la fibre dans toutes les écoles primaires et maternelles de Saint-Denis.", indice: "C'est une question d'infrastructure réseau." }
   ],
 
   // La carte secrète, débloquée quand la collection est complète
+  // Trophées (icone : etoile, cartes, chemin, eclair, paquet, epees, couronne, trophee)
+  trophees: [
+    { id: "premiere", nom: "Première carte", texte: "Trouver une première carte.", icone: "etoile" },
+    { id: "main", nom: "Main complète", texte: "Retourner les trois certificats.", icone: "cartes" },
+    { id: "parcours", nom: "Toute l'histoire", texte: "Piocher tout le parcours.", icone: "chemin" },
+    { id: "ultra", nom: "Coup de chance", texte: "Trouver une carte ultra rare dans un booster.", icone: "eclair" },
+    { id: "boosters", nom: "Collectionneur", texte: "Ouvrir trois boosters.", icone: "paquet" },
+    { id: "duel", nom: "Duelliste", texte: "Gagner les cinq duels.", icone: "epees" },
+    { id: "sansfaute", nom: "Sans faute", texte: "Gagner les cinq duels sans perdre un cœur.", icone: "couronne" },
+    { id: "complet", nom: "Album complet", texte: "Trouver toutes les cartes et voir la carte secrète.", icone: "trophee" }
+  ],
+
   carteSecrete: {
     nom: "Me contacter",
     effet: "Quand cette carte est jouée, un technicien SI santé rejoint votre projet.",
@@ -983,7 +1116,8 @@ const CONTENU = {
   try { S = JSON.parse(localStorage.getItem(CLE)) || {}; } catch { S = {}; }
   S.trouvees = new Set(S.trouvees || []);
   S.boosters = S.boosters || 0;
-  const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify({ ...S, trouvees: [...S.trouvees] })); } catch { /* le jeu marche quand même */ } };
+  S.trophees = new Set(S.trophees || []);
+  const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify({ ...S, trouvees: [...S.trouvees], trophees: [...S.trophees] })); } catch { /* le jeu marche quand même */ } };
 
   /* ---------- Sons générés (coupés par défaut) ---------- */
   const Son = (() => {
@@ -1034,7 +1168,15 @@ const CONTENU = {
     code: '<path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
     valide: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9"/>',
     alerte: '<path d="M12 3 2 21h20Z"/><path d="M12 10v5M12 18v.4"/>',
-    ecran: '<rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'
+    ecran: '<rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+    etoile: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/>',
+    cartes: '<rect x="3" y="6" width="10" height="14" rx="1.5" transform="rotate(-8 8 13)"/><rect x="11" y="4" width="10" height="14" rx="1.5" transform="rotate(8 16 11)"/>',
+    chemin: '<circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h7a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h7"/>',
+    eclair: '<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>',
+    paquet: '<path d="M6 3h12l1 4H5Z"/><rect x="5" y="7" width="14" height="14" rx="1.5"/><path d="M9 12h6"/>',
+    epees: '<path d="m4 4 9 9M4 4v4M4 4h4M20 4l-9 9M20 4v4M20 4h-4"/><path d="m8 15-3 3 1.5 1.5 3-3M16 15l3 3-1.5 1.5-3-3"/>',
+    couronne: '<path d="m3 8 4.5 4L12 5l4.5 7L21 8l-2 11H5Z"/>',
+    trophee: '<path d="M8 4h8v5a4 4 0 0 1-8 0Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9.5 17h5"/>'
   };
   const etoiles = n => "★".repeat(Math.max(0, Math.min(10, n || 0)));
   const artIcone = nom => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[nom] || ICONES.engrenage}</svg>`;
@@ -1086,6 +1228,7 @@ const CONTENU = {
     S.trouvees.add(cid); sauver();
     compteur(true); album();
     notifier(`Nouvelle carte : <b>${esc(parId[cid].nom)}</b> (${S.trouvees.size}/${TOTAL})`);
+    verifier();
     if (S.trouvees.size === TOTAL) setTimeout(() => {
       Son.jouer("deblocage");
       notifier("Collection complète ! <b>La carte secrète est débloquée.</b>", "La voir", () => voir("secret"));
@@ -1202,7 +1345,7 @@ const CONTENU = {
     if (ouverture) return; ouverture = true;
     Son.jouer("dechire"); pack.classList.add("dechire");
     await attendre(600);
-    pack.hidden = true; S.boosters++; sauver();
+    pack.hidden = true; S.boosters++; sauver(); verifier();
     tirage.innerHTML = choisir().map((c, i) => `<button class="carte" type="button" data-rarete="${c.rarete}" data-id="${c.id}" aria-pressed="false" style="--i:${i}" aria-label="Carte face cachée ${i + 1} sur 5. Retourner.">
       <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(parId[c.id])}</span></span></button>`).join("");
     tirage.hidden = false;
@@ -1239,22 +1382,34 @@ const CONTENU = {
   $('[data-zone="competences-liste"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
   $('[data-zone="competences"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
 
-  /* ---------- 4. Missions ---------- */
-  const M = C.missions;
+  /* ---------- 4. Missions en duel ---------- */
+  const M = C.missions, VIES = 3;
+  const mission = $(".mission"), plateau = $(".plateau"), nomAdv = $(".mission__nom");
   const num = $(".mission__num"), texte = $(".mission__texte"), retour = $(".mission__retour");
-  const choix = $(".choix"), score = $(".score"), suivante = $('[data-action="suivante"]');
-  let n = 0, reussies = 0, enCours = true;
-  const afficherScore = () => { score.textContent = `Missions réussies : ${reussies}/${M.length}`; };
+  const pvBarre = $(".pv__barre span"), pvVal = $(".pv__val"), pv = $(".pv");
+  const choix = $(".choix"), score = $(".score"), coeurs = $(".coeurs"), suivante = $('[data-action="suivante"]');
+  let n = 0, reussies = 0, erreurs = 0, enCours = true;
+  const afficherScore = () => {
+    score.textContent = `Duels gagnés : ${reussies}/${M.length}`;
+    const v = Math.max(0, VIES - erreurs);
+    coeurs.innerHTML = `Cœurs <b aria-hidden="true">${"♥".repeat(v)}</b><i aria-hidden="true">${"♥".repeat(VIES - v)}</i><span class="sr">${v} sur ${VIES}</span>`;
+  };
+  const rangDe = e => e === 0 ? "Duelliste légendaire" : e <= 2 ? "Duelliste confirmé" : "Apprenti duelliste";
+  function setPv(v) { pvBarre.style.width = v + "%"; pvVal.textContent = v; }
   function charger(i) {
+    mission.classList.remove("vaincu", "touche");
     if (i >= M.length) {
-      num.textContent = "Partie terminée";
-      texte.textContent = reussies === M.length ? "Toutes les missions réussies. On en parle ?" : "Partie terminée. On en parle ?";
+      num.textContent = "Fin du tournoi"; nomAdv.innerHTML = `<span class="rang">${rangDe(erreurs)}</span>`; pv.hidden = true;
+      texte.textContent = erreurs === 0 ? "Cinq duels, zéro erreur. On travaille ensemble ?" : `Cinq duels gagnés, ${erreurs} erreur${erreurs > 1 ? "s" : ""}. On en parle ?`;
       retour.innerHTML = `Écrivez-moi : <a href="mailto:${esc(id.email)}">${esc(id.email)}</a>`;
-      choix.replaceChildren(); suivante.textContent = "Rejouer"; suivante.hidden = false; enCours = false; return;
+      choix.replaceChildren(); suivante.textContent = "Rejouer"; suivante.hidden = false; enCours = false;
+      gagner("duel"); if (erreurs === 0) gagner("sansfaute");
+      return;
     }
-    enCours = true;
+    enCours = true; pv.hidden = false; setPv(100);
     const m = M[i];
-    num.textContent = `Mission ${i + 1} sur ${M.length}`;
+    num.textContent = `Duel ${i + 1} sur ${M.length}`;
+    nomAdv.textContent = m.adversaire || "Problème";
     texte.textContent = m.texte; retour.textContent = ""; delete retour.dataset.etat; suivante.hidden = true;
     choix.innerHTML = melange([m.bonne, ...m.autres]).filter(k => parId[k]).map(k => {
       const c = parId[k];
@@ -1262,25 +1417,28 @@ const CONTENU = {
         <span class="carte__in"><span class="face">${papier(c, { type: c.type, art: c.art, pied: [RARETE[c.rarete], "Jouer"] })}</span></span></button>`;
     }).join("");
   }
+  const rejouer = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
   choix.addEventListener("click", e => {
     const b = e.target.closest(".carte");
     if (!b || b.disabled || !enCours) return;
     const m = M[n];
     if (b.dataset.carte === m.bonne) {
       b.classList.add("est-bonne"); $$(".carte", choix).forEach(x => { x.disabled = true; });
-      retour.innerHTML = `<b>Mission réussie.</b> ${esc(m.bravo)}`; retour.dataset.etat = "ok";
+      if (!calme) rejouer(mission, "touche");
+      setPv(0); setTimeout(() => mission.classList.add("vaincu"), calme ? 0 : 450);
+      retour.innerHTML = `<b>Duel gagné !</b> ${esc(m.bravo)}`; retour.dataset.etat = "ok";
       reussies++; afficherScore(); Son.jouer("bravo"); decouvrir(m.bonne);
-      suivante.textContent = n + 1 < M.length ? "Mission suivante" : "Voir le résultat"; suivante.hidden = false; suivante.focus({ preventScroll: true });
+      suivante.textContent = n + 1 < M.length ? "Duel suivant" : "Voir le résultat"; suivante.hidden = false; suivante.focus({ preventScroll: true });
     } else {
       b.classList.add("est-fausse"); b.disabled = true; Son.jouer("rate");
-      retour.innerHTML = `<b>Pas cette carte.</b> Indice : ${esc(m.indice)}`; retour.dataset.etat = "rate";
+      erreurs++; afficherScore(); if (!calme) rejouer(plateau, "riposte");
+      retour.innerHTML = `<b>Riposte ! Vous perdez un cœur.</b> Indice : ${esc(m.indice)}`; retour.dataset.etat = "rate";
     }
   });
   suivante.addEventListener("click", () => {
-    if (!enCours) { n = 0; reussies = 0; afficherScore(); charger(0); return; }
+    if (!enCours) { n = 0; reussies = 0; erreurs = 0; afficherScore(); charger(0); return; }
     n++; charger(n); $(".carte", choix)?.focus({ preventScroll: true });
   });
-  afficherScore(); charger(0);
 
   /* ---------- 5. Collection ---------- */
   const zoneAlbum = $(".album");
@@ -1305,6 +1463,93 @@ const CONTENU = {
     notifier(`Cette carte se trouve dans <b>${x.ouTexte}</b>.`, "Y aller", () => $(x.ou)?.scrollIntoView({ behavior: calme ? "auto" : "smooth" }));
   });
 
+  /* ---------- Trophées ---------- */
+  const zoneTroph = $(".trophees ul");
+  function trophees() {
+    $(".trophees__compte").textContent = `${S.trophees.size}/${C.trophees.length}`;
+    zoneTroph.innerHTML = C.trophees.map(t => {
+      const ok = S.trophees.has(t.id);
+      return `<li class="trophee${ok ? " gagne" : ""}"><span class="trophee__ico">${artIcone(t.icone)}</span><span><b>${esc(t.nom)}<span class="sr"> (${ok ? "débloqué" : "à débloquer"})</span></b><span>${esc(t.texte)}</span></span></li>`;
+    }).join("");
+  }
+  function gagner(tid, discret) {
+    const t = C.trophees.find(x => x.id === tid);
+    if (!t || S.trophees.has(tid)) return;
+    S.trophees.add(tid); sauver(); trophees();
+    if (!discret) setTimeout(() => { Son.jouer("ultra"); notifier(`Trophée débloqué : <b>${esc(t.nom)}</b>`); }, 500);
+  }
+  function verifier(discret) {
+    const a = x => S.trouvees.has(x.id), g = t => gagner(t, discret);
+    if (S.trouvees.size) g("premiere");
+    if (C.certificats.every(a)) g("main");
+    if (C.parcours.every(a)) g("parcours");
+    if (C.competences.some(c => c.rarete === "ultra" && a(c))) g("ultra");
+    if (S.boosters >= 3) g("boosters");
+  }
+
+  /* ---------- Partager son score ---------- */
+  async function partager() {
+    const url = location.origin + location.pathname;
+    const txt = `J'ai trouvé ${S.trouvees.size}/${TOTAL} cartes et ${S.trophees.size}/${C.trophees.length} trophées sur le portfolio-jeu de Dimitri Gigan. À toi de jouer !`;
+    if (navigator.share) { try { await navigator.share({ title: "Portfolio de Dimitri Gigan", text: txt, url }); return; } catch (e) { if (e.name === "AbortError") return; } }
+    try { await navigator.clipboard.writeText(`${txt} ${url}`); notifier("Texte et lien copiés. <b>Il n'y a plus qu'à les coller.</b>"); }
+    catch { notifier(`Copiez ce lien : <b>${esc(url)}</b>`); }
+  }
+
+  /* ---------- Effet holographique ---------- */
+  if (!calme) {
+    let cur = null, raf = 0;
+    const lacher = () => { if (!cur) return; cur.classList.remove("incline"); cur = null; };
+    const viser = (c, e) => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.setProperty("--ry", ((x - .5) * 18).toFixed(1) + "deg");
+      c.style.setProperty("--rx", ((.5 - y) * 18).toFixed(1) + "deg");
+      c.style.setProperty("--mx", (x * 100).toFixed(0) + "%");
+      c.style.setProperty("--my", (y * 100).toFixed(0) + "%");
+      c.style.setProperty("--px", (x * 100).toFixed(0) + "%");
+    };
+    document.addEventListener("pointermove", e => {
+      if (e.pointerType === "touch") return;
+      const c = e.target.closest?.(".carte");
+      if (cur && cur !== c) lacher();
+      if (!c || c.disabled) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => { cur = c; c.classList.add("incline"); viser(c, e); });
+    }, { passive: true });
+    document.addEventListener("pointerout", e => { if (cur && !cur.contains(e.relatedTarget)) { cancelAnimationFrame(raf); lacher(); } });
+    document.addEventListener("pointerdown", e => {
+      if (e.pointerType !== "touch") return;
+      const c = e.target.closest?.(".carte"); if (!c) return;
+      viser(c, e); rejouer(c, "eclat"); setTimeout(() => c.classList.remove("eclat"), 750);
+    }, { passive: true });
+  }
+
+  /* ---------- Rangées qui défilent ---------- */
+  const fleche = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d === "g" ? "m15 5-7 7 7 7" : "m9 5 7 7-7 7"}"/></svg>`;
+  function defileur(el, nom) {
+    const w = document.createElement("div"); w.className = "defile"; el.before(w); w.append(el);
+    const bouton = d => { const b = document.createElement("button"); b.type = "button"; b.className = `fleche fleche--${d}`; b.hidden = true; b.innerHTML = fleche(d);
+      b.setAttribute("aria-label", `${d === "g" ? "Cartes précédentes" : "Cartes suivantes"} : ${nom}`);
+      b.addEventListener("click", () => el.scrollBy({ left: (d === "g" ? -1 : 1) * Math.max(160, el.clientWidth * .75), behavior: calme ? "auto" : "smooth" })); w.append(b); return b; };
+    const bg = bouton("g"), bd = bouton("d");
+    const maj = () => {
+      const g = el.scrollLeft > 4, d = el.scrollLeft + el.clientWidth < el.scrollWidth - 4 && el.clientWidth > 0;
+      w.classList.toggle("vers-g", g); w.classList.toggle("vers-d", d); bg.hidden = !g; bd.hidden = !d;
+    };
+    el.addEventListener("scroll", maj, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(maj).observe(el);
+    new MutationObserver(() => requestAnimationFrame(maj)).observe(el, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
+    maj();
+  }
+  defileur($(".main-cartes"), "certificats"); defileur(terrain, "parcours"); defileur(tirage, "booster");
+
+  /* ---------- Menu sur téléphone ---------- */
+  const nav = $("#menu-sections"), btnMenu = $(".menu");
+  const menu = ouvrir => { nav.classList.toggle("ouvert", ouvrir); btnMenu.setAttribute("aria-expanded", String(ouvrir)); btnMenu.setAttribute("aria-label", ouvrir ? "Fermer le menu" : "Ouvrir le menu"); };
+  nav.addEventListener("click", e => { if (e.target.closest("a")) menu(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && nav.classList.contains("ouvert")) { menu(false); btnMenu.focus(); } });
+  document.addEventListener("click", e => { if (nav.classList.contains("ouvert") && !e.target.closest("#menu-sections, .menu")) menu(false); });
+
   /* ---------- Visionneuse ---------- */
   const vue = $(".vue");
   function voir(cid) {
@@ -1314,7 +1559,7 @@ const CONTENU = {
     let t = `<p>${esc(c.effet)}</p>`;
     if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a></p>` : ""}`;
     if (c.sorte === "parcours") t = `<p>${esc(c.role)}</p>${c.points.length ? `<ul>${c.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
-    if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download>Télécharger mon CV</a></div>`; Son.jouer("secrete"); }
+    if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download>Télécharger mon CV</a></div>`; Son.jouer("secrete"); setTimeout(() => gagner("complet"), 600); }
     $(".vue__texte").innerHTML = t;
     vue.showModal();
   }
@@ -1333,7 +1578,7 @@ const CONTENU = {
     S.mode = classique ? "classique" : "jeu"; sauver();
     document.body.classList.toggle("classique", classique);
     const b = $(".mode");
-    b.textContent = classique ? "Mode jeu" : "Mode classique";
+    b.innerHTML = classique ? `<span class="mode__l">Mode jeu</span><span class="mode__c">Jouer</span>` : `<span class="mode__l">Mode classique</span><span class="mode__c">Classique</span>`;
     b.setAttribute("aria-label", classique ? "Passer en mode jeu de cartes" : "Passer en mode classique");
   }
   mode(S.mode !== "jeu");
@@ -1348,6 +1593,8 @@ const CONTENU = {
     piocher, "tout-piocher": async () => { while (piochees < C.parcours.length) { piocher(); await attendre(350); } },
     ouvrir, "tout-retourner": toutRetourner, nouveau,
     fermer: () => vue.close(),
+    menu: () => menu(!nav.classList.contains("ouvert")),
+    partager,
     reset: e => {
       const b = e.target.closest("button");
       if (Date.now() - resetArme > 4000) { resetArme = Date.now(); b.textContent = "Cliquez encore pour tout effacer"; setTimeout(() => { b.textContent = "Recommencer la collection"; }, 4000); return; }
@@ -1359,7 +1606,7 @@ const CONTENU = {
     if (t && actions[t.dataset.action] && t.dataset.action !== "suivante") actions[t.dataset.action](e);
   });
 
-  album(); compteur(false);
+  album(); compteur(false); trophees(); afficherScore(); charger(0); verifier(true);
 })();
 </script>
 </body>

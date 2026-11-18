@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dimitrigigan.github.io/sitemap.xml
