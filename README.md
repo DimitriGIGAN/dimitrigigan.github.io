@@ -1,49 +1,38 @@
 # Portfolio de Dimitri Gigan
 
-Technicien informatique à Saint-Denis, La Réunion, certifié sur le logiciel ASSIA.
+Technicien informatique SI santé à Saint-Denis, La Réunion.
+Site en ligne : https://dimitrigigan.github.io/Portfolio-/
 
-Site statique en HTML, CSS et JavaScript modernes, sans outil de build ni dépendance.
+## Le site
 
-## Le mode jeu
+Un portfolio dans l'univers des jeux de cartes :
 
-Le portfolio se joue comme un jeu de cartes :
-
-- **Certificats** : les 3 certificats de formation (ASSIA 360°, Paramétrage produit, JIRA) en éventail, à retourner pour lire le détail, avec le PDF à consulter.
-- **Parcours** : une pioche, chaque carte posée sur le terrain révèle une étape.
-- **Compétences** : des boosters de 5 cartes à ouvrir, de la rare à la rare secrète.
-- **Missions** : un mini-duel où le recruteur joue la carte qui résout une situation.
-- **Collection** : un album qui se remplit, avec une carte secrète au bout.
-
-La progression est enregistrée dans le navigateur du visiteur. Les sons sont générés par le navigateur (aucun fichier) et coupés par défaut.
-Le site s'ouvre en **mode classique** (parcours en liste). Le bouton « Mode jeu » lance le jeu de cartes, et le choix du visiteur est retenu.
+- **Carte joueur** en haut de page
+- **Ma main** : les certificats de formation, à retourner d'un clic (avec le PDF quand il existe)
+- **Réalisations** : bascule IZY Protect vers ASSIA PSA, 500+ garanties, 70 % des extractions et requêtes…
+- **Parcours** et **Compétences**
+- **Mission recruteur** : un petit jeu où l'on joue la carte qui résout une situation
 
 ## Modifier le contenu
 
-Tout le texte du site se trouve dans **`data.js`** : identité, certifications, expériences, formations, compétences.
-Pour ajouter une expérience, copie un bloc `{ ... }` dans `experiences` et change les textes (le plus récent en haut, avec l'année `debut` pour l'ordre de la pioche).
+Tout tient dans **un seul fichier : `index.html`**.
+Les textes sont dans la partie `CONTENU`, en bas du fichier (cherche « CONTENU DU PORTFOLIO »).
+Garde les guillemets `"..."` et les virgules entre les blocs.
 
-Les cartes compétences (`cartesCompetences`), les missions (`missions`) et la carte secrète (`carteSecrete`) se modifient aussi dans `data.js`. Niveaux (étoiles) et raretés : mets les tiens.
+- Un nouveau certificat : copie un bloc dans `certificats`, et dépose le PDF dans `assets/certificats/`.
+- Une nouvelle expérience : copie un bloc dans `parcours` (la plus récente en haut).
+- `rarete` : `"commune"`, `"rare"`, `"super"`, `"ultra"` ou `"secrete"`. `etoiles` : de 1 à 10.
 
-Pour remplacer le CV, dépose le nouveau PDF dans `assets/` sous le nom `CV-Dimitri-Gigan.pdf`.
+Le CV se remplace en déposant le nouveau PDF dans `assets/` sous le nom `CV-Dimitri-Gigan.pdf`.
 
-## Voir le site en local
-
-Ouvre `index.html` dans ton navigateur (double-clic).
-
-## Mettre en ligne (GitHub Pages)
-
-1. Remplace le contenu du dépôt par ces fichiers (garde l'ancienne version dans une branche `v1` si tu veux).
-2. Sur GitHub : Settings → Pages → Source « Deploy from a branch », branche `main`, dossier `/ (root)`.
-3. Le site est publié sur https://dimitrigigan.github.io/Portfolio-/
-
-Après une grosse modification de `style.css`, `main.js` ou `data.js`, augmente le numéro `?v=` dans `index.html` (par exemple `?v=4`) pour que les visiteurs reçoivent la nouvelle version.
-
-## Structure
+## Fichiers
 
 ```
-index.html   structure de la page
-style.css    styles (couches @layer, nesting CSS, color-mix, oklch)
-main.js      moteur du jeu : cartes, pioche, boosters, missions, collection, sons
-data.js      contenu, le seul fichier à modifier
-assets/      CV en PDF, certificats (assets/certificats) et favicon
+index.html                  le site complet (styles, contenu, code)
+assets/CV-Dimitri-Gigan.pdf le CV
+assets/certificats/         les certificats en PDF
+assets/apercu.png           l'image affichée quand on partage le lien
+assets/favicon.svg          l'icône de l'onglet
 ```
+
+Les anciennes versions restent dans l'historique Git (et la toute première dans la branche `v1`).
