@@ -1,7 +1,7 @@
 # Portfolio de Dimitri Gigan
 
 Technicien informatique SI santé à Saint-Denis, La Réunion.
-Site en ligne : https://dimitrigigan.github.io/Portfolio-/
+Site en ligne : https://dimitrigigan.github.io/
 
 ## Le site
 
