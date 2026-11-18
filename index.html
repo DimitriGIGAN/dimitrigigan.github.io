@@ -1161,7 +1161,7 @@ const CONTENU = {
       <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(c)}</span></span></button>`;
     const btn = $(".carte", cases[i]);
     btn.addEventListener("click", () => montrer(p));
-    if (anime) { Son.jouer("pioche"); setTimeout(() => retourner(btn), calme ? 0 : 450); cases[i].scrollIntoView({ block: "nearest", inline: "nearest", behavior: calme ? "auto" : "smooth" }); }
+    if (anime) { Son.jouer("pioche"); setTimeout(() => retourner(btn), calme ? 0 : 450); const t = terrain, d = cases[i].getBoundingClientRect().left - t.getBoundingClientRect().left + t.scrollLeft; if (d + cases[i].offsetWidth > t.scrollLeft + t.clientWidth || d < t.scrollLeft) t.scrollTo({ left: d - 16, behavior: calme ? "auto" : "smooth" }); }
   }
   function majPaquet() {
     const reste = C.parcours.length - piochees;
@@ -1302,8 +1302,7 @@ const CONTENU = {
     if (!c) return;
     if (c.dataset.cache === "secret") return notifier(`Il manque <b>${TOTAL - S.trouvees.size}</b> carte${TOTAL - S.trouvees.size > 1 ? "s" : ""} pour débloquer la carte secrète.`);
     const x = parId[c.dataset.cache];
-    notifier(`Cette carte se trouve dans <b>${x.ouTexte}</b>.`);
-    $(x.ou)?.scrollIntoView({ behavior: calme ? "auto" : "smooth" });
+    notifier(`Cette carte se trouve dans <b>${x.ouTexte}</b>.`, "Y aller", () => $(x.ou)?.scrollIntoView({ behavior: calme ? "auto" : "smooth" }));
   });
 
   /* ---------- Visionneuse ---------- */
@@ -1345,7 +1344,6 @@ const CONTENU = {
       const versJeu = S.mode !== "jeu";
       mode(!versJeu);
       notifier(versJeu ? "Mode jeu activé. <b>Bonne partie !</b>" : "Mode classique : tout le parcours en liste.");
-      if (versJeu) $("#parcours").scrollIntoView({ behavior: calme ? "auto" : "smooth" });
     },
     piocher, "tout-piocher": async () => { while (piochees < C.parcours.length) { piocher(); await attendre(350); } },
     ouvrir, "tout-retourner": toutRetourner, nouveau,
