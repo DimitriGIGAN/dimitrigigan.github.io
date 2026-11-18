@@ -114,15 +114,18 @@
      ========================================================= */
   const RARETES = { rare: "Rare", super: "Super rare", ultra: "Ultra rare", secrete: "Rare secrète" };
   const RANG = { rare: 0, super: 1, ultra: 2, secrete: 3 };
-  const KINDS = { cert: "Certification ASSIA", skill: "Compétence", exp: "Expérience", form: "Formation", secret: "Carte secrète" };
+  const KINDS = { cert: "Certificat de formation", skill: "Compétence", exp: "Expérience", form: "Formation", secret: "Carte secrète" };
   const cert = d.certifications;
 
   const catalog = [];
   cert.modules.forEach((m, i) => catalog.push({
-    id: `cert-${i + 1}`, kind: "cert", index: i, total: cert.modules.length,
+    id: m.id || `cert-${i + 1}`, kind: "cert", index: i, total: cert.modules.length,
     titre: m.titre, niveau: m.niveau, rarete: m.rarete, effet: m.effet, detail: m.detail,
-    stats: m.stats || cert.stats || [], source: "#certifications", sourceLabel: "les certifications en haut de page"
+    organisme: m.organisme, duree: m.duree, date: m.date, modalite: m.modalite, fichier: m.fichier,
+    stats: m.stats || [m.duree && ["Durée", m.duree], (String(m.date || "").match(/\d{4}/) || [])[0] && ["Année", String(m.date).match(/\d{4}/)[0]]].filter(Boolean),
+    source: "#certifications", sourceLabel: "les certificats en haut de page"
   }));
+  const certMeta = c => [c.duree, c.modalite && c.modalite.toLowerCase(), c.date, c.organisme && `par le ${c.organisme}`].filter(Boolean).join(", ");
   (d.cartesCompetences || []).forEach((c, i, arr) => catalog.push({
     id: c.id || slug(c.titre), kind: "skill", index: i, total: arr.length,
     titre: c.titre, niveau: c.niveau, rarete: c.rarete, effet: c.effet, icone: c.icone,
@@ -210,6 +213,7 @@
           ${c.kind === "cert" ? `<span class="back__detail">
             <span class="back__title">${esc(c.titre)}</span>
             <span class="back__text">${esc(c.detail || "")}</span>
+            <span class="back__meta">${esc(certMeta(c))}</span>
             <span class="back__hint">Cliquer pour retourner</span>
           </span>` : ""}
         </span>
@@ -291,10 +295,15 @@
      ========================================================= */
   const hand = $(".hand");
   const certCards = catalog.filter(c => c.kind === "cert");
-  $(".deck__set").textContent = `Certifié sur le logiciel ${cert.nom} en ${cert.date.toLowerCase()} : ${certCards.length} modules sur ${certCards.length}.`;
+  $(".deck__set").textContent = cert.resume || "";
   const pickTitle = $(".deck__pick strong"), pickText = $(".deck__pick span");
+  const pickMeta = $(".deck__meta"), pickFile = $(".deck__file");
+  // Moins il y a de cartes, plus l'éventail s'ouvre
+  const nCert = certCards.length;
+  hand.style.setProperty("--fan", nCert <= 3 ? .66 : nCert <= 4 ? .45 : .27);
+  hand.style.setProperty("--fan-rot", nCert <= 3 ? "9deg" : "6deg");
   certCards.forEach((c, i) => {
-    const card = makeCard(c, { side: calm ? "front" : "back", label: `${c.titre}, module ${i + 1} sur ${certCards.length}. Retourner la carte.` });
+    const card = makeCard(c, { side: calm ? "front" : "back", label: `Certificat ${c.titre}, ${i + 1} sur ${certCards.length}. Retourner la carte.` });
     card.style.setProperty("--i", i);
     card.style.setProperty("--n", certCards.length);
     card.setAttribute("aria-pressed", "false");
@@ -316,8 +325,11 @@
     }
     if (fromClick) discover(certCards[i].id);
     const c = certCards[i];
-    pickTitle.textContent = `${c.titre}, niveau ${c.niveau}.`;
+    pickTitle.textContent = `${c.titre}.`;
     pickText.textContent = c.detail;
+    pickMeta.textContent = certMeta(c);
+    if (c.fichier) { pickFile.href = c.fichier; pickFile.hidden = false; pickFile.setAttribute("aria-label", `Voir le certificat ${c.titre} (PDF)`); }
+    else pickFile.hidden = true;
   }
   requestAnimationFrame(() => requestAnimationFrame(() => {
     hand.classList.add("is-dealt");
@@ -613,7 +625,7 @@
     $(".viewer__card").replaceChildren(card);
     $("#viewer-title").textContent = c.titre;
     let body = "";
-    if (c.kind === "cert") body = `<p>${esc(c.detail)}</p><p class="viewer__meta">${RARETES[c.rarete]}, niveau ${c.niveau}</p>`;
+    if (c.kind === "cert") body = `<p>${esc(c.detail)}</p><p class="viewer__meta">${esc(certMeta(c))}</p>${c.fichier ? `<div class="viewer__actions"><a class="btn btn--primary" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a></div>` : ""}`;
     else if (c.kind === "skill") body = `<p>${esc(c.effet)}</p><p class="viewer__meta">${RARETES[c.rarete]}, niveau ${c.niveau}</p>`;
     else if (c.kind === "secret") body = `<p>${esc(d.carteSecrete?.message || "")}</p>
       <div class="viewer__actions"><a class="btn btn--primary" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn btn--dark" href="${esc(id.cv)}" download>Télécharger mon CV</a></div>`;

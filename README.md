@@ -8,7 +8,7 @@ Site statique en HTML, CSS et JavaScript modernes, sans outil de build ni dépen
 
 Le portfolio se joue comme un jeu de cartes :
 
-- **Certifications** : les 6 modules ASSIA en éventail, à retourner pour lire le détail.
+- **Certificats** : les 3 certificats de formation (ASSIA 360°, Paramétrage produit, JIRA) en éventail, à retourner pour lire le détail, avec le PDF à consulter.
 - **Parcours** : une pioche, chaque carte posée sur le terrain révèle une étape.
 - **Compétences** : des boosters de 5 cartes à ouvrir, de la rare à la rare secrète.
 - **Missions** : un mini-duel où le recruteur joue la carte qui résout une situation.
@@ -45,5 +45,5 @@ index.html   structure de la page
 style.css    styles (couches @layer, nesting CSS, color-mix, oklch)
 main.js      moteur du jeu : cartes, pioche, boosters, missions, collection, sons
 data.js      contenu, le seul fichier à modifier
-assets/      CV en PDF et favicon
+assets/      CV en PDF, certificats (assets/certificats) et favicon
 ```

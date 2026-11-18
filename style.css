@@ -204,8 +204,8 @@
   }
   .hand.is-dealt .card {
     transform:
-      translateX(calc(-50% + var(--spread) * var(--w) * .27))
-      rotate(calc(var(--spread) * 6deg))
+      translateX(calc(-50% + var(--spread) * var(--w) * var(--fan, .27)))
+      rotate(calc(var(--spread) * var(--fan-rot, 6deg)))
       translateY(var(--lift))
       rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   }
@@ -349,9 +349,12 @@
   }
   @keyframes spin-frame { to { --ang: 360deg; } }
 
-  .deck__caption { text-align: center; max-width: 30rem; min-height: 5.5rem; }
+  .deck__caption { text-align: center; max-width: 30rem; min-height: 8rem; }
   .deck__set { font-size: var(--step--1); color: var(--muted-dark); }
   .deck__pick { margin-top: .35rem; color: var(--foam); text-wrap: balance; strong { color: var(--white); } }
+  .deck__meta { margin-top: .25rem; font-size: var(--step--1); color: var(--mint); }
+  .deck__file { display: inline-block; margin-top: .5rem; font-size: var(--step--1); font-weight: 600; color: var(--white); text-decoration-color: var(--mint); }
+  .back__meta { color: var(--mint); font-size: .8em; }
 
   @media (max-width: 900px) {
     .deck { justify-items: stretch; }

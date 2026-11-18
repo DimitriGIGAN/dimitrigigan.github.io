@@ -22,43 +22,39 @@ window.PORTFOLIO = {
     disponible: true,
     disponibilite: "Ouvert à un nouveau poste, sur site, en hybride ou à distance",
     accroche:
-      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. Je suis certifié sur le logiciel de gestion ASSIA 360. Pendant trois ans chez UMS Réunion, je l'ai paramétré et j'ai accompagné ses utilisateurs, tout en migrant et en fiabilisant les données avec Oracle Maestro et SQL."
+      "Je travaille sur les systèmes d'information des mutuelles et de l'assurance santé. J'ai les certificats de formation ASSIA 360 et Paramétrage produit délivrés par l'éditeur du logiciel. Pendant trois ans chez UMS Réunion, j'ai paramétré ASSIA et accompagné ses utilisateurs, tout en migrant et en fiabilisant les données avec Oracle Maestro et SQL."
   },
 
-  // La "main" de cartes en haut de page : les certifications ASSIA
+  // La "main" de cartes en haut de page : tes certificats de formation
   certifications: {
-    nom: "ASSIA 360",
-    emetteur: "ASSIA, logiciel de gestion santé et assurance",
-    date: "Août 2023",
-    // Valeurs communes affichées en bas de chaque carte (comme ATK/DEF, mais à toi)
-    stats: [["Obtenue", "2023"], ["Pratique", "3 ans"]],
+    // Phrase affichée sous les cartes
+    resume: "3 certificats de formation délivrés en 2023 par le Cimut, l'éditeur du logiciel ASSIA.",
     /*
-      Pour chaque module :
+      Pour chaque certificat :
+      - id : identifiant unique (ne pas changer, il sert à la collection et aux missions)
       - niveau : nombre d'étoiles (1 à 10), ton niveau de maîtrise
       - rarete : "rare", "super", "ultra" ou "secrete" (effet brillant de plus en plus fort)
       - effet : le petit texte façon jeu de cartes sur la face
       - detail : l'explication au verso (quand on clique sur la carte)
-      Les niveaux et raretés ci-dessous sont des exemples : mets les tiens.
+      - fichier : le PDF du certificat (dans assets/certificats)
+      Les niveaux, raretés et effets sont des exemples : mets les tiens.
     */
     modules: [
-      { titre: "Paramétrage métier", niveau: 9, rarete: "secrete",
+      { id: "cert-assia360", titre: "Formation ASSIA 360°", niveau: 8, rarete: "ultra",
+        organisme: "Cimut (Assia)", duree: "7 h", date: "18 août 2023", modalite: "Présentiel",
+        effet: "Donne accès à toute la plateforme de gestion santé et assurance des mutuelles.",
+        detail: "Formation à la plateforme ASSIA 360, le logiciel de gestion des mutuelles et de l'assurance santé.",
+        fichier: "assets/certificats/certificat-assia-360.pdf" },
+      { id: "cert-parametrage", titre: "Paramétrage produit", niveau: 9, rarete: "secrete",
+        organisme: "Cimut (Assia)", duree: "21 h", date: "21 au 23 août 2023", modalite: "Présentiel",
         effet: "Quand une nouvelle garantie arrive, configure contrats, droits et règles sans écrire une ligne de code.",
-        detail: "Configuration des contrats, des prestations, des droits et des règles de gestion dans le logiciel." },
-      { titre: "Prestations santé", niveau: 7, rarete: "rare",
-        effet: "Chaque remboursement passe un contrôle avant d'arriver chez l'adhérent.",
-        detail: "Traitement et contrôle des remboursements santé des adhérents." },
-      { titre: "Contrats santé", niveau: 7, rarete: "rare",
-        effet: "Crée, fait évoluer ou clôture un contrat en gardant tout l'historique intact.",
-        detail: "Création, suivi et évolution des contrats et des garanties." },
-      { titre: "Exploitation applicative", niveau: 6, rarete: "super",
-        effet: "Tant que cette carte est en jeu, les traitements tournent et les données restent cohérentes.",
-        detail: "Suivi des traitements, contrôle des données et continuité de service." },
-      { titre: "Support utilisateur", niveau: 8, rarete: "ultra",
-        effet: "Quand un utilisateur est bloqué, diagnostique l'incident. Il repart avec la solution.",
-        detail: "Diagnostic, résolution des incidents et accompagnement des équipes." },
-      { titre: "Administration fonctionnelle", niveau: 6, rarete: "super",
-        effet: "Gère droits et référentiels : chacun voit exactement ce dont il a besoin.",
-        detail: "Gestion des droits, des référentiels et de la cohérence du paramétrage." }
+        detail: "Formation au paramétrage des produits dans ASSIA : contrats, garanties, prestations et règles de gestion.",
+        fichier: "assets/certificats/certificat-parametrage-produit.pdf" },
+      { id: "cert-jira", titre: "JIRA", niveau: 7, rarete: "super",
+        organisme: "Cimut (Assia)", duree: "3 h", date: "21 décembre 2023", modalite: "À distance",
+        effet: "Aucune demande ne se perd : chacune a un statut, une priorité et une suite.",
+        detail: "Formation au suivi des demandes et des incidents dans JIRA.",
+        fichier: "assets/certificats/certificat-jira.pdf" }
     ]
   },
 
@@ -171,7 +167,7 @@ window.PORTFOLIO = {
   /*
     Missions du mini-duel : le visiteur tire une mission et doit jouer
     la bonne carte. "bonne" et "autres" contiennent des id de cartes
-    compétences (ci-dessus) ou "cert-1" à "cert-6" pour les certifications.
+    compétences (ci-dessus) ou l'id d'un certificat ("cert-assia360", "cert-parametrage", "cert-jira").
   */
   missions: [
     { titre: "Migrer les contrats d'une mutuelle vers un nouveau logiciel sans perdre une seule donnée",
@@ -179,7 +175,7 @@ window.PORTFOLIO = {
       bravo: "C'est ce que j'ai fait chez UMS Réunion : préparation, contrôle et fiabilisation des données avant et après chaque bascule.",
       indice: "Pense aux données : il faut les reprendre, les contrôler et les basculer." },
     { titre: "Une nouvelle garantie optique doit être proposée aux adhérents le mois prochain",
-      bonne: "cert-1", autres: ["python", "reseau"],
+      bonne: "cert-parametrage", autres: ["python", "reseau"],
       bravo: "Le paramétrage métier dans ASSIA permet de configurer contrats, prestations et règles de gestion sans développement.",
       indice: "Ce n'est pas un problème technique : c'est une règle de gestion à configurer." },
     { titre: "Un service ne peut plus saisir de remboursements depuis ce matin",
@@ -195,7 +191,7 @@ window.PORTFOLIO = {
       bravo: "Des requêtes SQL pour repérer, analyser et corriger les anomalies dans les données métier.",
       indice: "Il faut interroger la base de données pour trouver les doublons." },
     { titre: "Une tâche répétitive prend deux heures par jour à l'équipe",
-      bonne: "automatisation", autres: ["incidents", "cert-3"],
+      bonne: "automatisation", autres: ["incidents", "cert-jira"],
       bravo: "J'ai développé des scripts et des outils pour automatiser ce genre de tâches et fiabiliser les processus.",
       indice: "Et si une machine faisait cette tâche à la place de l'équipe ?" }
   ],
