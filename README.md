@@ -5,7 +5,7 @@ Site en ligne : https://dimitrigigan.github.io/Portfolio-/
 
 ## Le site
 
-Un portfolio dans l'univers des jeux de cartes :
+Un portfolio dans l'univers des jeux de cartes. Il s'ouvre en **mode classique** (parcours et compétences en liste) ; le bouton **Mode jeu** active les jeux, et le choix du visiteur est retenu.
 
 - **Carte joueur** en haut de page
 - **Ma main** : les certificats de formation, à retourner d'un clic (avec le PDF quand il existe)

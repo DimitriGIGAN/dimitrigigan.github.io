@@ -489,6 +489,18 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .vue__fermer { position: absolute; top: .7rem; right: .7rem; width: 2.3rem; height: 2.3rem; border-radius: 6px; border: 1.5px solid #6ea2ff; background: transparent; color: #fff; cursor: pointer; font-size: 1.2rem; }
 @media (max-width: 640px) { .vue[open] { grid-template-columns: 1fr; justify-items: center; max-height: calc(100svh - 1.5rem); overflow-y: auto; } }
 
+/* ---------- Mode classique / mode jeu ---------- */
+body.classique .jeu-seul { display: none !important; }
+body:not(.classique) .classique-seul { display: none !important; }
+.mode {
+  display: inline-flex; align-items: center; min-height: 2.2rem; padding: .25rem .8rem; border-radius: 6px; cursor: pointer;
+  font-weight: 800; font-style: italic; font-stretch: 90%; font-size: var(--t-1); color: #fff;
+  background: linear-gradient(180deg, #2a55c9, #13297a); border: 1.5px solid #6ea2ff;
+}
+body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #2b1a02; }
+.indice { margin-top: 1.3rem; font-size: var(--t-1); color: var(--doux); }
+.indice button { background: none; border: 0; padding: 0; font: inherit; font-weight: 700; color: var(--or); text-decoration: underline; cursor: pointer; }
+
 /* ---------- Notifications ---------- */
 .notifs { position: fixed; left: 50%; bottom: 1rem; translate: -50% 0; z-index: 20; display: grid; gap: .5rem; width: min(25rem, calc(100% - 1.5rem)); pointer-events: none; }
 .notif { pointer-events: auto; display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .7rem 1rem; border-radius: 10px; font-size: var(--t-1); background: #1d2260; border: 1.5px solid var(--or); box-shadow: 0 14px 28px -12px #000; animation: notif .3s ease; }
@@ -502,7 +514,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 </style>
 </head>
-<body>
+<body class="classique">
 <a class="skip" href="#main-cartes">Aller au contenu</a>
 
 <header class="top">
@@ -511,19 +523,21 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <nav aria-label="Sections">
       <a href="#main-cartes">Certificats</a>
       <a href="#parcours">Parcours</a>
-      <a href="#competences">Booster</a>
-      <a href="#jeu">Mission</a>
+      <a href="#competences">Compétences</a>
+      <a class="jeu-seul" href="#jeu">Mission</a>
+      <a class="jeu-seul" href="#collection">Collection</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="controles">
-      <a class="compteur" href="#collection" aria-label="Ma collection">
+      <a class="compteur jeu-seul" href="#collection" aria-label="Ma collection">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="11" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></svg>
         <span data-compte>0/0</span>
       </a>
-      <button class="son" type="button" data-action="son" aria-pressed="false" aria-label="Activer le son">
+      <button class="son jeu-seul" type="button" data-action="son" aria-pressed="false" aria-label="Activer le son">
         <svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="m17 9 5 6M22 9l-5 6"/></svg>
         <svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg>
       </button>
+      <button class="mode" type="button" data-action="mode">Mode jeu</button>
     </div>
   </div>
 </header>
@@ -541,6 +555,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <a class="btn" data-lien="cv" download>Télécharger mon CV</a>
           <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+        <p class="indice classique-seul">Envie de jouer ? Ce portfolio a aussi un <button type="button" data-action="mode">mode jeu de cartes</button> : pioche, boosters, missions et collection.</p>
+        <p class="indice jeu-seul">Pressé ? <button type="button" data-action="mode">Passer en mode classique</button></p>
       </div>
       <div class="joueur" data-zone="joueur"></div>
     </div>
@@ -550,7 +566,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-main">Ma main</h2>
-        <p class="chapeau">Mes certificats de formation. Retournez chaque carte pour l'ajouter à votre collection.</p>
+        <p class="chapeau">Mes certificats de formation. Touchez une carte pour la retourner<span class="jeu-seul"> et l'ajouter à votre collection</span>.</p>
       </div>
       <div class="main-cartes" data-zone="certificats" role="list"></div>
     </div>
@@ -570,9 +586,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-parcours">Parcours</h2>
-        <p class="chapeau">Piochez les cartes une par une, du lycée à aujourd'hui.</p>
+        <p class="chapeau jeu-seul">Piochez les cartes une par une, du lycée à aujourd'hui.</p>
       </div>
-      <div class="pioche">
+      <ol class="parcours classique-seul" data-zone="parcours-liste"></ol>
+      <div class="pioche jeu-seul">
         <div class="paquet">
           <button class="paquet__btn" type="button" data-action="piocher">
             <span class="paquet__pile" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -582,7 +599,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         </div>
         <ol class="terrain" aria-label="Cartes du parcours piochées"></ol>
       </div>
-      <div class="detail" aria-live="polite"></div>
+      <div class="detail jeu-seul" aria-live="polite"></div>
       <details class="anciens">
         <summary>Premières expériences, 2011 – 2019</summary>
         <ul data-zone="anciens"></ul>
@@ -593,10 +610,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   <section id="competences" aria-labelledby="t-comp">
     <div class="wrap">
       <div class="entete">
-        <h2 class="titre" id="t-comp">Booster de compétences</h2>
-        <p class="chapeau">Ouvrez un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
+        <h2 class="titre" id="t-comp"><span class="jeu-seul">Booster de c</span><span class="classique-seul">C</span>ompétences</h2>
+        <p class="chapeau jeu-seul">Ouvrez un booster : cinq cartes compétences, de la rare à l'ultra rare. Trois boosters suffisent pour toutes les trouver.</p>
       </div>
-      <div class="booster">
+      <div class="competences classique-seul" data-zone="competences-liste"></div>
+      <div class="booster jeu-seul">
         <div class="scene">
           <button class="pack" type="button" data-action="ouvrir" aria-label="Ouvrir le booster">
             <span class="pack__haut" aria-hidden="true"></span>
@@ -612,14 +630,14 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           </div>
         </div>
       </div>
-      <details class="toutes">
+      <details class="toutes jeu-seul">
         <summary>Voir toutes mes compétences en liste</summary>
         <div class="competences" data-zone="competences"></div>
       </details>
     </div>
   </section>
 
-  <section class="jeu" id="jeu" aria-labelledby="t-jeu">
+  <section class="jeu jeu-seul" id="jeu" aria-labelledby="t-jeu">
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-jeu">Mission recruteur</h2>
@@ -640,7 +658,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
-  <section id="collection" aria-labelledby="t-collec">
+  <section class="jeu-seul" id="collection" aria-labelledby="t-collec">
     <div class="wrap">
       <div class="entete">
         <h2 class="titre" id="t-collec">Collection</h2>
@@ -1028,6 +1046,10 @@ const CONTENU = {
   while (piochees < C.parcours.length && S.trouvees.has(C.parcours[piochees].id)) poser(piochees++, false);
   if (piochees) montrer(C.parcours[piochees - 1]); else detail.innerHTML = `<p class="vide">Le terrain est vide. Piochez votre première carte !</p>`;
   majPaquet();
+  $('[data-zone="parcours-liste"]').innerHTML = [...C.parcours].reverse().map(p => `<li class="etape" data-rarete="${p.rarete}">
+      <div class="etape__annee"><b>${esc(p.annee)}</b><span>${p.fin ? "à " + esc(p.fin) : ""}</span></div>
+      <div class="etape__corps"><p class="etape__type">${esc(p.type)}</p><h3>${esc(p.nom)}</h3><p class="etape__role">${esc(p.role)}</p>
+      ${p.points.length ? `<ul>${p.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}</div></li>`).join("");
   $('[data-zone="anciens"]').innerHTML = C.anciens.map(([a, n, r]) => `<li>${esc(a)} : <b>${esc(n)}</b>, ${esc(r)}</li>`).join("");
 
   /* ---------- 3. Booster de compétences ---------- */
@@ -1082,6 +1104,7 @@ const CONTENU = {
     { groupe: "Support et méthode", items: ["Support applicatif", "Gestion des incidents", "JIRA", "Analyse fonctionnelle", "RGPD", "LCB-FT", "Sécurité informatique"] },
     { groupe: "Technique", items: ["Python", "VBA / Visual Basic", "Développement web", "Windows, Linux, macOS", "Réseau et fibre"] }
   ];
+  $('[data-zone="competences-liste"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
   $('[data-zone="competences"]').innerHTML = listeComp.map(g => `<div><h3>${esc(g.groupe)}</h3><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
 
   /* ---------- 4. Mission recruteur ---------- */
@@ -1174,9 +1197,24 @@ const CONTENU = {
     b.setAttribute("aria-label", on ? "Couper le son" : "Activer le son");
   }
   son(!!S.son);
+  // Mode classique par défaut ; le choix du visiteur est retenu
+  function mode(classique) {
+    S.mode = classique ? "classique" : "jeu"; sauver();
+    document.body.classList.toggle("classique", classique);
+    const b = $(".mode");
+    b.textContent = classique ? "Mode jeu" : "Mode classique";
+    b.setAttribute("aria-label", classique ? "Passer en mode jeu de cartes" : "Passer en mode classique");
+  }
+  mode(S.mode !== "jeu");
   let resetArme = 0;
   const actions = {
     son: () => { son(!S.son); if (S.son) Son.jouer("bravo"); },
+    mode: () => {
+      const versJeu = S.mode !== "jeu";
+      mode(!versJeu);
+      notifier(versJeu ? "Mode jeu activé. <b>Bonne partie !</b>" : "Mode classique : tout le parcours en liste.");
+      if (versJeu) $("#parcours").scrollIntoView({ behavior: calme ? "auto" : "smooth" });
+    },
     piocher, "tout-piocher": async () => { while (piochees < C.parcours.length) { piocher(); await attendre(350); } },
     ouvrir, "tout-retourner": toutRetourner, nouveau,
     fermer: () => vue.close(),
