@@ -508,7 +508,7 @@
   .icon-btn[aria-pressed="true"] .i-on { display: block; }
   .icon-btn[aria-pressed="true"] { border-color: var(--mint); color: var(--mint); }
   .mode-btn { padding: .3rem .95rem; }
-  .mode-btn[aria-pressed="true"] { background: var(--mint); color: var(--abyss); border-color: var(--mint); }
+  body.is-classic .mode-btn { background: var(--mint); color: var(--abyss); border-color: var(--mint); }
   .linklike {
     background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer;
     text-decoration: underline; text-underline-offset: .2em; text-decoration-color: var(--mint);

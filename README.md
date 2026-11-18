@@ -15,7 +15,7 @@ Le portfolio se joue comme un jeu de cartes :
 - **Collection** : un album qui se remplit, avec une carte secrète au bout.
 
 La progression est enregistrée dans le navigateur du visiteur. Les sons sont générés par le navigateur (aucun fichier) et coupés par défaut.
-Le bouton « Mode classique » affiche tout le parcours en liste, pour les recruteurs pressés.
+Le site s'ouvre en **mode classique** (parcours en liste). Le bouton « Mode jeu » lance le jeu de cartes, et le choix du visiteur est retenu.
 
 ## Modifier le contenu
 

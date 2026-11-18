@@ -631,12 +631,13 @@
   /* =========================================================
      Mode classique, son, actions
      ========================================================= */
+  // Mode classique par défaut ; le choix du visiteur est retenu
   function setMode(classic) {
-    S.classic = classic; store.save();
+    S.mode = classic ? "classique" : "jeu"; S.classic = classic; store.save();
     document.body.classList.toggle("is-classic", classic);
     const b = $(".mode-btn");
-    b.setAttribute("aria-pressed", String(classic));
     b.textContent = classic ? "Mode jeu" : "Mode classique";
+    b.setAttribute("aria-label", classic ? "Passer en mode jeu de cartes" : "Passer en mode classique");
   }
   function setSound(on, quiet) {
     Sound.set(on);
@@ -645,7 +646,7 @@
     b.setAttribute("aria-label", on ? "Couper le son" : "Activer le son");
     if (on && !quiet) Sound.play("success");
   }
-  setMode(!!S.classic);
+  setMode(S.mode !== "jeu");
   setSound(!!S.sound, true);
 
   // Confirmation sans boîte de dialogue du navigateur : il faut cliquer deux fois
@@ -663,6 +664,7 @@
     mode: () => {
       setMode(!S.classic);
       toast(S.classic ? "Mode classique : tout le parcours en liste." : "Mode jeu activé. Bonne partie !");
+      if (!S.classic) $("#parcours").scrollIntoView({ behavior: calm ? "auto" : "smooth" });
     },
     sound: () => setSound(!S.sound),
     draw,
