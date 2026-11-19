@@ -662,6 +662,9 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
 .mode { white-space: nowrap; } .mode__c { display: none; }
 @media (max-width: 480px) { .controles { gap: .3rem; } .mode { padding-inline: .6rem; } .mode__l { display: none; } .mode__c { display: inline; } .compteur { padding-inline: .5rem; } }
 @media (max-width: 360px) { .top .wrap { gap: .4rem; } .compteur svg { display: none; } .controles { gap: .25rem; } .langue, .menu, .son { min-width: 2rem; padding-inline: .4rem; } .mode { padding-inline: .45rem; font-size: .74rem; } .mono { width: 2rem; height: 2rem; } }
+.article-lien { margin-top: 1.2rem; }
+.article-lien a { display: inline-block; font-weight: 800; color: var(--or); text-underline-offset: 3px; }
+.article-lien a:hover { color: #fff; }
 </style>
 </head>
 <body class="classique">
@@ -705,7 +708,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <p class="pitch" data-html="pitch"></p>
         <div class="btns">
           <a class="btn btn--or" data-lien="mail">M'écrire</a>
-          <a class="btn" data-lien="cv" download>Télécharger mon CV</a>
+          <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a>
           <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
         </div>
         <p class="indice classique-seul">Envie de jouer ? Ce portfolio a aussi un <button type="button" data-action="mode">mode jeu de cartes</button> : pioche, boosters, missions et collection.</p>
@@ -773,6 +776,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       </div>
 
       <p class="bilan"><b>Le résultat :</b> la mutuelle a changé de logiciel en 6 mois, sans perdre ses données, et les équipes maîtrisaient l'outil un an plus tard.</p>
+      <p class="article-lien"><a href="articles/changer-logiciel-metier-mutuelle.html">Lire la checklist complète : changer le logiciel métier d'une mutuelle</a></p>
     </div>
   </section>
 
@@ -892,7 +896,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <p class="chapeau">Un projet sur ASSIA, une migration de données ou du support applicatif ? Écrivez-moi.</p>
       <a class="mail" data-lien="mail" data-texte="email"></a>
       <div class="btns">
-        <a class="btn" data-lien="cv" download>Télécharger mon CV</a>
+        <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a>
         <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
@@ -1346,7 +1350,7 @@ const CONTENU = {
     if (ouverture) return; ouverture = true;
     Son.jouer("dechire"); pack.classList.add("dechire");
     await attendre(600);
-    pack.hidden = true; S.boosters++; sauver(); verifier();
+    pack.hidden = true; S.boosters++; sauver(); verifier(); stat("jeu/booster-ouvert");
     tirage.innerHTML = choisir().map((c, i) => `<button class="carte" type="button" data-rarete="${c.rarete}" data-id="${c.id}" aria-pressed="false" style="--i:${i}" aria-label="Carte face cachée ${i + 1} sur 5. Retourner.">
       <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(parId[c.id])}</span></span></button>`).join("");
     tirage.hidden = false;
@@ -1404,7 +1408,7 @@ const CONTENU = {
       texte.textContent = erreurs === 0 ? "Cinq duels, zéro erreur. On travaille ensemble ?" : `Cinq duels gagnés, ${erreurs} erreur${erreurs > 1 ? "s" : ""}. On en parle ?`;
       retour.innerHTML = `Écrivez-moi : <a href="mailto:${esc(id.email)}">${esc(id.email)}</a>`;
       choix.replaceChildren(); suivante.textContent = "Rejouer"; suivante.hidden = false; enCours = false;
-      gagner("duel"); if (erreurs === 0) gagner("sansfaute");
+      gagner("duel"); if (erreurs === 0) gagner("sansfaute"); stat("jeu/duels-termines");
       return;
     }
     enCours = true; pv.hidden = false; setPv(100);
@@ -1490,6 +1494,7 @@ const CONTENU = {
 
   /* ---------- Partager son score ---------- */
   async function partager() {
+    stat("jeu/partage");
     const url = location.origin + location.pathname;
     const txt = `J'ai trouvé ${S.trouvees.size}/${TOTAL} cartes et ${S.trophees.size}/${C.trophees.length} trophées sur le portfolio-jeu de Dimitri Gigan. À toi de jouer !`;
     if (navigator.share) { try { await navigator.share({ title: "Portfolio de Dimitri Gigan", text: txt, url }); return; } catch (e) { if (e.name === "AbortError") return; } }
@@ -1560,7 +1565,7 @@ const CONTENU = {
     let t = `<p>${esc(c.effet)}</p>`;
     if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a></p>` : ""}`;
     if (c.sorte === "parcours") t = `<p>${esc(c.role)}</p>${c.points.length ? `<ul>${c.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
-    if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download>Télécharger mon CV</a></div>`; Son.jouer("secrete"); setTimeout(() => gagner("complet"), 600); }
+    if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a></div>`; Son.jouer("secrete"); setTimeout(() => gagner("complet"), 600); stat("jeu/carte-secrete"); }
     $(".vue__texte").innerHTML = t;
     vue.showModal();
   }
@@ -1575,6 +1580,8 @@ const CONTENU = {
   }
   son(!!S.son);
   // Mode classique par défaut ; le choix du visiteur est retenu
+  // Statistiques de visite (GoatCounter, sans cookies) : événements du jeu
+  function stat(chemin) { try { window.goatcounter && window.goatcounter.count && window.goatcounter.count({ path: chemin, title: chemin, event: true }); } catch (e) {} }
   function mode(classique) {
     S.mode = classique ? "classique" : "jeu"; sauver();
     document.body.classList.toggle("classique", classique);
@@ -1587,7 +1594,7 @@ const CONTENU = {
   const actions = {
     son: () => { son(!S.son); if (S.son) Son.jouer("bravo"); },
     mode: () => {
-      const versJeu = S.mode !== "jeu";
+      const versJeu = S.mode !== "jeu"; if (versJeu) stat("jeu/mode-jeu-active");
       mode(!versJeu);
       notifier(versJeu ? "Mode jeu activé. <b>Bonne partie !</b>" : "Mode classique : tout le parcours en liste.");
     },
@@ -1610,5 +1617,6 @@ const CONTENU = {
   album(); compteur(false); trophees(); afficherScore(); charger(0); verifier(true);
 })();
 </script>
+<script data-goatcounter="https://dimitrigigan.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
