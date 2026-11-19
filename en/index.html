@@ -51,6 +51,7 @@
    ========================================================= */
 /* Polices hébergées avec le site (licence SIL OFL, voir ../assets/fonts) */
 @font-face { font-family: "Orbitron"; src: url(../assets/fonts/orbitron-latin-wght-normal.woff2) format("woff2"); font-weight: 400 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url(../assets/fonts/geist-mono-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Archivo"; src: url(../assets/fonts/archivo-latin-wdth-normal.woff2) format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-style: normal; font-display: swap; }
 @font-face { font-family: "Archivo"; src: url(../assets/fonts/archivo-latin-wdth-italic.woff2) format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-style: italic; font-display: swap; }
 :root {
@@ -72,6 +73,7 @@
   --secrete: linear-gradient(135deg, #3fe0b5, #5b9bff 30%, #b07bff 55%, #ff8fc4 75%, #ffd36a);
 
   --titres: "Orbitron", "Archivo", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
   --chrome: linear-gradient(180deg, #ffffff 0%, #dfe7ff 38%, #8ea6e6 50%, #cfdbff 62%, #ffffff 100%);
   --r: 14px;
   --w-carte: 190px;
@@ -109,11 +111,14 @@ a { color: inherit; text-underline-offset: .2em; }
 
 /* ---------- Barre du haut ---------- */
 .top {
-  position: sticky; top: 0; z-index: 5;
-  background: rgb(17 20 58 / .94);
-  border-bottom: 1px solid rgb(180 185 227 / .12);
+  position: sticky; top: .6rem; z-index: 5;
+  width: min(100% - 1.2rem, var(--max) + 2.4rem); margin: .6rem auto 0;
+  border-radius: 14px; border: 1px solid rgb(255 255 255 / .12);
+  background: rgb(24 28 78 / .62); box-shadow: 0 18px 40px -22px #000, inset 0 1px 0 rgb(255 255 255 / .08);
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
 }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .top { background: rgb(17 20 58 / .96); } }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.4rem; width: auto; padding-inline: .7rem; }
 .mono { flex: none;
 
   display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 8px;
@@ -239,7 +244,7 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
    ========================================================= */
 .hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2rem, 5vw, 4rem); }
 .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) auto; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-.dispo { display: inline-flex; align-items: center; gap: .55rem; font-size: var(--t-1); color: var(--doux); margin-bottom: 1.2rem; }
+.dispo { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--mono); font-size: .8rem; letter-spacing: .02em; color: var(--doux); margin-bottom: 1.2rem; }
 .dispo::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: var(--menthe); box-shadow: 0 0 0 4px rgb(63 224 181 / .2); flex: none; }
 .nom {
   font-family: var(--titres); font-size: clamp(2.6rem, 1.3rem + 5vw, 5.2rem); font-weight: 900; line-height: 1; letter-spacing: .01em;
@@ -275,7 +280,7 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 }
 .main-cartes .carte { animation: arrive .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
 .main-cartes > div { display: grid; justify-items: center; align-content: start; gap: .55rem; }
-.lien-pdf { display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-pdf { font-family: var(--mono); display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
 .lien-projet { display: inline-block; padding: .4rem 0; }
 .vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .pied-liens { display: flex; gap: 1.2rem; margin: 0; }
@@ -329,9 +334,9 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
   background: radial-gradient(circle at 50% 30%, #34408f, #141846 80%); color: #fff; padding: 1rem .5rem;
 }
 .etape__annee b { font-family: var(--titres); font-size: 1.9rem; font-weight: 900; line-height: 1; }
-.etape__annee span { font-size: var(--t-1); color: var(--doux); }
+.etape__annee span { font-family: var(--mono); font-size: .78rem; color: var(--doux); }
 .etape__corps { background: linear-gradient(175deg, var(--papier), var(--papier-2)); color: var(--texte-carte); border-radius: 0 calc(var(--r) - 4px) calc(var(--r) - 4px) 0; padding: 1rem 1.25rem 1.1rem; margin-left: -1.2rem; }
-.etape__type { font-size: var(--t-1); font-weight: 700; color: #6a5a2e; }
+.etape__type { font-family: var(--mono); font-size: .78rem; font-weight: 600; color: #6a5a2e; }
 .etape h3 { font-size: var(--t1); font-weight: 850; line-height: 1.2; font-stretch: 88%; }
 .etape__role { margin-top: .1rem; color: #4b4636; }
 .etape ul { margin-top: .7rem; display: grid; gap: .3rem; }
@@ -469,8 +474,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .top .wrap { position: relative; }
   .menu { display: inline-flex; }
   .top nav {
-    display: none; position: absolute; top: 100%; left: calc(-1 * var(--pad)); right: calc(-1 * var(--pad)); flex-direction: column; gap: .5rem;
-    padding: .9rem var(--pad) 1.1rem; background: rgb(17 20 58 / .98); border-bottom: 1px solid rgb(180 185 227 / .2); box-shadow: 0 20px 30px -20px #000;
+    display: none; position: absolute; top: calc(100% + .5rem); left: 0; right: 0; flex-direction: column; gap: .25rem;
+    padding: .6rem; background: #11143a; border: 1px solid rgb(255 255 255 / .12); border-radius: 14px; box-shadow: 0 24px 40px -20px #000;
   }
   .top nav.ouvert { display: flex; }
   .top nav a { padding: .7rem 1rem; font-size: var(--t0); }
@@ -600,6 +605,23 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @media (max-width: 640px) { .vue[open] { grid-template-columns: 1fr; justify-items: center; max-height: calc(100svh - 1.5rem); overflow-y: auto; } }
 
 
+
+/* ---------- Scène animée de la bascule ---------- */
+.flux { position: relative; margin: 0 0 2rem; border-radius: var(--r); overflow: hidden; border: 1px solid rgb(180 185 227 / .16); background: radial-gradient(120% 90% at 50% 0%, #1e2466, #0a0c26 70%); }
+.flux canvas { display: block; width: 100%; height: clamp(15rem, 11rem + 14vw, 21rem); }
+.flux__sys { position: absolute; top: .9rem; display: grid; gap: .1rem; font-family: var(--mono); font-size: .8rem; color: var(--encre); }
+.flux__sys small { font-size: .7rem; color: var(--doux); }
+.flux__sys--de { left: 1rem; } .flux__sys--vers { right: 1rem; text-align: right; }
+.flux__bas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; padding: .8rem 1rem; border-top: 1px solid rgb(180 185 227 / .14); background: rgb(10 12 38 / .6); font-family: var(--mono); font-size: .76rem; }
+.flux__etapes { display: flex; flex-wrap: wrap; gap: .3rem .9rem; counter-reset: fe; }
+.flux__etapes li { counter-increment: fe; color: rgb(180 185 227 / .5); transition: color .3s; }
+.flux__etapes li::before { content: "0" counter(fe) " "; }
+.flux__etapes li.fait { color: var(--menthe); }
+.flux__etapes li.actif { color: var(--or); }
+.flux__pct { color: var(--encre); white-space: nowrap; }
+.flux__pct b { font-weight: 600; color: var(--menthe); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .flux__etapes li { transition: none; } }
+
 /* ---------- Page plus courte sur téléphone ---------- */
 .plus-parcours { display: none; }
 .haut { position: fixed; right: 1rem; bottom: 1rem; z-index: 19; display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 50%; border: 1.5px solid var(--or); background: #1d2260; color: var(--or); cursor: pointer; box-shadow: 0 10px 22px -10px #000; opacity: 0; translate: 0 .6rem; pointer-events: none; transition: opacity .2s, translate .2s; }
@@ -642,7 +664,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .role-liste li::before { content: "◆"; position: absolute; left: 0; color: var(--or); font-size: .8em; top: .2em; }
 .code { margin-top: .4rem; border-radius: var(--r); overflow: hidden; border: 1px solid rgb(180 185 227 / .2); max-width: 48rem; }
 .code p { padding: .6rem 1rem; font-size: var(--t-1); color: var(--doux); background: rgb(27 31 82 / .8); }
-.code pre { margin: 0; padding: 1rem; overflow-x: auto; background: #0b0e2a; color: #dfe6ff; font: .86rem/1.55 ui-monospace, "Cascadia Code", Menlo, Consolas, monospace; }
+.code pre { margin: 0; padding: 1rem; overflow-x: auto; background: #0b0e2a; color: #dfe6ff; font: .86rem/1.55 var(--mono); }
 .code .k { color: #f2bf4a; } .code .c { color: #8f96c8; }
 .bilan { margin-top: 2rem; padding: 1.3rem 1.4rem; border-radius: var(--r); background: rgb(63 224 181 / .08); border: 1px solid rgb(63 224 181 / .35); max-width: 48rem; }
 .bilan b { color: var(--menthe); }
@@ -770,6 +792,16 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <h2 class="titre" id="t-bascule">The IZY → PSA migration</h2>
         <p class="chapeau">Case study. Together with the UMS and Assia teams, we replaced the mutual's core software: all member data moved from IZY Protect to ASSIA PSA.</p>
       </div>
+      <figure class="flux" aria-labelledby="flux-legende">
+        <canvas aria-hidden="true"></canvas>
+        <p class="flux__sys flux__sys--de" aria-hidden="true">IZY Protect<small>old software</small></p>
+        <p class="flux__sys flux__sys--vers" aria-hidden="true">ASSIA PSA<small>new software</small></p>
+        <div class="flux__bas" aria-hidden="true">
+          <ol class="flux__etapes"><li>Takeover</li><li>Checks</li><li>Switchover</li><li>Cleanup</li></ol>
+          <p class="flux__pct"><b data-flux-pct>0</b> % of data migrated</p>
+        </div>
+        <figcaption class="vh" id="flux-legende">Animation: member data moves from the old software to the new one in four steps: takeover, checks, switchover and cleanup.</figcaption>
+      </figure>
       <div class="cas__tete">
         <div class="jalon"><b>6 months</b><span>to switch over</span><p>Takeover, checks and go-live of member data in ASSIA PSA.</p></div>
         <div class="jalon"><b>1 year</b><span>to adapt and master it</span><p>Adjustments, new configuration and team autonomy on the tool.</p></div>
@@ -1569,6 +1601,54 @@ const CONTENU = {
   { const h = $(".haut"); const maj = () => { const v = scrollY > innerHeight * 1.5; h.classList.toggle("visible", v); h.tabIndex = v ? 0 : -1; };
     addEventListener("scroll", maj, { passive: true }); maj(); }
   defileur($(".main-cartes"), "certificates"); defileur($(".enjeux"), "migration challenges"); defileur(terrain, "career"); defileur(tirage, "booster");
+
+
+  /* ---------- Scène animée de la bascule ---------- */
+  (() => {
+    const fig = $(".flux"); if (!fig) return;
+    const cv = fig.querySelector("canvas"), cx = cv.getContext("2d"), etapes = [...fig.querySelectorAll(".flux__etapes li")], pctEl = fig.querySelector("[data-flux-pct]");
+    let W = 0, H = 0, pts = [], cible = calme ? 1 : 0, P = cible, visible = false, boucle = 0;
+    const alea = (n => () => (n = (n * 16807) % 2147483647) / 2147483647)(974);
+    function preparer() {
+      const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+      W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = W < 500 ? 260 : 420, bw = Math.min(W * .26, 190), bh = H * .46, top = H * .3;
+      pts = Array.from({ length: n }, (_, i) => {
+        const col = i % 14, ligne = Math.floor(i / 14), lignes = Math.ceil(n / 14);
+        return { x0: W * .05 + (col + alea() * .6) / 14 * bw, y0: top + (ligne + alea() * .6) / lignes * bh,
+          x1: W * .95 - bw + (col + alea() * .6) / 14 * bw, y1: top + (ligne + alea() * .6) / lignes * bh,
+          d: (col / 14) * .25 + alea() * .45, h: (alea() - .5) * H * .32, a: .45 + alea() * .55 };
+      });
+    }
+    const lisse = t => t * t * (3 - 2 * t);
+    function dessiner() {
+      cx.clearRect(0, 0, W, H);
+      cx.strokeStyle = "rgba(143,150,200,.09)"; cx.lineWidth = 1;
+      for (let x = 0; x <= W; x += 28) { cx.beginPath(); cx.moveTo(x, H * .78); cx.lineTo(W / 2 + (x - W / 2) * 1.8, H); cx.stroke(); }
+      for (let y = H * .78; y <= H; y += 12) { cx.beginPath(); cx.moveTo(0, y); cx.lineTo(W, y); cx.stroke(); }
+      const gx = W / 2;
+      cx.setLineDash([3, 5]); cx.strokeStyle = "rgba(242,191,74,.45)"; cx.beginPath(); cx.moveTo(gx, H * .24); cx.lineTo(gx, H * .84); cx.stroke(); cx.setLineDash([]);
+      cx.fillStyle = "rgba(242,191,74,.8)"; cx.font = "11px 'Geist Mono', monospace"; cx.textAlign = "center"; cx.fillText("checks", gx, H * .9);
+      let arrives = 0, passes = 0;
+      for (const p of pts) {
+        const t = Math.max(0, Math.min(1, (P * 1.25 - p.d) / .55)), e = lisse(t);
+        const x = p.x0 + (p.x1 - p.x0) * e, y = p.y0 + (p.y1 - p.y0) * e + Math.sin(e * Math.PI) * p.h;
+        if (t >= 1) arrives++; if (x > gx) passes++;
+        cx.fillStyle = t >= 1 ? `rgba(63,224,181,${p.a})` : x > gx ? `rgba(242,191,74,${p.a})` : t > 0 ? `rgba(160,190,255,${p.a})` : `rgba(143,150,200,${p.a * .7})`;
+        cx.fillRect(x, y, t > 0 && t < 1 ? 2.2 : 1.6, t > 0 && t < 1 ? 2.2 : 1.6);
+      }
+      const pct = Math.round(arrives / pts.length * 100); pctEl.textContent = pct;
+      const g = passes / pts.length, k = pct >= 100 ? 4 : pct >= 85 ? 3 : g >= .35 ? 2 : P > .05 ? 1 : 0;
+      etapes.forEach((li, i) => { li.classList.toggle("fait", i < k); li.classList.toggle("actif", i === k); });
+    }
+    function mesurer() { const r = fig.getBoundingClientRect(), vh = innerHeight; cible = calme ? 1 : Math.max(0, Math.min(1, (vh * .92 - r.top) / (vh * .72))); }
+    function tic() { P += (cible - P) * .12; dessiner(); boucle = visible && Math.abs(cible - P) > .001 ? requestAnimationFrame(tic) : 0; if (!boucle) { P = cible; dessiner(); } }
+    const relancer = () => { mesurer(); if (!boucle) boucle = requestAnimationFrame(tic); };
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) relancer(); }).observe(fig);
+    addEventListener("scroll", () => { if (visible && !calme) relancer(); }, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(() => { preparer(); dessiner(); }).observe(cv);
+    preparer(); mesurer(); P = cible; dessiner();
+  })();
 
   /* ---------- Menu sur téléphone ---------- */
   const nav = $("#menu-sections"), btnMenu = $(".menu");
