@@ -599,6 +599,28 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .vue__fermer { position: absolute; top: .7rem; right: .7rem; width: 2.3rem; height: 2.3rem; border-radius: 6px; border: 1.5px solid #6ea2ff; background: transparent; color: #fff; cursor: pointer; font-size: 1.2rem; }
 @media (max-width: 640px) { .vue[open] { grid-template-columns: 1fr; justify-items: center; max-height: calc(100svh - 1.5rem); overflow-y: auto; } }
 
+
+/* ---------- Page plus courte sur téléphone ---------- */
+.plus-parcours { display: none; }
+.haut { position: fixed; right: 1rem; bottom: 1rem; z-index: 19; display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 50%; border: 1.5px solid var(--or); background: #1d2260; color: var(--or); cursor: pointer; box-shadow: 0 10px 22px -10px #000; opacity: 0; translate: 0 .6rem; pointer-events: none; transition: opacity .2s, translate .2s; }
+.haut.visible { opacity: 1; translate: 0 0; pointer-events: auto; }
+.haut svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.haut:hover { background: var(--or); color: #2b1a02; }
+@media (max-width: 640px) {
+  .enjeux { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: .3rem; }
+  .enjeux::-webkit-scrollbar { display: none; }
+  .enjeu { scroll-snap-align: start; }
+  .parcours:not(.tout) > .etape:nth-child(n+4) { display: none; }
+  .plus-parcours { display: flex; justify-content: center; margin-top: 1rem; }
+  body:not(.classique) .plus-parcours { display: none; }
+  .exploits { grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .exploit { grid-template-columns: 1fr; align-content: start; gap: .5rem; padding: .85rem .8rem; }
+  .exploit__valeur { justify-self: start; }
+  .exploit h3 { font-size: var(--t-1); }
+  .exploit p { font-size: .82rem; }
+}
+@media (prefers-reduced-motion: reduce) { .haut { transition: none; } }
+
 /* ---------- Étude de cas ---------- */
 .cas__tete { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; margin-bottom: 2rem; }
 .jalon { padding: 1.1rem 1.2rem; border-radius: var(--r); background: linear-gradient(175deg, var(--papier), var(--papier-2)) padding-box, var(--ultra) border-box; border: 5px solid transparent; color: var(--texte-carte); }
@@ -800,7 +822,8 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <h2 class="titre" id="t-parcours">Career</h2>
         <p class="chapeau jeu-seul">Draw the cards one by one, from high school to today.</p>
       </div>
-      <ol class="parcours classique-seul" data-zone="parcours-liste"></ol>
+      <ol class="parcours classique-seul" id="liste-parcours" data-zone="parcours-liste"></ol>
+      <p class="plus-parcours classique-seul"><button class="btn btn--clair" type="button" data-action="tout-parcours" aria-controls="liste-parcours" aria-expanded="false">Show the whole career</button></p>
       <div class="pioche jeu-seul">
         <div class="paquet">
           <button class="paquet__btn" type="button" data-action="piocher">
@@ -913,6 +936,8 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
     <p class="pied-liens"><a href="../articles/" hreflang="fr">Articles (FR)</a><a data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (opens in a new tab)</span></a></p>
   </div>
 </footer>
+
+<button class="haut" type="button" data-action="haut" aria-label="Back to top" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg></button>
 
 <dialog class="vue" aria-labelledby="vue-titre">
   <button class="vue__fermer" type="button" data-action="fermer" aria-label="Close">✕</button>
@@ -1541,7 +1566,9 @@ const CONTENU = {
     new MutationObserver(() => requestAnimationFrame(maj)).observe(el, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
     maj();
   }
-  defileur($(".main-cartes"), "certificates"); defileur(terrain, "career"); defileur(tirage, "booster");
+  { const h = $(".haut"); const maj = () => { const v = scrollY > innerHeight * 1.5; h.classList.toggle("visible", v); h.tabIndex = v ? 0 : -1; };
+    addEventListener("scroll", maj, { passive: true }); maj(); }
+  defileur($(".main-cartes"), "certificates"); defileur($(".enjeux"), "migration challenges"); defileur(terrain, "career"); defileur(tirage, "booster");
 
   /* ---------- Menu sur téléphone ---------- */
   const nav = $("#menu-sections"), btnMenu = $(".menu");
@@ -1592,6 +1619,13 @@ const CONTENU = {
       mode(!versJeu);
       notifier(versJeu ? "Game mode on. <b>Have fun!</b>" : "Classic mode: the whole career as a list.");
     },
+    "tout-parcours": e => {
+      const b = e.target.closest("button"), l = $("#liste-parcours"), ouvert = l.classList.toggle("tout");
+      b.setAttribute("aria-expanded", ouvert); b.textContent = ouvert ? "Show less" : "Show the whole career";
+      const h = l.querySelector(".etape:nth-child(4) h3");
+      if (ouvert && h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    },
+    haut: () => { window.scrollTo({ top: 0, behavior: calme ? "auto" : "smooth" }); $(".mono")?.focus({ preventScroll: true }); },
     piocher, "tout-piocher": async () => { while (piochees < C.parcours.length) { piocher(); await attendre(350); } },
     ouvrir, "tout-retourner": toutRetourner, nouveau,
     fermer: () => vue.close(),
