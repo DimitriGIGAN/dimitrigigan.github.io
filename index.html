@@ -822,17 +822,6 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <li>Support et accompagnement des utilisateurs pendant et après le changement</li>
       </ul>
 
-      <h3 class="cas__sous">Exemple de contrôle</h3>
-      <div class="code">
-        <p>Exemple simplifié et anonymisé du type de requête utilisé pour vérifier qu'aucun adhérent ne s'est perdu pendant la reprise.</p>
-<pre><code><span class="c">-- Adhérents présents dans l'ancien système mais absents du nouveau</span>
-<span class="k">SELECT</span> a.num_adherent, a.nom, a.date_adhesion
-<span class="k">FROM</span>   anciens_adherents a
-<span class="k">LEFT JOIN</span> adherents_assia n
-       <span class="k">ON</span> n.num_adherent = a.num_adherent
-<span class="k">WHERE</span>  n.num_adherent <span class="k">IS NULL</span>;</code></pre>
-      </div>
-
       <p class="bilan"><b>Le résultat :</b> la mutuelle a changé de logiciel en 6 mois, sans perdre ses données, et les équipes maîtrisaient l'outil un an plus tard.</p>
       <p class="article-lien"><a href="articles/changer-logiciel-metier-mutuelle.html">Lire la checklist complète : changer le logiciel métier d'une mutuelle</a> · <a href="articles/">Tous mes articles</a></p>
     </div>

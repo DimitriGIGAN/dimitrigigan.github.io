@@ -822,17 +822,6 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <li>User support and coaching during and after the change</li>
       </ul>
 
-      <h3 class="cas__sous">Sample check</h3>
-      <div class="code">
-        <p>A simplified, anonymised example of the kind of query used to make sure no member got lost during the takeover.</p>
-<pre><code><span class="c">-- Members present in the old system but missing from the new one</span>
-<span class="k">SELECT</span> a.num_adherent, a.nom, a.date_adhesion
-<span class="k">FROM</span>   anciens_adherents a
-<span class="k">LEFT JOIN</span> adherents_assia n
-       <span class="k">ON</span> n.num_adherent = a.num_adherent
-<span class="k">WHERE</span>  n.num_adherent <span class="k">IS NULL</span>;</code></pre>
-      </div>
-
       <p class="bilan"><b>The result:</b> the mutual changed software in 6 months without losing its data, and the teams had mastered the tool a year later.</p>
       <p class="article-lien"><a href="../articles/changer-logiciel-metier-mutuelle.html" hreflang="fr">Read the full checklist (in French): changing a health mutual's core software</a> · <a href="../articles/" hreflang="fr">All my articles (in French)</a></p>
     </div>
