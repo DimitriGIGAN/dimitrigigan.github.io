@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiers payant et flux : comment l'argent circule entre la Sécu, la mutuelle et la pharmacie · Dimitri Gigan</title>
+<meta name="description" content="Carte Vitale, feuille de soins électronique, télétransmission NOEMIE, tiers payant : le trajet d'un remboursement santé expliqué étape par étape.">
+<link rel="canonical" href="https://dimitrigigan.github.io/articles/flux-tiers-payant.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tiers payant et flux : comment l'argent circule en santé">
+<meta property="og:description" content="Ce qui se passe entre le moment où vous tendez votre carte Vitale et celui où tout le monde est payé.">
+<meta property="og:url" content="https://dimitrigigan.github.io/articles/flux-tiers-payant.html">
+<meta property="og:image" content="https://dimitrigigan.github.io/assets/apercu.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="theme-color" content="#11143a">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/article.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tiers payant et flux : comment l'argent circule entre la Sécu, la mutuelle et la pharmacie",
+  "description": "Carte Vitale, feuille de soins électronique, télétransmission NOEMIE et tiers payant expliqués étape par étape.",
+  "inLanguage": "fr",
+  "datePublished": "2026-11-19",
+  "dateModified": "2026-11-19",
+  "image": "https://dimitrigigan.github.io/assets/apercu.jpg",
+  "mainEntityOfPage": "https://dimitrigigan.github.io/articles/flux-tiers-payant.html",
+  "author": { "@type": "Person", "name": "Dimitri Gigan", "url": "https://dimitrigigan.github.io/" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#article">Aller à l'article</a>
+<header class="top">
+  <a class="mono" href="../" aria-label="Retour au portfolio de Dimitri Gigan">DG</a>
+  <a class="retour" href="./">← Tous les articles</a>
+</header>
+
+<header class="entete">
+  <p class="rubrique">Comprendre sa santé · Pour tout le monde et pour les pros</p>
+  <h1>Tiers payant et flux : comment l'argent circule</h1>
+  <p class="chapeau">À la pharmacie, vous tendez votre carte Vitale et votre carte de mutuelle, et vous repartez sans payer. Pourtant, trois organismes vont s'échanger des fichiers et de l'argent. Voici le trajet, étape par étape.</p>
+  <p class="meta">Par Dimitri Gigan, technicien informatique SI santé · 19 novembre 2026 · 5 min de lecture</p>
+</header>
+
+<main id="article" class="papier">
+  <p>Dans une mutuelle, on appelle ça « les flux » : des fichiers échangés chaque jour, de façon automatique, entre les professionnels de santé, l'Assurance maladie et les complémentaires. Quand ils fonctionnent, personne ne les voit. Quand l'un d'eux s'arrête, les remboursements s'arrêtent avec lui.</p>
+
+  <h2>Le trajet d'une feuille de soins</h2>
+  <ol class="parcours-flux">
+    <li><b>Vous présentez votre carte Vitale</b>Le professionnel de santé crée une feuille de soins électronique : qui vous êtes, quel acte, quel montant.<span class="qui">Professionnel de santé</span></li>
+    <li><b>La feuille part à l'Assurance maladie</b>Elle est télétransmise à votre caisse, sans papier. Votre caisse calcule et paie sa part, en tenant compte de la participation forfaitaire et des franchises.<span class="qui">Assurance maladie</span></li>
+    <li><b>Le décompte part à votre mutuelle</b>Grâce à la télétransmission dite NOEMIE, votre caisse envoie automatiquement le détail du remboursement à votre complémentaire santé. Vous n'avez rien à envoyer.<span class="qui">Assurance maladie → mutuelle</span></li>
+    <li><b>La mutuelle calcule sa part</b>Elle applique les garanties de votre contrat à ce décompte : pourcentage de la base, forfaits, plafonds.<span class="qui">Mutuelle</span></li>
+    <li><b>Chacun est payé</b>Selon les cas, l'argent va sur votre compte, ou directement chez le professionnel de santé si vous avez bénéficié du tiers payant.<span class="qui">Virements</span></li>
+  </ol>
+
+  <h2>Télétransmission ou tiers payant : la différence</h2>
+  <p>On confond souvent les deux. Ce sont pourtant deux mécanismes distincts, qui se complètent.</p>
+  <div class="defile-tab">
+  <table class="tableau">
+    <caption>Deux mécanismes complémentaires</caption>
+    <thead><tr><th scope="col"></th><th scope="col">Télétransmission</th><th scope="col">Tiers payant</th></tr></thead>
+    <tbody>
+      <tr><td><b>Ce qui circule</b></td><td>L'information : le décompte de la Sécu est envoyé à la mutuelle.</td><td>L'argent : le professionnel est payé directement par la Sécu et la mutuelle.</td></tr>
+      <tr><td><b>Pour vous</b></td><td>Vous avancez les frais, mais vous êtes remboursé automatiquement par les deux, sans paperasse.</td><td>Vous n'avancez pas les frais (ou seulement une partie).</td></tr>
+      <tr><td><b>Ce qu'il faut</b></td><td>Que votre mutuelle soit bien rattachée à votre dossier à la Sécu.</td><td>Présenter une carte de mutuelle valide, et un professionnel qui le pratique.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="encart">Un seul organisme complémentaire peut être relié à votre dossier pour la télétransmission. <b>Si vous changez de mutuelle, prévenez l'ancienne et la nouvelle</b>, et donnez votre nouvelle carte à votre pharmacie : c'est la cause n°1 des remboursements bloqués en début d'année.</p>
+
+  <h2>Ce que la mutuelle échange d'autre</h2>
+  <p>Les remboursements ne sont qu'une partie des flux. Une mutuelle échange aussi, chaque jour ou chaque mois :</p>
+  <ul class="points">
+    <li><strong>Les retours de paiement et de rejet</strong> vers les professionnels de santé, pour qu'ils sachent ce qui a été payé en tiers payant.</li>
+    <li><strong>Les prélèvements des cotisations</strong> sur les comptes des adhérents.</li>
+    <li><strong>Les virements des remboursements</strong> vers les adhérents et les professionnels.</li>
+    <li><strong>Les fichiers des partenaires</strong> : réseaux de soins, organismes de gestion, entreprises clientes.</li>
+    <li><strong>Les écritures comptables</strong> qui découlent de tout cela.</li>
+  </ul>
+  <p>C'est pour ça qu'un changement de logiciel de mutuelle est si délicat : le jour de la bascule, chacun de ces tuyaux doit être rebranché sans coupure. Je l'ai vécu de l'intérieur, et je l'ai raconté dans <a href="changer-logiciel-metier-mutuelle.html">ma checklist de la bascule</a>.</p>
+
+  <h2>Si un remboursement n'arrive pas</h2>
+  <ul class="points">
+    <li>Regardez votre décompte de la Sécu (sur votre compte en ligne) : il indique si les informations ont été transmises à votre mutuelle.</li>
+    <li>Si rien n'a été transmis, demandez à votre mutuelle de vérifier qu'elle est bien rattachée à votre dossier.</li>
+    <li>En tiers payant refusé à la pharmacie, vérifiez que votre carte de mutuelle est celle de l'année en cours.</li>
+  </ul>
+
+  <section class="cta" aria-labelledby="cta-titre">
+    <h2 id="cta-titre">Des flux à fiabiliser ?</h2>
+    <p>J'ai participé au basculement de tous les flux d'une mutuelle lors d'un changement de logiciel. Si vos échanges posent problème, parlons-en.</p>
+    <div class="boutons">
+      <a class="btn btn--or" href="../#contact">Me contacter</a>
+      <a class="btn btn--clair" href="./">Lire les autres articles</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Dimitri Gigan, Saint-Denis, La Réunion · <a href="../">Portfolio</a></p>
+</footer>
+<script data-goatcounter="https://dimitrigigan.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

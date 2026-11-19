@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lire un décompte de remboursement : Sécu, mutuelle, reste à charge · Dimitri Gigan</title>
+<meta name="description" content="Base de remboursement, part de la Sécu, part de la mutuelle, participation forfaitaire, « 100 % » : comprendre son décompte de remboursement santé, avec un calculateur.">
+<link rel="canonical" href="https://dimitrigigan.github.io/articles/lire-decompte-remboursement.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lire un décompte de remboursement : Sécu, mutuelle, reste à charge">
+<meta property="og:description" content="Pourquoi on vous rembourse 19 € sur une consultation à 30 €, et ce que veut vraiment dire « remboursé à 100 % ».">
+<meta property="og:url" content="https://dimitrigigan.github.io/articles/lire-decompte-remboursement.html">
+<meta property="og:image" content="https://dimitrigigan.github.io/assets/apercu.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="theme-color" content="#11143a">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/article.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Lire un décompte de remboursement : Sécu, mutuelle, reste à charge",
+  "description": "Comprendre son décompte de remboursement santé : base de remboursement, part de la Sécu, part de la mutuelle, participation forfaitaire.",
+  "inLanguage": "fr",
+  "datePublished": "2026-11-19",
+  "dateModified": "2026-11-19",
+  "image": "https://dimitrigigan.github.io/assets/apercu.jpg",
+  "mainEntityOfPage": "https://dimitrigigan.github.io/articles/lire-decompte-remboursement.html",
+  "author": { "@type": "Person", "name": "Dimitri Gigan", "url": "https://dimitrigigan.github.io/" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#article">Aller à l'article</a>
+<header class="top">
+  <a class="mono" href="../" aria-label="Retour au portfolio de Dimitri Gigan">DG</a>
+  <a class="retour" href="./">← Tous les articles</a>
+</header>
+
+<header class="entete">
+  <p class="rubrique">Comprendre sa santé · Pour tout le monde</p>
+  <h1>Lire un décompte de remboursement</h1>
+  <p class="chapeau">Vous payez 30 € chez le médecin, la Sécu vous rembourse 19 €, la mutuelle 9 €, et il reste 2 €. D'où viennent ces chiffres ? Voici comment lire un décompte, ligne par ligne.</p>
+  <p class="meta">Par Dimitri Gigan, technicien informatique SI santé · 19 novembre 2026 · 5 min de lecture</p>
+</header>
+
+<main id="article" class="papier">
+  <p>J'ai passé trois ans dans les coulisses d'une mutuelle, à paramétrer les garanties qui calculent ces montants. Bonne nouvelle : un décompte se lit avec seulement <strong>quatre notions</strong>. Une fois qu'on les a, plus rien ne surprend.</p>
+
+  <h2>1. Le montant payé</h2>
+  <p>C'est ce que le professionnel de santé vous a facturé. Il peut être égal au tarif officiel, ou plus élevé si le praticien pratique des dépassements d'honoraires.</p>
+
+  <h2>2. La base de remboursement</h2>
+  <p>C'est le tarif de référence fixé par l'Assurance maladie pour chaque acte. <strong>Tous les calculs partent de là, pas du prix que vous avez payé.</strong> Pour une consultation chez un médecin généraliste de secteur 1, la base est de 30 € en métropole ; les tarifs sont majorés en outre-mer, dont La Réunion.</p>
+  <p>Si le médecin est en secteur 2 sans adhérer à l'OPTAM, la base tombe à 23 €, même si vous payez davantage. C'est souvent là que naît un reste à charge inattendu.</p>
+
+  <h2>3. La part de la Sécu</h2>
+  <p>L'Assurance maladie rembourse un pourcentage de la base : <strong>70 %</strong> pour une consultation chez votre médecin traitant. Sur une base de 30 €, cela fait 21 €.</p>
+  <p>Elle retire ensuite la <strong>participation forfaitaire de 2 €</strong>, qui reste à votre charge. D'où les 19 € versés. Hors parcours de soins (sans médecin traitant déclaré), le taux descend à 30 % : le remboursement chute fortement.</p>
+
+  <h2>4. La part de la mutuelle</h2>
+  <p>La mutuelle complète, selon votre contrat. La plupart des garanties sont exprimées en <strong>pourcentage de la base de remboursement</strong>, Sécu comprise.</p>
+  <p class="encart">« Remboursé à 100 % » veut souvent dire <b>100 % de la base de remboursement</b>, pas 100 % de ce que vous avez payé. Sur une consultation à 30 € et une base de 30 €, la Sécu prend 70 %, la mutuelle les 30 % restants, et seule la participation forfaitaire de 2 € reste pour vous. Mais si le médecin facture 50 €, les 20 € de dépassement ne sont couverts que si votre contrat prévoit plus de 100 %.</p>
+  <p>À savoir : dans les contrats dits « responsables », les plus courants, la mutuelle ne rembourse ni la participation forfaitaire ni les franchises médicales. Ces quelques euros restent donc toujours à votre charge.</p>
+
+  <h2>Un exemple complet</h2>
+  <div class="defile-tab">
+  <table class="tableau">
+    <caption>Consultation chez un médecin traitant généraliste, secteur 1, avec une garantie à 100 % de la base</caption>
+    <thead><tr><th scope="col">Ligne du décompte</th><th scope="col" class="nb">Montant</th></tr></thead>
+    <tbody>
+      <tr><td>Montant payé</td><td class="nb">30,00 €</td></tr>
+      <tr><td>Base de remboursement</td><td class="nb">30,00 €</td></tr>
+      <tr><td>Part Sécu : 70 % de 30 €</td><td class="nb">21,00 €</td></tr>
+      <tr><td>Participation forfaitaire retenue</td><td class="nb">− 2,00 €</td></tr>
+      <tr><td>Versé par la Sécu</td><td class="nb">19,00 €</td></tr>
+      <tr><td>Versé par la mutuelle : 100 % − 70 % de 30 €</td><td class="nb">9,00 €</td></tr>
+      <tr><td><b>Reste à votre charge</b></td><td class="nb"><b>2,00 €</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <section class="calc" aria-labelledby="calc-titre">
+    <h3 id="calc-titre">Calculez votre reste à charge</h3>
+    <p>Reprenez les chiffres de votre décompte ou de votre contrat. Le calcul est simplifié : il ne tient pas compte des franchises, des plafonds annuels ni des forfaits.</p>
+    <div class="champs">
+      <label>Montant payé (€)<input type="number" id="paye" value="30" min="0" step="0.01" inputmode="decimal"></label>
+      <label>Base de remboursement (€)<input type="number" id="base" value="30" min="0" step="0.01" inputmode="decimal"></label>
+      <label>Taux de la Sécu (%)<input type="number" id="taux" value="70" min="0" max="100" step="1" inputmode="numeric"></label>
+      <label>Garantie de la mutuelle (% de la base, Sécu comprise)<input type="number" id="garantie" value="100" min="0" max="1000" step="10" inputmode="numeric"></label>
+    </div>
+    <label class="case"><input type="checkbox" id="pf" checked> Retenir la participation forfaitaire de 2 €</label>
+    <div class="resultat" role="status" aria-live="polite">
+      <div><span>Versé par la Sécu</span><b id="r-secu">19,00 €</b></div>
+      <div><span>Versé par la mutuelle</span><b id="r-mut">9,00 €</b></div>
+      <div class="reste"><span>Reste à votre charge</span><b id="r-reste">2,00 €</b></div>
+    </div>
+    <p class="note">Exemple pédagogique : seul votre décompte officiel fait foi.</p>
+  </section>
+
+  <h2>Quand le décompte vous surprend</h2>
+  <ul class="points">
+    <li><strong>Remboursement Sécu plus faible que prévu</strong> : vérifiez que votre médecin traitant est bien déclaré, et que d'anciennes participations forfaitaires ou franchises n'ont pas été récupérées sur ce paiement.</li>
+    <li><strong>Rien de la mutuelle</strong> : la télétransmission entre la Sécu et votre mutuelle n'est peut-être pas activée. Votre décompte Sécu indique si l'information a été transmise.</li>
+    <li><strong>Gros reste à charge</strong> : regardez l'écart entre le montant payé et la base. C'est presque toujours un dépassement d'honoraires.</li>
+  </ul>
+
+  <section class="cta" aria-labelledby="cta-titre">
+    <h2 id="cta-titre">Une question sur un remboursement ?</h2>
+    <p>J'ai paramétré plus de 500 garanties de mutuelle. Si un calcul vous échappe, ou si vous êtes une mutuelle qui veut des décomptes plus clairs, écrivez-moi.</p>
+    <div class="boutons">
+      <a class="btn btn--or" href="../#contact">Me contacter</a>
+      <a class="btn btn--clair" href="./">Lire les autres articles</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Sources : barèmes de l'Assurance maladie 2026 (ameli.fr). © 2026 Dimitri Gigan, Saint-Denis, La Réunion · <a href="../">Portfolio</a></p>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const euros = n => n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  const lire = id => Math.max(0, parseFloat(String($(id).value).replace(",", ".")) || 0);
+  function calculer() {
+    const paye = lire("paye"), base = lire("base"), taux = Math.min(100, lire("taux")) / 100, garantie = lire("garantie") / 100;
+    const pf = $("pf").checked ? 2 : 0;
+    const partSecu = base * taux;
+    const verseSecu = Math.max(0, partSecu - pf);
+    const plafondMut = Math.max(0, base * garantie - partSecu);
+    const besoin = Math.max(0, paye - partSecu);
+    const verseMut = Math.min(plafondMut, besoin);
+    const reste = Math.max(0, paye - verseSecu - verseMut);
+    $("r-secu").textContent = euros(verseSecu);
+    $("r-mut").textContent = euros(verseMut);
+    $("r-reste").textContent = euros(reste);
+  }
+  ["paye", "base", "taux", "garantie", "pf"].forEach(id => $(id).addEventListener("input", calculer));
+  calculer();
+})();
+</script>
+<script data-goatcounter="https://dimitrigigan.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

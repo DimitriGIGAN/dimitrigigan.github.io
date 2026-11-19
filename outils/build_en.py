@@ -104,8 +104,8 @@ PAIRES = [
   ("<b>Le résultat :</b> la mutuelle a changé de logiciel en 6 mois, sans perdre ses données, et les équipes maîtrisaient l'outil un an plus tard.",
    "<b>The result:</b> the mutual changed software in 6 months without losing its data, and the teams had mastered the tool a year later."),
   ('Mon rôle : ${esc(e.moi)}', 'My role: ${esc(e.moi)}'),
-  ('<p class="article-lien"><a href="articles/changer-logiciel-metier-mutuelle.html">Lire la checklist complète : changer le logiciel métier d\'une mutuelle</a></p>',
-   '<p class="article-lien"><a href="../articles/changer-logiciel-metier-mutuelle.html" hreflang="fr">Read the full checklist (in French): changing a health mutual\'s core software</a></p>'),
+  ('<p class="article-lien"><a href="articles/changer-logiciel-metier-mutuelle.html">Lire la checklist complète : changer le logiciel métier d\'une mutuelle</a> · <a href="articles/">Tous mes articles</a></p>',
+   '<p class="article-lien"><a href="../articles/changer-logiciel-metier-mutuelle.html" hreflang="fr">Read the full checklist (in French): changing a health mutual\'s core software</a> · <a href="../articles/" hreflang="fr">All my articles (in French)</a></p>'),
   # Projets
   (">Projets<", ">Projects<"),
   ("Ce que je construis à côté de mon métier.", "What I build alongside my job."),

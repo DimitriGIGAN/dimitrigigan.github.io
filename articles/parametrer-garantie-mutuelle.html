@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paramétrer une garantie de mutuelle : de la grille au remboursement · Dimitri Gigan</title>
+<meta name="description" content="Taux, forfaits, plafonds, périodes, cas de test : comment transformer une grille de garanties en règles de calcul fiables dans un logiciel de mutuelle.">
+<link rel="canonical" href="https://dimitrigigan.github.io/articles/parametrer-garantie-mutuelle.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paramétrer une garantie de mutuelle : de la grille au remboursement">
+<meta property="og:description" content="La méthode d'un technicien qui a paramétré plus de 500 garanties.">
+<meta property="og:url" content="https://dimitrigigan.github.io/articles/parametrer-garantie-mutuelle.html">
+<meta property="og:image" content="https://dimitrigigan.github.io/assets/apercu.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="theme-color" content="#11143a">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/article.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Paramétrer une garantie de mutuelle : de la grille au remboursement",
+  "description": "Comment transformer une grille de garanties en règles de calcul fiables dans un logiciel de mutuelle.",
+  "inLanguage": "fr",
+  "datePublished": "2026-11-19",
+  "dateModified": "2026-11-19",
+  "image": "https://dimitrigigan.github.io/assets/apercu.jpg",
+  "mainEntityOfPage": "https://dimitrigigan.github.io/articles/parametrer-garantie-mutuelle.html",
+  "author": { "@type": "Person", "name": "Dimitri Gigan", "url": "https://dimitrigigan.github.io/" }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#article">Aller à l'article</a>
+<header class="top">
+  <a class="mono" href="../" aria-label="Retour au portfolio de Dimitri Gigan">DG</a>
+  <a class="retour" href="./">← Tous les articles</a>
+</header>
+
+<header class="entete">
+  <p class="rubrique">Métier · Pour les équipes des mutuelles</p>
+  <h1>Paramétrer une garantie de mutuelle : de la grille au remboursement</h1>
+  <p class="chapeau">Une grille de garanties tient sur une page. Derrière chaque case, il y a une règle de calcul qui doit rembourser juste, des milliers de fois par jour. Voici la méthode que j'applique.</p>
+  <p class="meta">Par Dimitri Gigan, technicien informatique SI santé · 19 novembre 2026 · 6 min de lecture</p>
+  <div class="chiffres" aria-label="En chiffres">
+    <span><b>500+</b>garanties paramétrées</span>
+    <span><b>1</b>cas de test par garantie, au minimum</span>
+  </div>
+</header>
+
+<main id="article" class="papier">
+  <p>Paramétrer, ce n'est pas recopier une grille dans un logiciel. C'est <strong>traduire une promesse commerciale en règle de calcul</strong>, sans ambiguïté. Un même soin doit toujours donner le même remboursement, quel que soit le gestionnaire ou le jour.</p>
+
+  <h2><span class="etape">Étape 1</span>Lire la grille comme une machine</h2>
+  <p>Pour chaque ligne de la grille, je réponds à cinq questions. Si une seule reste floue, je ne paramètre pas : je pose la question au service qui a conçu le produit.</p>
+  <div class="defile-tab">
+  <table class="tableau">
+    <caption>Les cinq questions à poser à chaque ligne</caption>
+    <thead><tr><th scope="col">Question</th><th scope="col">Exemples de réponses</th></tr></thead>
+    <tbody>
+      <tr><td><b>Quel acte ?</b></td><td>Consultation de généraliste, verres, détartrage, ostéopathie, chambre particulière.</td></tr>
+      <tr><td><b>Quelle unité ?</b></td><td>Pourcentage de la base de remboursement, forfait en euros, montant par jour, par séance ou par an.</td></tr>
+      <tr><td><b>Sécu comprise ou en plus ?</b></td><td>« 150 % de la base » inclut-il les 70 % de la Sécu ? C'est la source d'erreur n°1.</td></tr>
+      <tr><td><b>Quelle limite ?</b></td><td>Plafond par acte, par an, par bénéficiaire ; nombre de séances maximum.</td></tr>
+      <tr><td><b>Quelle période ?</b></td><td>Année civile, date anniversaire du contrat, période glissante de deux ans pour l'optique.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2><span class="etape">Étape 2</span>Traduire en règles</h2>
+  <h3>Les garanties en pourcentage de la base</h3>
+  <p>Le cas le plus courant. La mutuelle rembourse la différence entre le pourcentage garanti et ce qu'a déjà versé la Sécu, sans jamais dépasser ce que l'adhérent a réellement payé. Un contrat à 200 % de la base peut donc couvrir une partie des dépassements d'honoraires ; un contrat à 100 % ne couvre que le ticket modérateur.</p>
+  <h3>Les forfaits en euros</h3>
+  <p>Fréquents pour l'optique, les médecines douces ou certains équipements. Ils se cumulent souvent avec un pourcentage de la base : il faut alors définir l'ordre de calcul, et ce qui se passe quand le forfait est épuisé en cours d'année.</p>
+  <h3>Les compteurs et périodes</h3>
+  <p>Un forfait annuel, une paire de lunettes tous les deux ans, un nombre de séances : chaque limite devient un compteur, rattaché au bon bénéficiaire et remis à zéro à la bonne date. Une erreur de période ne se voit pas tout de suite, mais elle finit toujours par produire un refus ou un double remboursement.</p>
+  <h3>Les règles du contrat responsable</h3>
+  <p>La plupart des contrats sont « responsables » : ils doivent respecter un cadre réglementaire (par exemple, ne pas rembourser la participation forfaitaire ni les franchises, et intégrer les paniers 100 % Santé). Le paramétrage doit appliquer ces règles automatiquement, pour ne pas dépendre de la vigilance de chacun.</p>
+
+  <h2><span class="etape">Étape 3</span>Tester avec des cas concrets</h2>
+  <p>Avant toute mise en production, chaque garantie passe des cas de test : un soin, un montant payé, un remboursement attendu, calculé à la main. Voici le type de tableau que je prépare.</p>
+  <div class="defile-tab">
+  <table class="tableau">
+    <caption>Exemple fictif : consultation chez un spécialiste, garantie à 200 % de la base, Sécu comprise</caption>
+    <thead><tr><th scope="col">Cas</th><th scope="col" class="nb">Payé</th><th scope="col" class="nb">Base</th><th scope="col" class="nb">Sécu (70 %)</th><th scope="col" class="nb">Mutuelle attendue</th></tr></thead>
+    <tbody>
+      <tr><td>Sans dépassement</td><td class="nb">30 €</td><td class="nb">30 €</td><td class="nb">21 €</td><td class="nb">9 €</td></tr>
+      <tr><td>Dépassement modéré</td><td class="nb">50 €</td><td class="nb">30 €</td><td class="nb">21 €</td><td class="nb">29 €</td></tr>
+      <tr><td>Dépassement au-delà de la garantie</td><td class="nb">80 €</td><td class="nb">30 €</td><td class="nb">21 €</td><td class="nb">39 €</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Dans le dernier cas, la garantie s'arrête à 200 % de 30 €, soit 60 € au total : 21 € pour la Sécu, 39 € pour la mutuelle. Les 20 € restants sont à la charge de l'adhérent. Pour garder l'exemple lisible, la participation forfaitaire n'est pas déduite du montant versé par la Sécu. Un test bien choisi teste toujours <strong>la limite</strong>, pas seulement le cas facile.</p>
+
+  <h2><span class="etape">Étape 4</span>Contrôler après la mise en service</h2>
+  <ul class="points">
+    <li>Relancer une requête de contrôle sur les premiers remboursements réels : montants versés, refus, garanties jamais déclenchées.</li>
+    <li>Surveiller les compteurs qui atteignent leur plafond plus vite que prévu : c'est souvent le signe d'un mauvais rattachement.</li>
+    <li>Recueillir les remarques des gestionnaires : ce sont eux qui voient les cas bizarres en premier.</li>
+  </ul>
+
+  <h2>Ce que je retiens</h2>
+  <p class="encart">Une garantie bien paramétrée, c'est une garantie qu'on ne remarque pas : <b>le remboursement est juste, point.</b> Le temps passé à clarifier la grille et à écrire les cas de test est le meilleur investissement du projet.</p>
+
+  <section class="cta" aria-labelledby="cta-titre">
+    <h2 id="cta-titre">Un nouveau produit à paramétrer ?</h2>
+    <p>Grille à clarifier, cas de test à écrire, contrôles à mettre en place : je peux vous aider.</p>
+    <div class="boutons">
+      <a class="btn btn--or" href="../#contact">Me contacter</a>
+      <a class="btn btn--clair" href="./">Lire les autres articles</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Les montants des exemples sont fictifs et simplifiés. © 2026 Dimitri Gigan, Saint-Denis, La Réunion · <a href="../">Portfolio</a></p>
+</footer>
+<script data-goatcounter="https://dimitrigigan.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
