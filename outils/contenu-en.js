@@ -3,7 +3,7 @@ const CONTENU = {
     nom: "Dimitri Gigan",
     metier: "Health insurance IT technician",
     dispo: "Available",
-    pitch: "I work on the software that health mutuals run on. Over three years at UMS Réunion, I took part in the <b>migration from IZY Protect to ASSIA PSA</b>, configured <b>more than 500 coverage benefits</b> and wrote <b>more than 100 queries and data extractions</b> for the mutual.",
+    pitch: "I work on the software that health mutuals run on. Over three years at UMS Réunion, I took part in the <b>migration of the mutual's core management software</b> (from IZY Protect to ASSIA PSA), configured <b>more than 500 coverage benefits</b> and wrote <b>more than 100 queries and data extractions</b> for the mutual.",
     email: "__EMAIL__",
     ville: "Saint-Denis, Réunion Island",
     cv: "assets/CV-Dimitri-Gigan.pdf",

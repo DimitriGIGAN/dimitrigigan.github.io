@@ -122,12 +122,11 @@ a { color: inherit; text-underline-offset: .2em; }
 }
 .top nav { display: flex; gap: .45rem; font-size: var(--t-1); }
 .top nav a {
-  text-decoration: none; color: #fff; font-weight: 800; font-style: italic; font-stretch: 90%;
-  padding: .32rem .8rem; border-radius: 5px;
-  background: linear-gradient(180deg, #2a55c9, #13297a);
-  border: 1.5px solid #6ea2ff; box-shadow: inset 0 1px 0 rgb(255 255 255 / .35);
+  text-decoration: none; color: var(--doux); font-weight: 600;
+  padding: .45rem .7rem; border-radius: 6px;
+  text-decoration-line: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: 6px;
 }
-.top nav a:hover { background: linear-gradient(180deg, #3b6ff0, #1a3596); }
+.top nav a:hover { color: #fff; text-decoration-color: var(--or); }
 
 /* ---------- Boutons ---------- */
 .btns { display: flex; flex-wrap: wrap; gap: .7rem; }
@@ -276,7 +275,11 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 }
 .main-cartes .carte { animation: arrive .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
 .main-cartes > div { display: grid; justify-items: center; align-content: start; gap: .55rem; }
-.lien-pdf { font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-pdf { display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-projet { display: inline-block; padding: .4rem 0; }
+.vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.pied-liens { display: flex; gap: 1.2rem; margin: 0; }
+.pied-liens a { display: inline-block; padding: .35rem 0; }
 .lien-pdf:hover { color: var(--encre); }
 .astuce { margin-top: 1.25rem; text-align: center; color: var(--doux); font-size: var(--t-1); }
 @media (max-width: 700px) {
@@ -678,6 +681,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <a href="#bascule">Bascule</a>
       <a href="#parcours">Parcours</a>
       <a href="#competences">Compétences</a>
+      <a href="articles/">Articles</a>
       <a class="jeu-seul" href="#jeu">Mission</a>
       <a class="jeu-seul" href="#collection">Collection</a>
       <a href="#contact">Contact</a>
@@ -709,7 +713,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <div class="btns">
           <a class="btn btn--or" data-lien="mail">M'écrire</a>
           <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a>
-          <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (nouvel onglet)</span></a>
         </div>
         <p class="indice classique-seul">Envie de jouer ? Ce portfolio a aussi un <button type="button" data-action="mode">mode jeu de cartes</button> : pioche, boosters, missions et collection.</p>
         <p class="indice jeu-seul">Pressé ? <button type="button" data-action="mode">Passer en mode classique</button></p>
@@ -897,7 +901,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <a class="mail" data-lien="mail" data-texte="email"></a>
       <div class="btns">
         <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a>
-        <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (nouvel onglet)</span></a>
       </div>
     </div>
   </section>
@@ -906,7 +910,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
 <footer>
   <div class="wrap">
     <p>© <span data-texte="annee"></span> Dimitri Gigan, <span data-texte="ville"></span></p>
-    <a data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+    <p class="pied-liens"><a href="articles/">Articles</a><a data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (nouvel onglet)</span></a></p>
   </div>
 </footer>
 
@@ -933,7 +937,7 @@ const CONTENU = {
     nom: "Dimitri Gigan",
     metier: "Technicien informatique SI santé",
     dispo: "Disponible",
-    pitch: "Je travaille sur les logiciels des mutuelles. Pendant trois ans chez UMS Réunion, j'ai participé à la <b>bascule d'IZY Protect vers ASSIA PSA</b>, paramétré <b>plus de 500 garanties</b> et réalisé <b>plus de 100 requêtes et extractions</b> pour la mutuelle.",
+    pitch: "Je travaille sur les logiciels des mutuelles. Pendant trois ans chez UMS Réunion, j'ai participé au <b>changement de logiciel de gestion</b> de la mutuelle (d'IZY Protect vers ASSIA PSA), paramétré <b>plus de 500 garanties</b> et réalisé <b>plus de 100 requêtes et extractions</b> pour la mutuelle.",
     email: "dimitrigigan@gmail.com",
     ville: "Saint-Denis, La Réunion",
     cv: "assets/CV-Dimitri-Gigan.pdf",
@@ -1270,7 +1274,7 @@ const CONTENU = {
         <span class="face">${faceDe(parId[c.id])}</span>
         <span class="face face--dos"><span class="dos"><h3>${esc(c.nom)}</h3><p>${esc(c.detail)}</p><p class="meta">${esc(c.meta)}</p></span></span>
       </span>
-    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a>` : ""}</div>`).join("");
+    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener" aria-label="Voir le certificat ${esc(c.nom)} (PDF, nouvel onglet)">Voir le certificat (PDF)</a>` : ""}</div>`).join("");
   zoneCert.addEventListener("click", e => {
     const b = e.target.closest(".carte"); if (!b) return;
     const ouverte = b.getAttribute("aria-pressed") === "true";
@@ -1286,7 +1290,7 @@ const CONTENU = {
   $('[data-zone="projets"]').innerHTML = C.projets.map(p => `<article class="projet" data-rarete="${p.rarete}"><div>
       ${p.logo ? `<img src="${esc(p.logo)}" alt="Logo ${esc(p.nom)}" style="width:3.4rem;height:3.4rem;object-fit:contain;border-radius:10px">` : (p.nom === "Mon entreprise" ? `<span class="projet__logo" aria-hidden="true">?</span>` : "")}
       <span class="projet__etat">${esc(p.etat)}</span><h3>${esc(p.nom)}</h3><p>${esc(p.texte)}</p>
-      ${p.lien ? `<a href="${esc(p.lien)}" target="_blank" rel="noopener">Voir le projet</a>` : ""}</div></article>`).join("");
+      ${p.lien ? `<a class="lien-projet" href="${esc(p.lien)}" target="_blank" rel="noopener">Voir le projet<span class="vh"> (nouvel onglet)</span></a>` : ""}</div></article>`).join("");
 
   /* ---------- Réalisations ---------- */
   $('[data-zone="realisations"]').innerHTML = C.realisations.map(r => `
@@ -1563,7 +1567,7 @@ const CONTENU = {
     $(".vue__carte").innerHTML = `<div class="carte" data-rarete="${c.rarete}" style="cursor:default"><div class="carte__in"><div class="face">${papier(c, { type: c.type, art: c.art, pied: c.pied, effet: c.effetLabel || "Effet" })}</div></div></div>`;
     $("#vue-titre").textContent = c.nom;
     let t = `<p>${esc(c.effet)}</p>`;
-    if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)</a></p>` : ""}`;
+    if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">Voir le certificat (PDF)<span class="vh"> (nouvel onglet)</span></a></p>` : ""}`;
     if (c.sorte === "parcours") t = `<p>${esc(c.role)}</p>${c.points.length ? `<ul>${c.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
     if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">M'écrire</a><a class="btn" href="${esc(id.cv)}" download data-goatcounter-click="cv-telecharge">Télécharger mon CV</a></div>`; Son.jouer("secrete"); setTimeout(() => gagner("complet"), 600); stat("jeu/carte-secrete"); }
     $(".vue__texte").innerHTML = t;

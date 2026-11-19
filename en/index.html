@@ -122,12 +122,11 @@ a { color: inherit; text-underline-offset: .2em; }
 }
 .top nav { display: flex; gap: .45rem; font-size: var(--t-1); }
 .top nav a {
-  text-decoration: none; color: #fff; font-weight: 800; font-style: italic; font-stretch: 90%;
-  padding: .32rem .8rem; border-radius: 5px;
-  background: linear-gradient(180deg, #2a55c9, #13297a);
-  border: 1.5px solid #6ea2ff; box-shadow: inset 0 1px 0 rgb(255 255 255 / .35);
+  text-decoration: none; color: var(--doux); font-weight: 600;
+  padding: .45rem .7rem; border-radius: 6px;
+  text-decoration-line: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: 6px;
 }
-.top nav a:hover { background: linear-gradient(180deg, #3b6ff0, #1a3596); }
+.top nav a:hover { color: #fff; text-decoration-color: var(--or); }
 
 /* ---------- Boutons ---------- */
 .btns { display: flex; flex-wrap: wrap; gap: .7rem; }
@@ -276,7 +275,11 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 }
 .main-cartes .carte { animation: arrive .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
 .main-cartes > div { display: grid; justify-items: center; align-content: start; gap: .55rem; }
-.lien-pdf { font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-pdf { display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-projet { display: inline-block; padding: .4rem 0; }
+.vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.pied-liens { display: flex; gap: 1.2rem; margin: 0; }
+.pied-liens a { display: inline-block; padding: .35rem 0; }
 .lien-pdf:hover { color: var(--encre); }
 .astuce { margin-top: 1.25rem; text-align: center; color: var(--doux); font-size: var(--t-1); }
 @media (max-width: 700px) {
@@ -678,6 +681,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <a href="#bascule">Migration</a>
       <a href="#parcours">Career</a>
       <a href="#competences">Skills</a>
+      <a href="../articles/" hreflang="fr">Articles (FR)</a>
       <a class="jeu-seul" href="#jeu">Duels</a>
       <a class="jeu-seul" href="#collection">Collection</a>
       <a href="#contact">Contact</a>
@@ -709,7 +713,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
         <div class="btns">
           <a class="btn btn--or" data-lien="mail">Email me</a>
           <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Download my CV (French)</a>
-          <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (opens in a new tab)</span></a>
         </div>
         <p class="indice classique-seul">Feel like playing? This portfolio also has a <button type="button" data-action="mode">card game mode</button>: draw pile, boosters, duels and a collection.</p>
         <p class="indice jeu-seul">In a hurry? <button type="button" data-action="mode">Switch to classic mode</button></p>
@@ -897,7 +901,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
       <a class="mail" data-lien="mail" data-texte="email"></a>
       <div class="btns">
         <a class="btn" data-lien="cv" download data-goatcounter-click="cv-telecharge">Download my CV (French)</a>
-        <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (opens in a new tab)</span></a>
       </div>
     </div>
   </section>
@@ -906,7 +910,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
 <footer>
   <div class="wrap">
     <p>© <span data-texte="annee"></span> Dimitri Gigan, <span data-texte="ville"></span></p>
-    <a data-lien="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+    <p class="pied-liens"><a href="../articles/" hreflang="fr">Articles (FR)</a><a data-lien="linkedin" target="_blank" rel="noopener">LinkedIn<span class="vh"> (opens in a new tab)</span></a></p>
   </div>
 </footer>
 
@@ -933,7 +937,7 @@ const CONTENU = {
     nom: "Dimitri Gigan",
     metier: "Health insurance IT technician",
     dispo: "Available",
-    pitch: "I work on the software that health mutuals run on. Over three years at UMS Réunion, I took part in the <b>migration from IZY Protect to ASSIA PSA</b>, configured <b>more than 500 coverage benefits</b> and wrote <b>more than 100 queries and data extractions</b> for the mutual.",
+    pitch: "I work on the software that health mutuals run on. Over three years at UMS Réunion, I took part in the <b>migration of the mutual's core management software</b> (from IZY Protect to ASSIA PSA), configured <b>more than 500 coverage benefits</b> and wrote <b>more than 100 queries and data extractions</b> for the mutual.",
     email: "dimitrigigan@gmail.com",
     ville: "Saint-Denis, Réunion Island",
     cv: "../assets/CV-Dimitri-Gigan.pdf",
@@ -1260,7 +1264,7 @@ const CONTENU = {
         <span class="face">${faceDe(parId[c.id])}</span>
         <span class="face face--dos"><span class="dos"><h3>${esc(c.nom)}</h3><p>${esc(c.detail)}</p><p class="meta">${esc(c.meta)}</p></span></span>
       </span>
-    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener">View the certificate (PDF, in French)</a>` : ""}</div>`).join("");
+    </button>${c.fichier ? `<a class="lien-pdf" href="${esc(c.fichier)}" target="_blank" rel="noopener" aria-label="View the ${esc(c.nom)} certificate (PDF in French, opens in a new tab)">View the certificate (PDF, in French)</a>` : ""}</div>`).join("");
   zoneCert.addEventListener("click", e => {
     const b = e.target.closest(".carte"); if (!b) return;
     const ouverte = b.getAttribute("aria-pressed") === "true";
@@ -1276,7 +1280,7 @@ const CONTENU = {
   $('[data-zone="projets"]').innerHTML = C.projets.map(p => `<article class="projet" data-rarete="${p.rarete}"><div>
       ${p.logo ? `<img src="${esc(p.logo)}" alt="Logo ${esc(p.nom)}" style="width:3.4rem;height:3.4rem;object-fit:contain;border-radius:10px">` : (p.nom === "My company" ? `<span class="projet__logo" aria-hidden="true">?</span>` : "")}
       <span class="projet__etat">${esc(p.etat)}</span><h3>${esc(p.nom)}</h3><p>${esc(p.texte)}</p>
-      ${p.lien ? `<a href="${esc(p.lien)}" target="_blank" rel="noopener">View the project</a>` : ""}</div></article>`).join("");
+      ${p.lien ? `<a class="lien-projet" href="${esc(p.lien)}" target="_blank" rel="noopener">View the project<span class="vh"> (opens in a new tab)</span></a>` : ""}</div></article>`).join("");
 
   /* ---------- Réalisations ---------- */
   $('[data-zone="realisations"]').innerHTML = C.realisations.map(r => `
@@ -1553,7 +1557,7 @@ const CONTENU = {
     $(".vue__carte").innerHTML = `<div class="carte" data-rarete="${c.rarete}" style="cursor:default"><div class="carte__in"><div class="face">${papier(c, { type: c.type, art: c.art, pied: c.pied, effet: c.effetLabel || "Effect" })}</div></div></div>`;
     $("#vue-titre").textContent = c.nom;
     let t = `<p>${esc(c.effet)}</p>`;
-    if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">View the certificate (PDF, in French)</a></p>` : ""}`;
+    if (c.sorte === "cert") t = `<p>${esc(c.detail)}</p><p style="color:var(--or)">${esc(c.meta)}</p>${c.fichier ? `<p><a class="btn btn--or" href="${esc(c.fichier)}" target="_blank" rel="noopener">View the certificate (PDF, in French)<span class="vh"> (opens in a new tab)</span></a></p>` : ""}`;
     if (c.sorte === "parcours") t = `<p>${esc(c.role)}</p>${c.points.length ? `<ul>${c.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`;
     if (c.sorte === "secret") { t = `<p>${esc(C.carteSecrete.message)}</p><div class="btns"><a class="btn btn--or" href="mailto:${esc(id.email)}">Email me</a><a class="btn" href="${esc(id.cv)}" download data-goatcounter-click="cv-telecharge">Download my CV (French)</a></div>`; Son.jouer("secrete"); setTimeout(() => gagner("complet"), 600); stat("jeu/carte-secrete"); }
     $(".vue__texte").innerHTML = t;
