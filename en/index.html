@@ -222,6 +222,12 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 /* Effet holographique : la carte s'incline et brille sous le doigt ou la souris */
 .face { transition: transform .35s ease, box-shadow .2s; }
 .carte.incline .face { transition: transform .08s linear, box-shadow .2s; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.carte.touche .face { transition: transform .12s ease-out, box-shadow .2s; transform: scale(.965) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.carte.touche .face--dos { transform: rotateY(180deg) scale(.965); }
+.carte.relache .face { transition: transform .7s cubic-bezier(.34, 1.56, .64, 1), box-shadow .2s; }
+.carte.gyro .face { transition: transform .25s ease-out; transform: rotateX(var(--gx, 0deg)) rotateY(var(--gy, 0deg)); }
+.carte.gyro .face::after { opacity: .55; }
+.carte.gyro .face--dos { transform: rotateY(180deg) rotateX(calc(var(--gx, 0deg) * -1)) rotateY(calc(var(--gy, 0deg) * -1)); }
 .carte.incline .face--dos { transform: rotateY(180deg) rotateX(calc(var(--rx, 0deg) * -1)) rotateY(calc(var(--ry, 0deg) * -1)); }
 .face::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s;
@@ -280,7 +286,7 @@ section { padding-block: clamp(3rem, 8vw, 6rem); }
 }
 .main-cartes .carte { animation: arrive .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
 .main-cartes > div { display: grid; justify-items: center; align-content: start; gap: .55rem; }
-.lien-pdf { font-family: var(--mono); display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
+.lien-pdf { display: inline-block; min-height: 24px; padding: .55rem .2rem .45rem; margin-top: .25rem; font-size: var(--t-1); color: var(--doux); text-decoration-color: var(--or); }
 .lien-projet { display: inline-block; padding: .4rem 0; }
 .vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .pied-liens { display: flex; gap: 1.2rem; margin: 0; }
@@ -554,6 +560,20 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @keyframes secoue { 25% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } 75% { transform: rotate(-2deg); } }
 .tirage { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; }
 .tirage .carte { animation: sort .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); }
+/* Ouverture façon pile : on révèle puis on fait glisser chaque carte */
+.tirage.pile { position: relative; display: block; width: var(--w-carte); height: calc(var(--w-carte) * 1.4); overflow: visible; padding: 0; margin-inline: auto; }
+.tirage.pile .carte { position: absolute; left: 0; top: 0; animation: none; z-index: calc(10 - var(--k, 0));
+  transform: translate(calc(var(--k, 0) * 5px), calc(var(--k, 0) * -5px)) rotate(calc(var(--k, 0) * 2deg));
+  transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), translate .45s cubic-bezier(.2, .8, .2, 1), rotate .45s cubic-bezier(.2, .8, .2, 1), opacity .35s; }
+.tirage.pile.sortie .carte { translate: 0 60%; opacity: 0; }
+.tirage.pile .carte.glisse { transition: none; }
+.tirage.pile .carte.part-g { translate: -150% 0; rotate: -22deg; opacity: 0; pointer-events: none; }
+.tirage.pile .carte.part-d { translate: 150% 0; rotate: 22deg; opacity: 0; pointer-events: none; }
+.tirage.pile .carte[aria-pressed="true"] { touch-action: pan-y; }
+.tirage.resume .carte { animation: sort .55s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--i) * 90ms); }
+.defile.en-pile > .fleche { display: none !important; }
+.defile.en-pile > :first-child { -webkit-mask-image: none !important; mask-image: none !important; }
+@media (prefers-reduced-motion: reduce) { .tirage.pile .carte { transition: none; } .tirage.resume .carte { animation: none; } }
 @keyframes sort { from { opacity: 0; transform: translateY(40px) scale(.8); } }
 .booster__bas { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; margin-top: 1rem; }
 .booster__etat { color: var(--doux); }
@@ -566,6 +586,25 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .tirage { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; width: 100%; padding: .6rem 1rem; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .tirage .carte { scroll-snap-align: center; }
 }
+
+
+/* ---------- Booster plus vivant : déchirure au doigt, flottement, révélations ---------- */
+.pack { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.pack__haut { animation: flotte 3.2s ease-in-out infinite; }
+@keyframes flotte { 50% { translate: 0 -6px; } }
+.pack__corps { background-size: 250% 100%, 100% 100%; animation: flotte 3.2s ease-in-out infinite, reflet 4s ease-in-out infinite !important; }
+@keyframes reflet { 0%, 55% { background-position: 120% 0, 0 0; } 100% { background-position: -120% 0, 0 0; } }
+.pack__haut::after { content: ""; position: absolute; left: 0; bottom: -3px; height: 4px; width: calc(var(--dechirure, 0) * 100%); border-radius: 4px; background: linear-gradient(90deg, #fff, #ffe08a); box-shadow: 0 0 12px 3px rgb(255 224 138 / .9); }
+.pack.tire .pack__haut { transform: rotate(calc(var(--dechirure, 0) * -7deg)) translateY(calc(var(--dechirure, 0) * -6px)); transform-origin: left bottom; transition: none; }
+.carte.revele { animation: revele .65s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes revele { 0% { scale: 1; } 35% { scale: 1.1; } 100% { scale: 1; } }
+.carte.rayons { isolation: isolate; }
+.carte.rayons::before { content: ""; position: absolute; inset: -40%; z-index: -1; pointer-events: none; border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgb(255 236 170 / .55) 0 8deg, transparent 8deg 22deg); -webkit-mask: radial-gradient(circle, #000 20%, transparent 68%); mask: radial-gradient(circle, #000 20%, transparent 68%);
+  animation: rayons 1.2s ease-out forwards; }
+.carte[data-rarete="secrete"].rayons::before { background: repeating-conic-gradient(from 0deg, rgb(176 123 255 / .55) 0 8deg, rgb(63 224 181 / .45) 8deg 14deg, transparent 14deg 24deg); }
+@keyframes rayons { from { opacity: 0; rotate: 0deg; scale: .6; } 25% { opacity: 1; } to { opacity: 0; rotate: 40deg; scale: 1.15; } }
+@media (prefers-reduced-motion: reduce) { .pack__corps, .pack__haut { animation: none !important; } .carte.revele, .carte.rayons::before { animation: none; } }
 
 /* ---------- Collection ---------- */
 .barre { height: .8rem; border-radius: 999px; background: rgb(180 185 227 / .15); overflow: hidden; }
@@ -881,7 +920,7 @@ body.classique .mode { background: var(--ultra); border-color: #fff1c2; color: #
           <div class="tirage" role="group" aria-label="Booster cards" hidden></div>
         </div>
         <div class="booster__bas">
-          <p class="booster__etat" aria-live="polite">Click the booster to open it.</p>
+          <p class="booster__etat" aria-live="polite">Swipe across the booster to tear it, or tap it.</p>
           <div class="btns">
             <button class="btn" type="button" data-action="tout-retourner" hidden>Flip all</button>
             <button class="btn btn--or" type="button" data-action="nouveau" hidden>Open another booster</button>
@@ -1285,6 +1324,7 @@ const CONTENU = {
     const r = btn.dataset.rarete;
     if (["super", "ultra", "secrete"].includes(r)) setTimeout(() => Son.jouer(r), 220);
     if (r === "ultra" || r === "secrete") { btn.classList.add("brille"); setTimeout(() => btn.classList.remove("brille"), 1400); }
+    if (!calme) { rejouer(btn, "revele"); if (r === "ultra" || r === "secrete") rejouer(btn, "rayons"); setTimeout(() => btn.classList.remove("revele", "rayons"), 1300); }
   }
 
   /* ---------- Textes et liens ---------- */
@@ -1386,37 +1426,111 @@ const CONTENU = {
     etat.textContent = reste ? `Booster done. ${reste} skill${reste > 1 ? "s" : ""} left to find.` : `All skills are in your collection.`;
     btnTout.hidden = true; btnNouveau.hidden = false;
   }
+  let gyroDemande = false;
+  function demanderGyro() {
+    if (gyroDemande || calme || !/iPhone|iPad|Macintosh/.test(navigator.userAgent) || !matchMedia("(hover: none)").matches || typeof DeviceOrientationEvent === "undefined" || typeof DeviceOrientationEvent.requestPermission !== "function") return; gyroDemande = true;
+    DeviceOrientationEvent.requestPermission().catch(() => {});
+  }
   async function ouvrir() {
-    if (ouverture) return; ouverture = true;
+    if (ouverture) return; ouverture = true; demanderGyro();
     Son.jouer("dechire"); pack.classList.add("dechire");
     await attendre(600);
     pack.hidden = true; S.boosters++; sauver(); verifier(); stat("jeu/booster-ouvert");
     tirage.innerHTML = choisir().map((c, i) => `<button class="carte" type="button" data-rarete="${c.rarete}" data-id="${c.id}" aria-pressed="false" style="--i:${i}" aria-label="Face-down card ${i + 1} of 5. Flip it.">
       <span class="carte__in"><span class="face">${versoDG}</span><span class="face face--dos">${faceDe(parId[c.id])}</span></span></button>`).join("");
-    tirage.hidden = false;
-    etat.textContent = "Click each card to flip it.";
+    tirage.classList.remove("resume"); tirage.classList.add("pile", "sortie"); tirage.hidden = false; majPile();
+    requestAnimationFrame(() => requestAnimationFrame(() => tirage.classList.remove("sortie")));
+    etat.textContent = "Tap the card to reveal it.";
     btnTout.hidden = false; btnNouveau.hidden = true;
-    $(".carte", tirage)?.focus({ preventScroll: true });
+    pileHaut()?.focus({ preventScroll: true });
     ouverture = false;
   }
-  tirage.addEventListener("click", e => {
-    const b = e.target.closest(".carte");
-    if (!b || b.getAttribute("aria-pressed") === "true") return;
+  const enPile = () => tirage.classList.contains("pile");
+  const pileReste = () => $$(".carte:not(.part-g):not(.part-d)", tirage);
+  const pileHaut = () => pileReste()[0];
+  function majPile() {
+    tirage.parentElement.classList.toggle("en-pile", enPile());
+    pileReste().forEach((b, k) => { b.style.setProperty("--k", k); b.tabIndex = k ? -1 : 0; k ? b.setAttribute("aria-hidden", "true") : b.removeAttribute("aria-hidden"); });
+  }
+  function reveler(b) {
     retourner(b);
     const c = parId[b.dataset.id];
     b.setAttribute("aria-label", `${c.nom}, ${RARETE[c.rarete].toLowerCase()}`);
     decouvrir(c.id);
+  }
+  function envoyer(b, sens) {
+    b.classList.remove("glisse"); b.style.removeProperty("translate"); b.style.removeProperty("rotate");
+    b.classList.add(sens < 0 ? "part-g" : "part-d"); b.tabIndex = -1; b.setAttribute("aria-hidden", "true");
+    Son.jouer("retourne");
+    const reste = pileReste().length;
+    if (!reste) { setTimeout(resume, calme ? 0 : 380); return; }
+    majPile(); pileHaut().focus({ preventScroll: true });
+    etat.textContent = `Tap the card to reveal it. ${reste} more card${reste > 1 ? "s" : ""}.`;
+  }
+  function resume() {
+    $$(".carte", tirage).forEach(b => { b.classList.remove("part-g", "part-d", "glisse"); b.removeAttribute("aria-hidden"); b.tabIndex = 0; b.style.removeProperty("--k"); });
+    tirage.classList.remove("pile"); tirage.classList.add("resume"); tirage.parentElement.classList.remove("en-pile");
+    finBooster(); btnNouveau.focus({ preventScroll: true });
+  }
+  /* Glisser la carte révélée pour passer à la suivante */
+  {
+    let x0 = null, dx = 0, carte = null, bouge = false;
+    tirage.addEventListener("pointerdown", e => {
+      const b = e.target.closest(".carte"); if (!enPile() || !b || b !== pileHaut() || b.getAttribute("aria-pressed") !== "true") return;
+      carte = b; x0 = e.clientX; dx = 0; bouge = false; try { b.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    tirage.addEventListener("pointermove", e => {
+      if (!carte) return; dx = e.clientX - x0; if (Math.abs(dx) > 6) bouge = true;
+      carte.classList.add("glisse"); carte.style.translate = `${dx}px 0`; carte.style.rotate = `${dx / 18}deg`;
+    });
+    const fin = () => {
+      if (!carte) return; const b = carte; carte = null;
+      if (Math.abs(dx) > 70) { envoyer(b, Math.sign(dx)); }
+      else { b.classList.remove("glisse"); b.style.removeProperty("translate"); b.style.removeProperty("rotate"); }
+      if (bouge) tirage.dataset.bouge = "1";
+    };
+    tirage.addEventListener("pointerup", fin); tirage.addEventListener("pointercancel", fin);
+  }
+  /* Glisser le doigt (ou la souris) sur le booster pour le déchirer */
+  {
+    let x0 = null, glisse = false;
+    const largeur = () => pack.getBoundingClientRect().width;
+    pack.addEventListener("pointerdown", e => { if (ouverture) return; x0 = e.clientX; glisse = false; try { pack.setPointerCapture(e.pointerId); } catch (_) {} });
+    pack.addEventListener("pointermove", e => {
+      if (x0 === null) return;
+      const f = Math.max(0, Math.min(1, Math.abs(e.clientX - x0) / largeur()));
+      if (f > .08) { glisse = true; pack.classList.add("tire"); }
+      pack.style.setProperty("--dechirure", f.toFixed(3));
+      if (f >= .62) { x0 = null; pack.classList.remove("tire"); pack.style.removeProperty("--dechirure"); ouvrir(); }
+    });
+    const fin = () => { if (x0 === null) return; x0 = null; pack.classList.remove("tire"); pack.style.removeProperty("--dechirure"); };
+    pack.addEventListener("pointerup", fin); pack.addEventListener("pointercancel", fin);
+    pack.addEventListener("click", e => { if (glisse) { e.stopImmediatePropagation(); e.preventDefault(); glisse = false; } }, true);
+  }
+  tirage.addEventListener("click", e => {
+    const b = e.target.closest(".carte");
+    if (tirage.dataset.bouge) { delete tirage.dataset.bouge; return; }
+    if (b && enPile()) {
+      if (b !== pileHaut()) return;
+      if (b.getAttribute("aria-pressed") !== "true") { reveler(b); const n = pileReste().length - 1;
+        etat.textContent = n ? `Swipe the card (or tap it) to see the next one. ${n} more card${n > 1 ? "s" : ""}.` : "Swipe the card (or tap it) to see the summary."; }
+      else envoyer(b, 1);
+      return;
+    }
+    if (!b || b.getAttribute("aria-pressed") === "true") return;
+    reveler(b);
     const reste = $$('.carte[aria-pressed="false"]', tirage).length;
     if (!reste) finBooster(); else etat.textContent = `${reste} more card${reste > 1 ? "s" : ""} to flip.`;
   });
   async function toutRetourner() {
     btnTout.hidden = true;
+    if (enPile()) { $$('.carte[aria-pressed="false"]', tirage).forEach(reveler); resume(); return; }
     for (const b of $$('.carte[aria-pressed="false"]', tirage)) { b.click(); await attendre(250); }
   }
   function nouveau() {
-    tirage.hidden = true; tirage.innerHTML = "";
+    tirage.hidden = true; tirage.innerHTML = ""; tirage.classList.remove("pile", "resume");
     pack.hidden = false; pack.classList.remove("dechire");
-    etat.textContent = "Click the booster to open it.";
+    etat.textContent = "Swipe across the booster to tear it, or tap it.";
     btnNouveau.hidden = true; pack.focus({ preventScroll: true });
   }
   const listeComp = [
@@ -1543,6 +1657,7 @@ const CONTENU = {
   }
 
   /* ---------- Effet holographique ---------- */
+  let lancerGyro = () => {};
   if (!calme) {
     let cur = null, raf = 0;
     const lacher = () => { if (!cur) return; cur.classList.remove("incline"); cur = null; };
@@ -1563,11 +1678,40 @@ const CONTENU = {
       raf = requestAnimationFrame(() => { cur = c; c.classList.add("incline"); viser(c, e); });
     }, { passive: true });
     document.addEventListener("pointerout", e => { if (cur && !cur.contains(e.relatedTarget)) { cancelAnimationFrame(raf); lacher(); } });
+    let presse = null;
+    const relacher = () => { if (!presse) return; const c = presse; presse = null;
+      c.classList.remove("touche"); c.classList.add("relache"); c.style.setProperty("--rx", "0deg"); c.style.setProperty("--ry", "0deg");
+      setTimeout(() => c.classList.remove("relache"), 720); };
     document.addEventListener("pointerdown", e => {
       if (e.pointerType !== "touch") return;
       const c = e.target.closest?.(".carte"); if (!c) return;
-      viser(c, e); rejouer(c, "eclat"); setTimeout(() => c.classList.remove("eclat"), 750);
+      demanderGyro(); presse = c; c.classList.remove("relache"); viser(c, e);
+      c.style.setProperty("--rx", (parseFloat(c.style.getPropertyValue("--rx")) * .7).toFixed(1) + "deg");
+      c.style.setProperty("--ry", (parseFloat(c.style.getPropertyValue("--ry")) * .7).toFixed(1) + "deg");
+      c.classList.add("touche"); rejouer(c, "eclat"); setTimeout(() => c.classList.remove("eclat"), 750);
     }, { passive: true });
+    ["pointerup", "pointercancel"].forEach(t => document.addEventListener(t, e => { if (e.pointerType === "touch") relacher(); }, { passive: true }));
+
+    /* Sur téléphone : les cartes visibles suivent doucement l'inclinaison de l'appareil */
+    let gyroLance = false;
+    lancerGyro = () => {
+      if (gyroLance || !matchMedia("(hover: none)").matches || !("DeviceOrientationEvent" in window)) return; gyroLance = true;
+      let base = null, gr = 0, vues = new Set();
+      const io = new IntersectionObserver(es => es.forEach(x => { x.isIntersecting ? vues.add(x.target) : (vues.delete(x.target), x.target.classList.remove("gyro")); }));
+      const suivre = () => $$(".joueur .carte, .main-cartes .carte, .tirage .carte").forEach(c => io.observe(c));
+      suivre(); [$(".main-cartes"), $(".tirage")].forEach(z => new MutationObserver(suivre).observe(z, { childList: true }));
+      addEventListener("deviceorientation", e => {
+        if (e.beta == null) return;
+        base ??= { b: e.beta, g: e.gamma };
+        base.b += (e.beta - base.b) * .02; base.g += (e.gamma - base.g) * .02;
+        const gx = Math.max(-8, Math.min(8, (base.b - e.beta) * .45)), gy = Math.max(-8, Math.min(8, (e.gamma - base.g) * .45));
+        cancelAnimationFrame(gr);
+        gr = requestAnimationFrame(() => vues.forEach(c => { if (c.classList.contains("touche")) return;
+          c.classList.add("gyro"); c.style.setProperty("--gx", gx.toFixed(1) + "deg"); c.style.setProperty("--gy", gy.toFixed(1) + "deg");
+          c.style.setProperty("--mx", (50 + gy * 5).toFixed(0) + "%"); c.style.setProperty("--my", (50 - gx * 5).toFixed(0) + "%"); }));
+      }, { passive: true });
+    };
+    lancerGyro(); /* iPhone : les mouvements n'arrivent qu'après l'accord demandé au premier toucher d'une carte */
   }
 
   /* ---------- Rangées qui défilent ---------- */
@@ -1596,7 +1740,7 @@ const CONTENU = {
   (() => {
     const fig = $(".flux"); if (!fig) return;
     const cv = fig.querySelector("canvas"), cx = cv.getContext("2d"), etapes = [...fig.querySelectorAll(".flux__etapes li")], pctEl = fig.querySelector("[data-flux-pct]");
-    let W = 0, H = 0, pts = [], cible = calme ? 1 : 0, P = cible, visible = false, boucle = 0;
+    let W = 0, H = 0, pts = [], cible = calme ? 1 : 0, P = cible, visible = false, boucle = 0, temps = 0;
     const alea = (n => () => (n = (n * 16807) % 2147483647) / 2147483647)(974);
     function preparer() {
       const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
@@ -1606,7 +1750,7 @@ const CONTENU = {
         const col = i % 14, ligne = Math.floor(i / 14), lignes = Math.ceil(n / 14);
         return { x0: W * .05 + (col + alea() * .6) / 14 * bw, y0: top + (ligne + alea() * .6) / lignes * bh,
           x1: W * .95 - bw + (col + alea() * .6) / 14 * bw, y1: top + (ligne + alea() * .6) / lignes * bh,
-          d: (col / 14) * .25 + alea() * .45, h: (alea() - .5) * H * .32, a: .45 + alea() * .55 };
+          d: (col / 14) * .25 + alea() * .45, h: (alea() - .5) * H * .32, a: .45 + alea() * .55, f: alea() * 6.28, v: .6 + alea() * .8 };
       });
     }
     const lisse = t => t * t * (3 - 2 * t);
@@ -1621,7 +1765,8 @@ const CONTENU = {
       let arrives = 0, passes = 0;
       for (const p of pts) {
         const t = Math.max(0, Math.min(1, (P * 1.25 - p.d) / .55)), e = lisse(t);
-        const x = p.x0 + (p.x1 - p.x0) * e, y = p.y0 + (p.y1 - p.y0) * e + Math.sin(e * Math.PI) * p.h;
+        const vie = calme ? 0 : Math.sin(temps / 1000 * p.v + p.f) * 1.6;
+        const x = p.x0 + (p.x1 - p.x0) * e + vie * .6, y = p.y0 + (p.y1 - p.y0) * e + Math.sin(e * Math.PI) * p.h + vie;
         if (t >= 1) arrives++; if (x > gx) passes++;
         cx.fillStyle = t >= 1 ? `rgba(63,224,181,${p.a})` : x > gx ? `rgba(242,191,74,${p.a})` : t > 0 ? `rgba(160,190,255,${p.a})` : `rgba(143,150,200,${p.a * .7})`;
         cx.fillRect(x, y, t > 0 && t < 1 ? 2.2 : 1.6, t > 0 && t < 1 ? 2.2 : 1.6);
@@ -1631,9 +1776,14 @@ const CONTENU = {
       etapes.forEach((li, i) => { li.classList.toggle("fait", i < k); li.classList.toggle("actif", i === k); });
     }
     function mesurer() { const r = fig.getBoundingClientRect(), vh = innerHeight; cible = calme ? 1 : Math.max(0, Math.min(1, (vh * .92 - r.top) / (vh * .72))); }
-    function tic() { P += (cible - P) * .12; dessiner(); boucle = visible && Math.abs(cible - P) > .001 ? requestAnimationFrame(tic) : 0; if (!boucle) { P = cible; dessiner(); } }
+    let avant = 0;
+    function tic(t) {
+      const dt = avant ? Math.min(64, t - avant) : 16; avant = t; temps = t;
+      P += (cible - P) * (1 - Math.exp(-dt / 160)); dessiner();
+      boucle = visible ? requestAnimationFrame(tic) : 0; if (!boucle) avant = 0;
+    }
     const relancer = () => { mesurer(); if (!boucle) boucle = requestAnimationFrame(tic); };
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) relancer(); }).observe(fig);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting && !calme; if (visible) relancer(); }).observe(fig);
     addEventListener("scroll", () => { if (visible && !calme) relancer(); }, { passive: true });
     if ("ResizeObserver" in window) new ResizeObserver(() => { preparer(); dessiner(); }).observe(cv);
     preparer(); mesurer(); P = cible; dessiner();
